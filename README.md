@@ -4,7 +4,7 @@ Extend the complete BASIC challenge with the following features:
 
 - The trip can have multiple Stages and each one must be done using a specific Vehicle. The user must specify the starting and the destination city for each Stage (assuming the destination of one stage is the starting point of the next one) and,
   using the APIs provided by https://openrouteservice.org/, the system must automatically obtain the actual distance in km for each one.
-  - The enpoint https://openrouteservice.org/dev/#/api-docs/geocode/search/get can be used to determine the cities coordinates
+  - The endpoint https://openrouteservice.org/dev/#/api-docs/geocode/search/get can be used to determine the cities coordinates
   - The endpoint https://openrouteservice.org/dev/#/api-docs/v2/directions/{profile}/get can be used to obtain the actual distance between two coordinates. Note that you have to define a profile as path parameter for this call. Each profile will return a different path and distance (e.g: if you plan to use a bike you will avoid highways). Use `driving-car` for `Car` and `Scooter`, `driving-hgv` for `Pullman` and `cycling-regular` for `Bike`.
 - All the people must use the same vehicle for a stage. If in the garage there are more than one compatible vehicles of the same type (e.g: 3 cars), choose one of them randomly
 - The system must show the weather forecast for each Stage at the arriving date. Use the API https://weather-forecast.herokuapp.com/random to simply get a random weather condition (no parameters required).
