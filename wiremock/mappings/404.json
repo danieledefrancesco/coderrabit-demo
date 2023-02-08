@@ -1,0 +1,14 @@
+{
+  "priority": 3,
+  "request": {
+    "method": "GET",
+    "url": "/404"
+  },
+  "response": {
+    "status": 404,
+    "body": "{}",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

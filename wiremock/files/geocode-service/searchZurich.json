@@ -1,0 +1,495 @@
+{
+  "geocoding": {
+    "version": "0.2",
+    "attribution": "https://openrouteservice.org/terms-of-service/#attribution-geocode",
+    "query": {
+      "text": "Zurich",
+      "size": 10,
+      "layers": [
+        "venue",
+        "street",
+        "country",
+        "macroregion",
+        "region",
+        "county",
+        "localadmin",
+        "locality",
+        "borough",
+        "neighbourhood",
+        "continent",
+        "empire",
+        "dependency",
+        "macrocounty",
+        "macrohood",
+        "microhood",
+        "disputed",
+        "postalcode",
+        "ocean",
+        "marinearea"
+      ],
+      "private": false,
+      "lang": {
+        "name": "English",
+        "iso6391": "en",
+        "iso6393": "eng",
+        "via": "default",
+        "defaulted": true
+      },
+      "querySize": 20,
+      "parser": "libpostal",
+      "parsed_text": {
+        "city": "zurich"
+      }
+    },
+    "warnings": [
+      "performance optimization: excluding 'address' layer"
+    ],
+    "engine": {
+      "name": "Pelias",
+      "author": "Mapzen",
+      "version": "1.0"
+    },
+    "timestamp": 1675435473997
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.537087,
+          47.373754
+        ]
+      },
+      "properties": {
+        "id": "101748463",
+        "gid": "whosonfirst:locality:101748463",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "101748463",
+        "name": "Zurich",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Zurich, Switzerland"
+      },
+      "bbox": [
+        8.448018,
+        47.320218,
+        8.625453,
+        47.434659
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.548751,
+          47.385345
+        ]
+      },
+      "properties": {
+        "id": "85800361",
+        "gid": "whosonfirst:neighbourhood:85800361",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85800361",
+        "name": "Oberstrass",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Oberstrass",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85800361",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Oberstrass, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.53313,
+        47.372315,
+        8.55835,
+        47.387193
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.534143,
+          47.362126
+        ]
+      },
+      "properties": {
+        "id": "85799955",
+        "gid": "whosonfirst:neighbourhood:85799955",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85799955",
+        "name": "Enge",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Enge",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85799955",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Enge, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.53363,
+        47.357432,
+        8.548737,
+        47.372836
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.528064,
+          47.37497
+        ]
+      },
+      "properties": {
+        "id": "85799725",
+        "gid": "whosonfirst:neighbourhood:85799725",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85799725",
+        "name": "Aussersihl",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Aussersihl",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85799725",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Aussersihl, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.506165,
+        47.366662,
+        8.539686,
+        47.383474
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.698695,
+          47.233016
+        ]
+      },
+      "properties": {
+        "id": "1394212863",
+        "gid": "whosonfirst:county:1394212863",
+        "layer": "county",
+        "source": "whosonfirst",
+        "source_id": "1394212863",
+        "name": "Zurich (unincorporated)",
+        "confidence": 0.4,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich (unincorporated)",
+        "county_gid": "whosonfirst:county:1394212863",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Zurich (unincorporated), ZH, Switzerland"
+      },
+      "bbox": [
+        8.542814,
+        47.203037,
+        8.808599,
+        47.374024
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.544657,
+          47.408891
+        ]
+      },
+      "properties": {
+        "id": "85800373",
+        "gid": "whosonfirst:neighbourhood:85800373",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85800373",
+        "name": "Oerlikon",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Oerlikon",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85800373",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Oerlikon, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.53525074231,
+        47.4020673108,
+        8.58306884766,
+        47.4264095476
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.53838,
+          47.39142
+        ]
+      },
+      "properties": {
+        "id": "85800585",
+        "gid": "whosonfirst:neighbourhood:85800585",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85800585",
+        "name": "Unterstrass",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Unterstrass",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85800585",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Unterstrass, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.525391,
+        47.38106,
+        8.547363,
+        47.403177
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.516923,
+          47.388757
+        ]
+      },
+      "properties": {
+        "id": "85862359",
+        "gid": "whosonfirst:neighbourhood:85862359",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85862359",
+        "name": "Industriequartier",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Industriequartier",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85862359",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Industriequartier, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.500671,
+        47.380875,
+        8.528513,
+        47.39574
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.558695,
+          47.377594
+        ]
+      },
+      "properties": {
+        "id": "85799981",
+        "gid": "whosonfirst:neighbourhood:85799981",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85799981",
+        "name": "Fluntern",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Fluntern",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85799981",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Fluntern, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.54118347168,
+        47.3667341067,
+        8.55285644679,
+        47.3732446484
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.533028,
+          47.340601
+        ]
+      },
+      "properties": {
+        "id": "85800667",
+        "gid": "whosonfirst:neighbourhood:85800667",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85800667",
+        "name": "Wollishofen",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Switzerland",
+        "country_gid": "whosonfirst:country:85633051",
+        "country_a": "CHE",
+        "region": "Zurich",
+        "region_gid": "whosonfirst:region:85682309",
+        "region_a": "ZH",
+        "county": "Zurich",
+        "county_gid": "whosonfirst:county:102063071",
+        "localadmin": "Zürich",
+        "localadmin_gid": "whosonfirst:localadmin:1394254167",
+        "locality": "Zurich",
+        "locality_gid": "whosonfirst:locality:101748463",
+        "neighbourhood": "Wollishofen",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85800667",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Wollishofen, Zurich, Switzerland"
+      },
+      "bbox": [
+        8.513402,
+        47.331377,
+        8.547363,
+        47.353711
+      ]
+    }
+  ],
+  "bbox": [
+    8.448018,
+    47.203037,
+    8.808599,
+    47.434659
+  ]
+}

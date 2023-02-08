@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  trip-planner:
+    build:
+      context: trip-planner
+      target: runtime
+    environment:
+      - "GEOCODING_SERVICE_BASE_URI=http://wiremock:8080/geocode-service"
+      - "DIRECTIONS_SERVICE_BASE_URI=http://wiremock:8080/directions-service"
+      - "WEATHER_SERVICE_BASE_URI=http://wiremock:8080/weather-service"
+      - "API_KEY=12345678"
+
+  sdk:
+    build:
+      context: trip-planner
+      target: build
+    volumes:
+      - "./trip-planner:/home/app"
+    environment:
+      - "GEOCODING_SERVICE_BASE_URI=http://wiremock:8080/geocode-service"
+      - "DIRECTIONS_SERVICE_BASE_URI=http://wiremock:8080/directions-service"
+      - "WEATHER_SERVICE_BASE_URI=http://wiremock:8080/weather-service"
+      - "WIREMOCK_BASE_URI=http://wiremock:8080"
+      - "API_KEY=12345678"
+    depends_on:
+      - wiremock
+
+  wiremock:
+    build:
+      context: wiremock
+    ports:
+      - 8080:8080
+      - 8443:8443
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+      - ./wiremock/files:/home/wiremock/__files

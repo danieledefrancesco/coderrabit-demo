@@ -1,0 +1,478 @@
+{
+  "geocoding": {
+    "version": "0.2",
+    "attribution": "https://openrouteservice.org/terms-of-service/#attribution-geocode",
+    "query": {
+      "text": "Rome",
+      "size": 10,
+      "layers": [
+        "venue",
+        "street",
+        "country",
+        "macroregion",
+        "region",
+        "county",
+        "localadmin",
+        "locality",
+        "borough",
+        "neighbourhood",
+        "continent",
+        "empire",
+        "dependency",
+        "macrocounty",
+        "macrohood",
+        "microhood",
+        "disputed",
+        "postalcode",
+        "ocean",
+        "marinearea"
+      ],
+      "private": false,
+      "lang": {
+        "name": "English",
+        "iso6391": "en",
+        "iso6393": "eng",
+        "via": "default",
+        "defaulted": true
+      },
+      "querySize": 20,
+      "parser": "libpostal",
+      "parsed_text": {
+        "city": "rome"
+      }
+    },
+    "warnings": [
+      "performance optimization: excluding 'address' layer"
+    ],
+    "engine": {
+      "name": "Pelias",
+      "author": "Mapzen",
+      "version": "1.0"
+    },
+    "timestamp": 1675433767840
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.52809,
+          41.878243
+        ]
+      },
+      "properties": {
+        "id": "101752607",
+        "gid": "whosonfirst:locality:101752607",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "101752607",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Italy",
+        "country_gid": "whosonfirst:country:85633253",
+        "country_a": "ITA",
+        "macroregion": "Lazio",
+        "macroregion_gid": "whosonfirst:macroregion:404227517",
+        "region": "Rome",
+        "region_gid": "whosonfirst:region:85685461",
+        "region_a": "RM",
+        "localadmin": "Rome",
+        "localadmin_gid": "whosonfirst:localadmin:404461721",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:101752607",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Rome, RM, Italy"
+      },
+      "bbox": [
+        12.33407,
+        41.763576,
+        12.731048,
+        42.051758
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.172951,
+          34.260612
+        ]
+      },
+      "properties": {
+        "id": "85936575",
+        "gid": "whosonfirst:locality:85936575",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "85936575",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Georgia",
+        "region_gid": "whosonfirst:region:85688535",
+        "region_a": "GA",
+        "county": "Floyd County",
+        "county_gid": "whosonfirst:county:102084577",
+        "county_a": "FL",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:85936575",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Rome, GA, USA"
+      },
+      "bbox": [
+        -85.278941,
+        34.193159,
+        -85.112246,
+        34.3565
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.490916,
+          43.222652
+        ]
+      },
+      "properties": {
+        "id": "85978369",
+        "gid": "whosonfirst:locality:85978369",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "85978369",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "New York",
+        "region_gid": "whosonfirst:region:85688543",
+        "region_a": "NY",
+        "county": "Oneida County",
+        "county_gid": "whosonfirst:county:102083149",
+        "county_a": "OD",
+        "localadmin": "Rome",
+        "localadmin_gid": "whosonfirst:localadmin:404522697",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:85978369",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Rome, NY, USA"
+      },
+      "bbox": [
+        -75.667017,
+        43.168892,
+        -75.340914,
+        43.281523
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.335673,
+          38.51342
+        ]
+      },
+      "properties": {
+        "id": "404525203",
+        "gid": "whosonfirst:localadmin:404525203",
+        "layer": "localadmin",
+        "source": "whosonfirst",
+        "source_id": "404525203",
+        "name": "Rome Township",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Ohio",
+        "region_gid": "whosonfirst:region:85688485",
+        "region_a": "OH",
+        "county": "Lawrence County",
+        "county_gid": "whosonfirst:county:102083699",
+        "county_a": "LW",
+        "localadmin": "Rome Township",
+        "localadmin_gid": "whosonfirst:localadmin:404525203",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Rome Township, OH, USA"
+      },
+      "bbox": [
+        -82.373932,
+        38.436167,
+        -82.28727,
+        38.585182
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.32222,
+          51.79417
+        ]
+      },
+      "properties": {
+        "id": "1344264629",
+        "gid": "whosonfirst:locality:1344264629",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1344264629",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Netherlands",
+        "country_gid": "whosonfirst:country:85633337",
+        "country_a": "NLD",
+        "region": "Gelderland",
+        "region_gid": "whosonfirst:region:85687043",
+        "region_a": "GE",
+        "localadmin": "Maasdriel",
+        "localadmin_gid": "whosonfirst:localadmin:404473917",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:1344264629",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Rome, GE, Netherlands"
+      },
+      "bbox": [
+        5.30222,
+        51.77417,
+        5.34222,
+        51.81417
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.70284,
+          50.69854
+        ]
+      },
+      "properties": {
+        "id": "1343989445",
+        "gid": "whosonfirst:locality:1343989445",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1343989445",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Belgium",
+        "country_gid": "whosonfirst:country:85632997",
+        "country_a": "BEL",
+        "macroregion": "Wallonia",
+        "macroregion_gid": "whosonfirst:macroregion:404227353",
+        "region": "Hainaut",
+        "region_gid": "whosonfirst:region:85681723",
+        "region_a": "HT",
+        "county": "Ath",
+        "county_gid": "whosonfirst:county:102049949",
+        "county_a": "AT",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:1343989445",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Rome, HT, Belgium"
+      },
+      "bbox": [
+        3.68284,
+        50.67854,
+        3.72284,
+        50.71854
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.24007,
+          33.10457
+        ]
+      },
+      "properties": {
+        "id": "1343580769",
+        "gid": "whosonfirst:locality:1343580769",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1343580769",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Mississippi",
+        "region_gid": "whosonfirst:region:85688579",
+        "region_a": "MS",
+        "county": "Winston County",
+        "county_gid": "whosonfirst:county:102085907",
+        "county_a": "WN",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:1343580769",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Rome, MS, USA"
+      },
+      "bbox": [
+        -89.26007,
+        33.08457,
+        -89.22007,
+        33.12457
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.14282,
+          37.16142
+        ]
+      },
+      "properties": {
+        "id": "1343572579",
+        "gid": "whosonfirst:locality:1343572579",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1343572579",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Kansas",
+        "region_gid": "whosonfirst:region:85688555",
+        "region_a": "KS",
+        "county": "Cowley County",
+        "county_gid": "whosonfirst:county:102082165",
+        "county_a": "CL",
+        "localadmin": "Beaver Township",
+        "localadmin_gid": "whosonfirst:localadmin:404502227",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:1343572579",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Rome, KS, USA"
+      },
+      "bbox": [
+        -97.16282,
+        37.14142,
+        -97.12282,
+        37.18142
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.76479,
+          41.7108
+        ]
+      },
+      "properties": {
+        "id": "1343526299",
+        "gid": "whosonfirst:locality:1343526299",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1343526299",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Portugal",
+        "country_gid": "whosonfirst:country:85633735",
+        "country_a": "PRT",
+        "region": "Viana do Castelo",
+        "region_gid": "whosonfirst:region:85687433",
+        "region_a": "VC",
+        "localadmin": "Santa Marta de Portuzelo",
+        "localadmin_gid": "whosonfirst:localadmin:1511679227",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:1343526299",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Rome, VC, Portugal"
+      },
+      "bbox": [
+        -8.78479,
+        41.6908,
+        -8.74479,
+        41.7308
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -86.66885,
+          31.14184
+        ]
+      },
+      "properties": {
+        "id": "1327349739",
+        "gid": "whosonfirst:locality:1327349739",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1327349739",
+        "name": "Rome",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Alabama",
+        "region_gid": "whosonfirst:region:85688675",
+        "region_a": "AL",
+        "county": "Covington County",
+        "county_gid": "whosonfirst:county:102085495",
+        "county_a": "CV",
+        "locality": "Rome",
+        "locality_gid": "whosonfirst:locality:1327349739",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Rome, AL, USA"
+      },
+      "bbox": [
+        -86.68885,
+        31.12184,
+        -86.64885,
+        31.16184
+      ]
+    }
+  ],
+  "bbox": [
+    -97.16282,
+    31.12184,
+    12.731048,
+    51.81417
+  ]
+}

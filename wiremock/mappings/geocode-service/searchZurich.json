@@ -1,0 +1,14 @@
+{
+  "priority": 3,
+  "request": {
+    "method": "GET",
+    "url": "/geocode-service/geocode/search?api_key=12345678&text=Zurich"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "geocode-service/searchZurich.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

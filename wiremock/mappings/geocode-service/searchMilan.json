@@ -1,0 +1,14 @@
+{
+  "priority": 3,
+  "request": {
+    "method": "GET",
+    "url": "/geocode-service/geocode/search?api_key=12345678&text=Milan"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "geocode-service/searchMilan.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

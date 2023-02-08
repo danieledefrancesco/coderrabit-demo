@@ -1,0 +1,475 @@
+{
+  "geocoding": {
+    "version": "0.2",
+    "attribution": "https://openrouteservice.org/terms-of-service/#attribution-geocode",
+    "query": {
+      "text": "Milan",
+      "size": 10,
+      "layers": [
+        "venue",
+        "street",
+        "country",
+        "macroregion",
+        "region",
+        "county",
+        "localadmin",
+        "locality",
+        "borough",
+        "neighbourhood",
+        "continent",
+        "empire",
+        "dependency",
+        "macrocounty",
+        "macrohood",
+        "microhood",
+        "disputed",
+        "postalcode",
+        "ocean",
+        "marinearea"
+      ],
+      "private": false,
+      "lang": {
+        "name": "English",
+        "iso6391": "en",
+        "iso6393": "eng",
+        "via": "default",
+        "defaulted": true
+      },
+      "querySize": 20,
+      "parser": "libpostal",
+      "parsed_text": {
+        "city": "milan"
+      }
+    },
+    "warnings": [
+      "performance optimization: excluding 'address' layer"
+    ],
+    "engine": {
+      "name": "Pelias",
+      "author": "Mapzen",
+      "version": "1.0"
+    },
+    "timestamp": 1675435360787
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.170685,
+          45.473702
+        ]
+      },
+      "properties": {
+        "id": "101752703",
+        "gid": "whosonfirst:locality:101752703",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "101752703",
+        "name": "Milan",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Italy",
+        "country_gid": "whosonfirst:country:85633253",
+        "country_a": "ITA",
+        "macroregion": "Lombardy",
+        "macroregion_gid": "whosonfirst:macroregion:404227497",
+        "region": "Milano",
+        "region_gid": "whosonfirst:region:85685243",
+        "region_a": "MI",
+        "localadmin": "Milan",
+        "localadmin_gid": "whosonfirst:localadmin:404468459",
+        "locality": "Milan",
+        "locality_gid": "whosonfirst:locality:101752703",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Milan, MI, Italy"
+      },
+      "bbox": [
+        9.050087,
+        45.396279,
+        9.282442,
+        45.536289
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.118788,
+          45.447319
+        ]
+      },
+      "properties": {
+        "id": "85685243",
+        "gid": "whosonfirst:region:85685243",
+        "layer": "region",
+        "source": "whosonfirst",
+        "source_id": "85685243",
+        "name": "Milano",
+        "confidence": 0.3,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Italy",
+        "country_gid": "whosonfirst:country:85633253",
+        "country_a": "ITA",
+        "macroregion": "Lombardy",
+        "macroregion_gid": "whosonfirst:macroregion:404227497",
+        "region": "Milano",
+        "region_gid": "whosonfirst:region:85685243",
+        "region_a": "MI",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Milano, Italy"
+      },
+      "bbox": [
+        8.706139,
+        45.161455,
+        9.55161,
+        45.642663
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.758614,
+          35.9162
+        ]
+      },
+      "properties": {
+        "id": "101722619",
+        "gid": "whosonfirst:locality:101722619",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "101722619",
+        "name": "Milan",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Tennessee",
+        "region_gid": "whosonfirst:region:85688701",
+        "region_a": "TN",
+        "county": "Gibson County",
+        "county_gid": "whosonfirst:county:102086403",
+        "county_a": "GB",
+        "locality": "Milan",
+        "locality_gid": "whosonfirst:locality:101722619",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Milan, TN, USA"
+      },
+      "bbox": [
+        -88.78459,
+        35.870837,
+        -88.723919,
+        35.945429
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.566432,
+          41.450128
+        ]
+      },
+      "properties": {
+        "id": "85939669",
+        "gid": "whosonfirst:locality:85939669",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "85939669",
+        "name": "Milan",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Illinois",
+        "region_gid": "whosonfirst:region:85688697",
+        "region_a": "IL",
+        "county": "Rock Island County",
+        "county_gid": "whosonfirst:county:102082281",
+        "county_a": "RO",
+        "localadmin": "Blackhawk Township",
+        "localadmin_gid": "whosonfirst:localadmin:404499669",
+        "locality": "Milan",
+        "locality_gid": "whosonfirst:locality:85939669",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Milan, IL, USA"
+      },
+      "bbox": [
+        -90.605663,
+        41.409377,
+        -90.522614,
+        41.464061
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.51167,
+          1.29205
+        ]
+      },
+      "properties": {
+        "id": "421205529",
+        "gid": "whosonfirst:locality:421205529",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "421205529",
+        "name": "Milán",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Colombia",
+        "country_gid": "whosonfirst:country:85632519",
+        "country_a": "COL",
+        "region": "Caquetá",
+        "region_gid": "whosonfirst:region:85670179",
+        "region_a": "CQ",
+        "county": "Milán",
+        "county_gid": "whosonfirst:county:1108700417",
+        "county_a": "LM",
+        "locality": "Milán",
+        "locality_gid": "whosonfirst:locality:421205529",
+        "continent": "South America",
+        "continent_gid": "whosonfirst:continent:102191577",
+        "label": "Milán, CQ, Colombia"
+      },
+      "bbox": [
+        -75.53167,
+        1.27205,
+        -75.49167,
+        1.31205
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.644004,
+          1.121994
+        ]
+      },
+      "properties": {
+        "id": "1108700429",
+        "gid": "whosonfirst:county:1108700429",
+        "layer": "county",
+        "source": "whosonfirst",
+        "source_id": "1108700429",
+        "name": "Valparaíso",
+        "confidence": 0.4,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "Colombia",
+        "country_gid": "whosonfirst:country:85632519",
+        "country_a": "COL",
+        "region": "Caquetá",
+        "region_gid": "whosonfirst:region:85670179",
+        "region_a": "CQ",
+        "county": "Valparaíso",
+        "county_gid": "whosonfirst:county:1108700429",
+        "county_a": "MI",
+        "continent": "South America",
+        "continent_gid": "whosonfirst:continent:102191577",
+        "label": "Valparaíso, CQ, Colombia"
+      },
+      "bbox": [
+        -75.861764656,
+        0.870628226723,
+        -75.3170103168,
+        1.3285592974
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.097966,
+          29.933895
+        ]
+      },
+      "properties": {
+        "id": "85866119",
+        "gid": "whosonfirst:neighbourhood:85866119",
+        "layer": "neighbourhood",
+        "source": "whosonfirst",
+        "source_id": "85866119",
+        "name": "Milan",
+        "confidence": 0.6,
+        "match_type": "fallback",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Louisiana",
+        "region_gid": "whosonfirst:region:85688735",
+        "region_a": "LA",
+        "county": "Orleans Parish",
+        "county_gid": "whosonfirst:county:102086693",
+        "county_a": "OR",
+        "locality": "New Orleans",
+        "locality_gid": "whosonfirst:locality:85948111",
+        "neighbourhood": "Milan",
+        "neighbourhood_gid": "whosonfirst:neighbourhood:85866119",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Milan, New Orleans, LA, USA"
+      },
+      "bbox": [
+        -90.1033049999,
+        29.9263999995,
+        -90.0901819996,
+        29.9414680003
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.5875,
+          42.12889
+        ]
+      },
+      "properties": {
+        "id": "1360115535",
+        "gid": "whosonfirst:locality:1360115535",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1360115535",
+        "name": "Milan",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Albania",
+        "country_gid": "whosonfirst:country:85632405",
+        "country_a": "ALB",
+        "region": "Shkoder",
+        "region_gid": "whosonfirst:region:85667793",
+        "region_a": "SD",
+        "county": "Shkodër",
+        "county_gid": "whosonfirst:county:421167927",
+        "county_a": "SO",
+        "locality": "Milan",
+        "locality_gid": "whosonfirst:locality:1360115535",
+        "continent": "Europe",
+        "continent_gid": "whosonfirst:continent:102191581",
+        "label": "Milan, SD, Albania"
+      },
+      "bbox": [
+        19.5675,
+        42.10889,
+        19.6075,
+        42.14889
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.87568,
+          39.79434
+        ]
+      },
+      "properties": {
+        "id": "1344161919",
+        "gid": "whosonfirst:locality:1344161919",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1344161919",
+        "name": "Alkusak",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "Turkey",
+        "country_gid": "whosonfirst:country:85632393",
+        "country_a": "TUR",
+        "region": "Agri",
+        "region_gid": "whosonfirst:region:85679387",
+        "region_a": "AG",
+        "county": "Eleskirt",
+        "county_gid": "whosonfirst:county:1108709477",
+        "county_a": "EL",
+        "locality": "Alkusak",
+        "locality_gid": "whosonfirst:locality:1344161919",
+        "continent": "Asia",
+        "continent_gid": "whosonfirst:continent:102191569",
+        "label": "Alkusak, AG, Turkey"
+      },
+      "bbox": [
+        42.85568,
+        39.77434,
+        42.89568,
+        39.81434
+      ]
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.52328,
+          41.90757
+        ]
+      },
+      "properties": {
+        "id": "1344072575",
+        "gid": "whosonfirst:locality:1344072575",
+        "layer": "locality",
+        "source": "whosonfirst",
+        "source_id": "1344072575",
+        "name": "Milan",
+        "confidence": 1,
+        "match_type": "exact",
+        "accuracy": "centroid",
+        "country": "United States",
+        "country_gid": "whosonfirst:country:85633793",
+        "country_a": "USA",
+        "region": "Pennsylvania",
+        "region_gid": "whosonfirst:region:85688481",
+        "region_a": "PA",
+        "county": "Bradford County",
+        "county_gid": "whosonfirst:county:102081319",
+        "county_a": "BF",
+        "localadmin": "Ulster Township",
+        "localadmin_gid": "whosonfirst:localadmin:404484691",
+        "locality": "Milan",
+        "locality_gid": "whosonfirst:locality:1344072575",
+        "continent": "North America",
+        "continent_gid": "whosonfirst:continent:102191575",
+        "label": "Milan, PA, USA"
+      },
+      "bbox": [
+        -76.54328,
+        41.88757,
+        -76.50328,
+        41.92757
+      ]
+    }
+  ],
+  "bbox": [
+    -90.605663,
+    0.870628226723,
+    42.89568,
+    45.642663
+  ]
+}

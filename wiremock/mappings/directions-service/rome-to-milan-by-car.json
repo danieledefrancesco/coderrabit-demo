@@ -1,0 +1,14 @@
+{
+  "priority": 3,
+  "request": {
+    "method": "GET",
+    "url": "/directions-service/directions/driving-car?api_key=12345678&start=12.528090,41.878243&end=9.170685,45.473702"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "directions-service/rome-to-milan-by-car.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
