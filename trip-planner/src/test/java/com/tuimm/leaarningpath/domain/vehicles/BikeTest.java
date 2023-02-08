@@ -41,4 +41,9 @@ class BikeTest extends AbstractVehicleTest {
     protected DrivingProfile getExpectedDrivingProfile() {
         return DrivingProfile.BIKE_PROFILE;
     }
+
+    @Override
+    protected boolean getExpectedHasCoverage() {
+        return false;
+    }
 }

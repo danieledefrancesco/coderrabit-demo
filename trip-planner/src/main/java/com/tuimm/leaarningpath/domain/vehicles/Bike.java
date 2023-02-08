@@ -2,7 +2,7 @@ package com.tuimm.leaarningpath.domain.vehicles;
 
 import java.util.UUID;
 
-public class Bike extends AbstractVehicle{
+public class Bike extends AbstractVehicle {
     public Bike(UUID id,
                 String model,
                 int maxPeople,
@@ -28,7 +28,13 @@ public class Bike extends AbstractVehicle{
     }
 
     @Override
+    public boolean hasCoverage() {
+        return false;
+    }
+
+    @Override
     public DrivingProfile getDrivingProfile() {
+
         return DrivingProfile.BIKE_PROFILE;
     }
 }

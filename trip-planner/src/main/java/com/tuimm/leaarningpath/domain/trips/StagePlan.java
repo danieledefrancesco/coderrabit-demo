@@ -9,6 +9,7 @@ import lombok.NonNull;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Builder
 @Getter
@@ -46,5 +47,25 @@ public class StagePlan {
 
     public LocalDateTime getArrivalDateTime() {
         return startDateTime.plus(getDuration());
+    }
+
+    public boolean warnForWeatherCondition() {
+        return getDestinationWeatherCondition().requiresCoverage() && !getVehicle().hasCoverage();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("StagePlan:%s", System.lineSeparator()) +
+                String.format(" from: %s%s", this.getRoute().getFrom().getName(), System.lineSeparator()) +
+                String.format(" to: %s%s", this.getRoute().getTo().getName(), System.lineSeparator()) +
+                String.format(" duration: %d s%s", this.getDuration().toSeconds(), System.lineSeparator()) +
+                String.format(" arrivalDateTime: %s%s",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(this.getArrivalDateTime()),
+                        System.lineSeparator()) +
+                String.format(" totalPrice: %f%s", this.getPrice(), System.lineSeparator()) +
+                String.format(" totalEmissions: %f CO2%s", this.getEmissions(), System.lineSeparator()) +
+                String.format(" destinationWeatherCondition: %s%s", this.getDestinationWeatherCondition(), System.lineSeparator()) +
+                String.format(" warnForWeatherCondition: %s%s", this.warnForWeatherCondition(), System.lineSeparator()) +
+                String.format(" vehicle: %s%s", this.getVehicle(), System.lineSeparator());
     }
 }

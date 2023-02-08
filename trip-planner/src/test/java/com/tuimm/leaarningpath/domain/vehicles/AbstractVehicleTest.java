@@ -26,6 +26,7 @@ abstract class AbstractVehicleTest {
         Assertions.assertEquals(getExpectedAverageSpeedReductionFactor(), vehicle.getAverageSpeedReductionFactor(), 0);
         Assertions.assertEquals(getExpectedStopTimeInSeconds(), vehicle.getStopTimeInSeconds());
         Assertions.assertEquals(getExpectedDrivingProfile(), vehicle.getDrivingProfile());
+        Assertions.assertEquals(getExpectedHasCoverage(), vehicle.hasCoverage());
     }
     
     @Test
@@ -139,16 +140,14 @@ abstract class AbstractVehicleTest {
     }
     
     protected String getExpectedToString(AbstractVehicle vehicle) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%s:%s", vehicle.getClass().getSimpleName(), System.lineSeparator()));
-        builder.append(String.format("  id: %s%s", vehicle.getId(), System.lineSeparator()));
-        builder.append(String.format("  model: %s%s", vehicle.getModel(), System.lineSeparator()));
-        builder.append(String.format("  maxPeople: %d%s", vehicle.getMaxPeople(), System.lineSeparator()));
-        builder.append(String.format("  dailyRentPrice: %f EUR/d%s", vehicle.getDailyRentPrice(), System.lineSeparator()));
-        builder.append(String.format("  averageSpeed: %f km/h%s", vehicle.getAverageSpeed(), System.lineSeparator()));
-        builder.append(String.format("  autonomy: %f km%s", vehicle.getAutonomy(), System.lineSeparator()));
-        builder.append(String.format("  stopTimeInSeconds: %d%s", vehicle.getStopTimeInSeconds(), System.lineSeparator()));
-        return builder.toString();
+        return String.format("%s:%s", vehicle.getClass().getSimpleName(), System.lineSeparator()) +
+                String.format("  id: %s%s", vehicle.getId(), System.lineSeparator()) +
+                String.format("  model: %s%s", vehicle.getModel(), System.lineSeparator()) +
+                String.format("  maxPeople: %d%s", vehicle.getMaxPeople(), System.lineSeparator()) +
+                String.format("  dailyRentPrice: %f EUR/d%s", vehicle.getDailyRentPrice(), System.lineSeparator()) +
+                String.format("  averageSpeed: %f km/h%s", vehicle.getAverageSpeed(), System.lineSeparator()) +
+                String.format("  autonomy: %f km%s", vehicle.getAutonomy(), System.lineSeparator()) +
+                String.format("  stopTimeInSeconds: %d%s", vehicle.getStopTimeInSeconds(), System.lineSeparator());
     }
 
     protected abstract AbstractVehicle createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy);
@@ -158,4 +157,6 @@ abstract class AbstractVehicleTest {
     protected abstract int getExpectedStopTimeInSeconds();
 
     protected abstract DrivingProfile getExpectedDrivingProfile();
+
+    protected abstract boolean getExpectedHasCoverage();
 }

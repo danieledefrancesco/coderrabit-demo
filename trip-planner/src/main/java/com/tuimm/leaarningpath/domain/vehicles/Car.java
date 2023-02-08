@@ -33,6 +33,11 @@ public class Car extends EnginePoweredVehicle {
     }
 
     @Override
+    public boolean hasCoverage() {
+        return true;
+    }
+
+    @Override
     public DrivingProfile getDrivingProfile() {
         return DrivingProfile.CAR_PROFILE;
     }

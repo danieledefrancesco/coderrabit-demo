@@ -1,5 +1,6 @@
 package com.tuimm.leaarningpath.domain.trips;
 
+import com.tuimm.leaarningpath.domain.places.Place;
 import com.tuimm.leaarningpath.domain.routes.Route;
 import com.tuimm.leaarningpath.domain.vehicles.Vehicle;
 import com.tuimm.leaarningpath.domain.weatherconditions.WeatherCondition;
@@ -17,7 +18,7 @@ class StagePlanTest {
     private Route route;
     private Vehicle vehicle;
     private final LocalDateTime startDateTime = LocalDateTime.of(2023,1,1,9,0,0);
-    private final WeatherCondition weatherCondition = WeatherCondition.SUNNY;
+    private final WeatherCondition weatherCondition = WeatherCondition.RAINY;
     private final int numberOfPeople = 3;
 
     @BeforeEach
@@ -121,5 +122,64 @@ class StagePlanTest {
         clearInvocations(stagePlan);
         Assertions.assertEquals(expectedArrivalDateTime, stagePlan.getArrivalDateTime());
         verify(stagePlan, times(1)).getDuration();
+    }
+
+    @Test
+    void warnForDestinationWeatherCondition_shouldReturnTrue_whenTheDestinationWeatherRequiresCoverageAndTheVehicleHasNotCoverage() {
+        when(vehicle.hasCoverage()).thenReturn(false);
+        Assertions.assertTrue(stagePlan.warnForWeatherCondition());
+        verify(vehicle, times(1)).hasCoverage();
+    }
+
+    @Test
+    void warnForDestinationWeatherCondition_shouldReturnFalse_whenTheDestinationWeatherRequiresCoverageAndTheVehicleHasCoverage() {
+        when(vehicle.hasCoverage()).thenReturn(true);
+        Assertions.assertFalse(stagePlan.warnForWeatherCondition());
+        verify(vehicle, times(1)).hasCoverage();
+    }
+
+    @Test
+    void warnForDestinationWeatherCondition_shouldReturnFalse_whenTheDestinationWeatherDoesNotRequireCoverage() {
+        when(stagePlan.getDestinationWeatherCondition()).thenReturn(WeatherCondition.SUNNY);
+        Assertions.assertFalse(stagePlan.warnForWeatherCondition());
+    }
+
+    @Test
+    void toString_shouldReturnExpectedResult() {
+        String expectedFrom = "from";
+        String expectedTo = "to";
+        Place placeFrom = mock(Place.class);
+        Place placeTo = mock(Place.class);
+
+        Duration expectedDuration = Duration.ofSeconds(10);
+        LocalDateTime expectedArrivalDateTime =
+                LocalDateTime.of(2023,1,1,9,0,0);
+        double expectedPrice = 10;
+        double expectedEmissions = 15;
+        boolean expectedWarnForWeatherCondition = true;
+
+        when(placeFrom.getName()).thenReturn(expectedFrom);
+        when(placeTo.getName()).thenReturn(expectedTo);
+        when(route.getFrom()).thenReturn(placeFrom);
+        when(route.getTo()).thenReturn(placeTo);
+
+        when(stagePlan.getDuration()).thenReturn(expectedDuration);
+        when(stagePlan.getArrivalDateTime()).thenReturn(expectedArrivalDateTime);
+        when(stagePlan.getPrice()).thenReturn(expectedPrice);
+        when(stagePlan.getEmissions()).thenReturn(expectedEmissions);
+        when(stagePlan.warnForWeatherCondition()).thenReturn(expectedWarnForWeatherCondition);
+
+        String expectedString = String.format("StagePlan:%s", System.lineSeparator()) +
+                String.format(" from: %s%s", expectedFrom, System.lineSeparator()) +
+                String.format(" to: %s%s", expectedTo, System.lineSeparator()) +
+                String.format(" duration: %d s%s", expectedDuration.toSeconds(), System.lineSeparator()) +
+                String.format(" arrivalDateTime: 2023-01-01 09:00:00%s", System.lineSeparator()) +
+                String.format(" totalPrice: %f%s", expectedPrice, System.lineSeparator()) +
+                String.format(" totalEmissions: %f CO2%s", expectedEmissions, System.lineSeparator()) +
+                String.format(" destinationWeatherCondition: %s%s", weatherCondition, System.lineSeparator()) +
+                String.format(" warnForWeatherCondition: %s%s", expectedWarnForWeatherCondition, System.lineSeparator()) +
+                String.format(" vehicle: %s%s", vehicle, System.lineSeparator());
+
+        Assertions.assertEquals(expectedString, stagePlan.toString());
     }
 }

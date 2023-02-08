@@ -14,6 +14,11 @@ class PullmanTest extends EnginePoweredVehicleTest {
     }
 
     @Override
+    protected boolean getExpectedHasCoverage() {
+        return true;
+    }
+
+    @Override
     protected GenericPlate getExpectedPlate() {
 
         return GenericPlate.from("AA000BB");

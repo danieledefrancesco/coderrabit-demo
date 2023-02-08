@@ -33,6 +33,11 @@ public class Scooter extends EnginePoweredVehicle {
     }
 
     @Override
+    public boolean hasCoverage() {
+        return false;
+    }
+
+    @Override
     public DrivingProfile getDrivingProfile() {
         return DrivingProfile.CAR_PROFILE;
     }

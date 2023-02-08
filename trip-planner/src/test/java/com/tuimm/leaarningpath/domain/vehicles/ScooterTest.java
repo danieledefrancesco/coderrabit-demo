@@ -14,6 +14,11 @@ class ScooterTest extends EnginePoweredVehicleTest {
     }
 
     @Override
+    protected boolean getExpectedHasCoverage() {
+        return false;
+    }
+
+    @Override
     protected ScooterPlate getExpectedPlate() {
 
         return ScooterPlate.from("AA0000");

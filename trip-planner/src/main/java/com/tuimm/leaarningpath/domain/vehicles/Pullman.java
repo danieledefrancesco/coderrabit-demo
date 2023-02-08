@@ -33,6 +33,11 @@ public class Pullman extends EnginePoweredVehicle {
     }
 
     @Override
+    public boolean hasCoverage() {
+        return true;
+    }
+
+    @Override
     public DrivingProfile getDrivingProfile() {
         return DrivingProfile.HGV_PROFILE;
     }

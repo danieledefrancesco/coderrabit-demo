@@ -15,6 +15,7 @@ public interface Vehicle {
      * The vehicles which are not powered by an engine will just return 0.
      */
     double getEmissions();
+    boolean hasCoverage();
 
     DrivingProfile getDrivingProfile();
     double computeAverageSpeedForPassengersAmount(int passengersAmount);
