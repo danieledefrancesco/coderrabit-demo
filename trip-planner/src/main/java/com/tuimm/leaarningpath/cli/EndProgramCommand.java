@@ -1,5 +1,7 @@
 package com.tuimm.leaarningpath.cli;
 
+import lombok.RequiredArgsConstructor;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 

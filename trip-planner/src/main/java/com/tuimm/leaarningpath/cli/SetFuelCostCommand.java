@@ -2,20 +2,19 @@ package com.tuimm.leaarningpath.cli;
 
 import com.tuimm.leaarningpath.domain.vehicles.FuelType;
 import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 
+@RequiredArgsConstructor
 public class SetFuelCostCommand implements Command {
+    @NonNull
     private final VehiclesService vehiclesService;
+    @NonNull
     private final FuelType fuelType;
     private final double cost;
-
-    public SetFuelCostCommand(VehiclesService vehiclesService, FuelType fuelType, double cost) {
-        this.vehiclesService = vehiclesService;
-        this.fuelType = fuelType;
-        this.cost = cost;
-    }
 
     @Override
     public void execute(PrintStream outputStream, InputStream inputStream) {

@@ -1,27 +1,28 @@
 package com.tuimm.leaarningpath.cli;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+@RequiredArgsConstructor
 public class CommandLineInterface {
+    @NonNull
     private final InputStream inputStream;
+    @NonNull
     private final PrintStream outputStream;
+    @NonNull
     private final Collection<CommandFactory> factories;
 
-    public CommandLineInterface(InputStream inputStream, PrintStream outputStream, Collection<CommandFactory> factories) {
-        this.inputStream = inputStream;
-        this.outputStream = outputStream;
-        this.factories = factories;
-    }
 
-    public void run()
-    {
+    public void run() {
         showExamples();
         Scanner scanner = new Scanner(inputStream);
-        while(processNextLine(scanner));
+        while (processNextLine(scanner)) ;
     }
 
     private boolean processNextLine(Scanner scanner) {
@@ -42,7 +43,7 @@ public class CommandLineInterface {
         return command != EndProgramCommand.getInstance();
     }
 
-    private void showExamples(){
+    private void showExamples() {
         outputStream.println("The valid commands are the following:");
         for (CommandFactory factory : factories) {
             outputStream.println(factory.getCommandExample());

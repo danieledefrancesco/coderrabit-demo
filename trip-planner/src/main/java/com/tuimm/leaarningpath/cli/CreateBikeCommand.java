@@ -2,31 +2,22 @@ package com.tuimm.leaarningpath.cli;
 
 import com.tuimm.leaarningpath.domain.vehicles.Vehicle;
 import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 
+@RequiredArgsConstructor
 public class CreateBikeCommand implements Command {
+    @NonNull
     private final VehiclesService vehiclesService;
+    @NonNull
     private final String model;
     private final int maxPeople;
     private final double dailyRentPrice;
     private final double averageSpeed;
     private final double autonomy;
-
-    public CreateBikeCommand(VehiclesService vehiclesService,
-                             String model,
-                             int maxPeople,
-                             double dailyRentPrice,
-                             double averageSpeed,
-                             double autonomy) {
-        this.vehiclesService = vehiclesService;
-        this.model = model;
-        this.maxPeople = maxPeople;
-        this.dailyRentPrice = dailyRentPrice;
-        this.averageSpeed = averageSpeed;
-        this.autonomy = autonomy;
-    }
 
     @Override
     public void execute(PrintStream outputStream, InputStream inputStream) {

@@ -1,16 +1,16 @@
 package com.tuimm.leaarningpath.cli;
 
 import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 
+@RequiredArgsConstructor
 public class ShowGarageCommand implements Command {
+    @NonNull
     private final VehiclesService vehiclesService;
-
-    public ShowGarageCommand(VehiclesService vehiclesService) {
-        this.vehiclesService = vehiclesService;
-    }
 
     @Override
     public void execute(PrintStream outputStream, InputStream inputStream) {

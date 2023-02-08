@@ -2,15 +2,15 @@ package com.tuimm.leaarningpath.cli;
 
 import com.tuimm.leaarningpath.domain.vehicles.FuelType;
 import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.StringTokenizer;
 
+@RequiredArgsConstructor
 public class CreatePullmanCommandFactory implements CommandFactory {
+    @NonNull
     private final VehiclesService vehiclesService;
-
-    public CreatePullmanCommandFactory(VehiclesService vehiclesService) {
-        this.vehiclesService = vehiclesService;
-    }
 
     @Override
     public String getCommandRegex() {

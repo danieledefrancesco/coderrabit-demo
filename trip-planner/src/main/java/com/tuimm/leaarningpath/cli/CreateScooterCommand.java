@@ -3,46 +3,29 @@ package com.tuimm.leaarningpath.cli;
 import com.tuimm.leaarningpath.domain.vehicles.FuelType;
 import com.tuimm.leaarningpath.domain.vehicles.Vehicle;
 import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 
+@RequiredArgsConstructor
 public class CreateScooterCommand implements Command {
+    @NonNull
     private final VehiclesService vehiclesService;
+    @NonNull
     private final String model;
     private final int maxPeople;
     private final double dailyRentPrice;
     private final double averageSpeed;
     private final double autonomy;
     private final int stopTimeInSeconds;
+    @NonNull
     private final String plate;
+    @NonNull
     private final FuelType fuelType;
     private final double emissions;
     private final double fuelConsumption;
-
-    public CreateScooterCommand(VehiclesService vehiclesService,
-                                String model,
-                                int maxPeople,
-                                double dailyRentPrice,
-                                double averageSpeed,
-                                double autonomy,
-                                int stopTimeInSeconds,
-                                String plate,
-                                FuelType fuelType,
-                                double emissions,
-                                double fuelConsumption) {
-        this.vehiclesService = vehiclesService;
-        this.model = model;
-        this.maxPeople = maxPeople;
-        this.dailyRentPrice = dailyRentPrice;
-        this.averageSpeed = averageSpeed;
-        this.autonomy = autonomy;
-        this.stopTimeInSeconds = stopTimeInSeconds;
-        this.plate = plate;
-        this.fuelType = fuelType;
-        this.emissions = emissions;
-        this.fuelConsumption = fuelConsumption;
-    }
 
     @Override
     public void execute(PrintStream outputStream, InputStream inputStream) {

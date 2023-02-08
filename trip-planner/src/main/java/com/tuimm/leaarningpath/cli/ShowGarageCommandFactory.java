@@ -1,13 +1,13 @@
 package com.tuimm.leaarningpath.cli;
 
 import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class ShowGarageCommandFactory implements CommandFactory {
+    @NonNull
     private final VehiclesService vehiclesService;
-
-    public ShowGarageCommandFactory(VehiclesService vehiclesService) {
-        this.vehiclesService = vehiclesService;
-    }
 
     @Override
     public String getCommandRegex() {
