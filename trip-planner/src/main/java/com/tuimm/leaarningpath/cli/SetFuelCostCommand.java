@@ -5,8 +5,8 @@ import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class SetFuelCostCommand implements Command {
@@ -17,7 +17,7 @@ public class SetFuelCostCommand implements Command {
     private final double cost;
 
     @Override
-    public void execute(PrintStream outputStream, InputStream inputStream) {
+    public void execute(PrintStream outputStream, Scanner scanner) {
         vehiclesService.setFuelCost(fuelType, cost);
         outputStream.println("The fuel cost has been updated.");
         outputStream.println(fuelType);

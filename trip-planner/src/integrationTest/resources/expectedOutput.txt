@@ -1,0 +1,190 @@
+The valid commands are the following:
+set-fuel-cost <PETROL|DIESEL|LPG> <cost>
+create-bike <model> <max_people> <daily_rent_price> <average_speed> <autonomy>
+create-car <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+create-pullman <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+create-scooter <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+show-garage
+plan-trip <start-date-time|yyyy-MM-ddThh:mm:ss> <numberOfPeople> <numberOfStages>
+exit
+The fuel cost has been updated.
+PETROL - 1,900000 EUR/l
+The fuel cost has been updated.
+DIESEL - 1,920000 EUR/l
+The fuel cost has been updated.
+LPG - 0,750000 EUR/l
+The following has been created:
+Bike:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b01
+  model: ebike
+  maxPeople: 1
+  dailyRentPrice: 30,000000 EUR/d
+  averageSpeed: 45,000000 km/h
+  autonomy: 150,000000 km
+  stopTimeInSeconds: 28800
+The following has been created:
+Car:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
+  model: panda
+  maxPeople: 4
+  dailyRentPrice: 70,000000 EUR/d
+  averageSpeed: 130,000000 km/h
+  autonomy: 700,000000 km
+  stopTimeInSeconds: 300
+  plate: AB123CD
+  fuelType: LPG - 0,750000 EUR/l
+  fuelConsumption: 20,000000 km/l
+  emissions: 40,000000 CO2/km
+The following has been created:
+Pullman:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b03
+  model: pullman
+  maxPeople: 50
+  dailyRentPrice: 1000,000000 EUR/d
+  averageSpeed: 110,000000 km/h
+  autonomy: 1700,000000 km
+  stopTimeInSeconds: 900
+  plate: EF456GH
+  fuelType: DIESEL - 1,920000 EUR/l
+  fuelConsumption: 10,000000 km/l
+  emissions: 140,000000 CO2/km
+The following has been created:
+Scooter:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b04
+  model: sh125
+  maxPeople: 2
+  dailyRentPrice: 35,000000 EUR/d
+  averageSpeed: 90,000000 km/h
+  autonomy: 100,000000 km
+  stopTimeInSeconds: 150
+  plate: AB1234
+  fuelType: PETROL - 1,900000 EUR/l
+  fuelConsumption: 30,000000 km/l
+  emissions: 20,000000 CO2/km
+The following vehicles are present in the garage:
+[Car:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
+  model: panda
+  maxPeople: 4
+  dailyRentPrice: 70,000000 EUR/d
+  averageSpeed: 130,000000 km/h
+  autonomy: 700,000000 km
+  stopTimeInSeconds: 300
+  plate: AB123CD
+  fuelType: LPG - 0,750000 EUR/l
+  fuelConsumption: 20,000000 km/l
+  emissions: 40,000000 CO2/km, Bike:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b01
+  model: ebike
+  maxPeople: 1
+  dailyRentPrice: 30,000000 EUR/d
+  averageSpeed: 45,000000 km/h
+  autonomy: 150,000000 km
+  stopTimeInSeconds: 28800]
+Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:TripPlan:
+ duration: 26989238 s
+ arrivalDateTime: 2023-11-09 06:00:38
+ totalPrice: 54211,587500 EUR
+ totalEmissions: 34604360,000000 CO2
+ stages: [StagePlan:
+ from: Rome
+ to: Milan
+ distance: 588517,100000 km
+ duration: 18360218 s
+ arrivalDateTime: 2023-08-01 09:03:38
+ totalPrice: 36909,391250 EUR
+ totalEmissions: 23540684,000000 CO2
+ destinationWeatherCondition: CLOUDY
+ warnForWeatherCondition: false
+ vehicle: Car:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
+  model: panda
+  maxPeople: 4
+  dailyRentPrice: 70,000000 EUR/d
+  averageSpeed: 130,000000 km/h
+  autonomy: 700,000000 km
+  stopTimeInSeconds: 300
+  plate: AB123CD
+  fuelType: LPG - 0,750000 EUR/l
+  fuelConsumption: 20,000000 km/l
+  emissions: 40,000000 CO2/km, StagePlan:
+ from: Milan
+ to: Zurich
+ distance: 276591,900000 km
+ duration: 8629020 s
+ arrivalDateTime: 2023-11-09 06:00:38
+ totalPrice: 17302,196250 EUR
+ totalEmissions: 11063676,000000 CO2
+ destinationWeatherCondition: PARTLY_CLOUDY
+ warnForWeatherCondition: false
+ vehicle: Car:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
+  model: panda
+  maxPeople: 4
+  dailyRentPrice: 70,000000 EUR/d
+  averageSpeed: 130,000000 km/h
+  autonomy: 700,000000 km
+  stopTimeInSeconds: 300
+  plate: AB123CD
+  fuelType: LPG - 0,750000 EUR/l
+  fuelConsumption: 20,000000 km/l
+  emissions: 40,000000 CO2/km]
+Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:TripPlan:
+ duration: 104766468 s
+ arrivalDateTime: 2026-04-27 10:47:48
+ totalPrice: 66069,391250 EUR
+ totalEmissions: 23540684,000000 CO2
+ stages: [StagePlan:
+ from: Rome
+ to: Milan
+ distance: 588517,100000 km
+ duration: 16549396 s
+ arrivalDateTime: 2023-07-11 10:03:16
+ totalPrice: 35439,391250 EUR
+ totalEmissions: 23540684,000000 CO2
+ destinationWeatherCondition: CLOUDY
+ warnForWeatherCondition: false
+ vehicle: Car:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
+  model: panda
+  maxPeople: 4
+  dailyRentPrice: 70,000000 EUR/d
+  averageSpeed: 130,000000 km/h
+  autonomy: 700,000000 km
+  stopTimeInSeconds: 300
+  plate: AB123CD
+  fuelType: LPG - 0,750000 EUR/l
+  fuelConsumption: 20,000000 km/l
+  emissions: 40,000000 CO2/km, StagePlan:
+ from: Milan
+ to: Zurich
+ distance: 324393,400000 km
+ duration: 88217072 s
+ arrivalDateTime: 2026-04-27 10:47:48
+ totalPrice: 30630,000000 EUR
+ totalEmissions: 0,000000 CO2
+ destinationWeatherCondition: PARTLY_CLOUDY
+ warnForWeatherCondition: false
+ vehicle: Bike:
+  id: d0e82fb9-c4e5-4d20-9522-b09e8a857b01
+  model: ebike
+  maxPeople: 1
+  dailyRentPrice: 30,000000 EUR/d
+  averageSpeed: 45,000000 km/h
+  autonomy: 150,000000 km
+  stopTimeInSeconds: 28800]
+unrecognized command.
+The valid commands are the following:
+set-fuel-cost <PETROL|DIESEL|LPG> <cost>
+create-bike <model> <max_people> <daily_rent_price> <average_speed> <autonomy>
+create-car <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+create-pullman <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+create-scooter <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+show-garage
+plan-trip <start-date-time|yyyy-MM-ddThh:mm:ss> <numberOfPeople> <numberOfStages>
+exit
+Error while creating the bike: maxPeople must be greater than 0
+Error while creating the car: the value is not valid
+Error while creating the pullman: the value is not valid
+Error while creating the scooter: the value is not valid
+exiting

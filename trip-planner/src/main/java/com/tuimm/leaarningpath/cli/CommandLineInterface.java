@@ -39,7 +39,7 @@ public class CommandLineInterface {
         }
 
         Command command = commandFactory.createCommand(commandLine);
-        command.execute(outputStream, inputStream);
+        command.execute(outputStream, scanner);
         return command != EndProgramCommand.getInstance();
     }
 

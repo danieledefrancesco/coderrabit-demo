@@ -4,7 +4,6 @@ import com.tuimm.leaarningpath.domain.trips.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -23,8 +22,7 @@ public class PlanTripCommand implements Command {
 
 
     @Override
-    public void execute(PrintStream outputStream, InputStream inputStream) {
-        Scanner scanner = new Scanner(inputStream);
+    public void execute(PrintStream outputStream, Scanner scanner) {
         List<StageDefinition> stageDefinitions = new ArrayList<>(numberOfStages);
         for (int i = 0; i < numberOfStages; i++) {
             outputStream.print("Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:");

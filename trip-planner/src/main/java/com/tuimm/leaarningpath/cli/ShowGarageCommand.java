@@ -4,8 +4,8 @@ import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class ShowGarageCommand implements Command {
@@ -13,7 +13,7 @@ public class ShowGarageCommand implements Command {
     private final VehiclesService vehiclesService;
 
     @Override
-    public void execute(PrintStream outputStream, InputStream inputStream) {
+    public void execute(PrintStream outputStream, Scanner scanner) {
         outputStream.println("The following vehicles are present in the garage:");
         outputStream.println(vehiclesService.getAllVehicles());
     }

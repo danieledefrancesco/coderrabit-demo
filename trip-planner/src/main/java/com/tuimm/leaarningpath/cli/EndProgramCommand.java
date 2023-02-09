@@ -1,9 +1,7 @@
 package com.tuimm.leaarningpath.cli;
 
-import lombok.RequiredArgsConstructor;
-
-import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class EndProgramCommand implements Command {
     private static final EndProgramCommand instance = new EndProgramCommand();
@@ -16,7 +14,7 @@ public class EndProgramCommand implements Command {
     }
 
     @Override
-    public void execute(PrintStream outputStream, InputStream inputStream) {
+    public void execute(PrintStream outputStream, Scanner scanner) {
         outputStream.println("exiting");
     }
 }

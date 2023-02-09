@@ -5,8 +5,8 @@ import com.tuimm.leaarningpath.domain.vehicles.VehiclesService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class CreateBikeCommand implements Command {
@@ -20,7 +20,7 @@ public class CreateBikeCommand implements Command {
     private final double autonomy;
 
     @Override
-    public void execute(PrintStream outputStream, InputStream inputStream) {
+    public void execute(PrintStream outputStream, Scanner scanner) {
         try {
             Vehicle vehicle = vehiclesService.addBike(model,
                     maxPeople,

@@ -1,8 +1,8 @@
 package com.tuimm.leaarningpath.cli;
 
-import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public interface Command {
-    void execute(PrintStream outputStream, InputStream inputStream);
+    void execute(PrintStream outputStream, Scanner scanner);
 }
