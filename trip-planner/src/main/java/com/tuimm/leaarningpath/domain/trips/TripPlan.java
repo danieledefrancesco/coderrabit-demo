@@ -44,8 +44,8 @@ public class TripPlan {
                 String.format(" arrivalDateTime: %s%s",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(this.getArrivalDateTime()),
                         System.lineSeparator()) +
-                String.format(" totalPrice: %f%s", this.getTotalPrice(), System.lineSeparator()) +
-                String.format(" totalEmissions: %f CO2/d%s", this.getTotalEmissions(), System.lineSeparator()) +
-                String.format(" stages: %s%s", this.stages, System.lineSeparator());
+                String.format(" totalPrice: %f EUR%s", this.getTotalPrice(), System.lineSeparator()) +
+                String.format(" totalEmissions: %f CO2%s", this.getTotalEmissions(), System.lineSeparator()) +
+                String.format(" stages: %s", this.stages);
     }
 }

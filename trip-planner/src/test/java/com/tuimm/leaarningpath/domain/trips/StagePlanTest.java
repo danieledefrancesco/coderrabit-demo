@@ -156,12 +156,14 @@ class StagePlanTest {
                 LocalDateTime.of(2023,1,1,9,0,0);
         double expectedPrice = 10;
         double expectedEmissions = 15;
+        double expectedDistanceInKilometers = 20;
         boolean expectedWarnForWeatherCondition = true;
 
         when(placeFrom.getName()).thenReturn(expectedFrom);
         when(placeTo.getName()).thenReturn(expectedTo);
         when(route.getFrom()).thenReturn(placeFrom);
         when(route.getTo()).thenReturn(placeTo);
+        when(route.getDistanceInKilometers()).thenReturn(expectedDistanceInKilometers);
 
         when(stagePlan.getDuration()).thenReturn(expectedDuration);
         when(stagePlan.getArrivalDateTime()).thenReturn(expectedArrivalDateTime);
@@ -172,13 +174,14 @@ class StagePlanTest {
         String expectedString = String.format("StagePlan:%s", System.lineSeparator()) +
                 String.format(" from: %s%s", expectedFrom, System.lineSeparator()) +
                 String.format(" to: %s%s", expectedTo, System.lineSeparator()) +
+                String.format(" distance: %f km%s", expectedDistanceInKilometers, System.lineSeparator()) +
                 String.format(" duration: %d s%s", expectedDuration.toSeconds(), System.lineSeparator()) +
                 String.format(" arrivalDateTime: 2023-01-01 09:00:00%s", System.lineSeparator()) +
-                String.format(" totalPrice: %f%s", expectedPrice, System.lineSeparator()) +
+                String.format(" totalPrice: %f EUR%s", expectedPrice, System.lineSeparator()) +
                 String.format(" totalEmissions: %f CO2%s", expectedEmissions, System.lineSeparator()) +
                 String.format(" destinationWeatherCondition: %s%s", weatherCondition, System.lineSeparator()) +
                 String.format(" warnForWeatherCondition: %s%s", expectedWarnForWeatherCondition, System.lineSeparator()) +
-                String.format(" vehicle: %s%s", vehicle, System.lineSeparator());
+                String.format(" vehicle: %s", vehicle);
 
         Assertions.assertEquals(expectedString, stagePlan.toString());
     }

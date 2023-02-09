@@ -57,9 +57,10 @@ public abstract class EnginePoweredVehicle extends AbstractVehicle {
     @Override
     public String toString() {
         return super.toString() +
+                System.lineSeparator() +
                 String.format("  plate: %s%s", this.getPlate(), System.lineSeparator()) +
                 String.format("  fuelType: %s%s", this.getFuelType(), System.lineSeparator()) +
                 String.format("  fuelConsumption: %f km/l%s", this.getFuelConsumption(), System.lineSeparator()) +
-                String.format("  emissions: %f CO2/km%s", this.getEmissions(), System.lineSeparator());
+                String.format("  emissions: %f CO2/km", this.getEmissions());
     }
 }

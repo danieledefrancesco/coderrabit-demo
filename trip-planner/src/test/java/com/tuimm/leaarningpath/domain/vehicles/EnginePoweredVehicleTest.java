@@ -156,13 +156,12 @@ abstract class EnginePoweredVehicleTest extends AbstractVehicleTest {
     @Override
     protected String getExpectedToString(AbstractVehicle vehicle) {
         EnginePoweredVehicle enginePoweredVehicle = (EnginePoweredVehicle) vehicle;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(super.getExpectedToString(enginePoweredVehicle));
-        stringBuilder.append(String.format("  plate: %s%s", enginePoweredVehicle.getPlate(), System.lineSeparator()));
-        stringBuilder.append(String.format("  fuelType: %s%s", enginePoweredVehicle.getFuelType(), System.lineSeparator()));
-        stringBuilder.append(String.format("  fuelConsumption: %f km/l%s", enginePoweredVehicle.getFuelConsumption(), System.lineSeparator()));
-        stringBuilder.append(String.format("  emissions: %f CO2/km%s", enginePoweredVehicle.getEmissions(), System.lineSeparator()));
-        return stringBuilder.toString();
+        return super.getExpectedToString(enginePoweredVehicle) +
+                System.lineSeparator() +
+                String.format("  plate: %s%s", enginePoweredVehicle.getPlate(), System.lineSeparator()) +
+                String.format("  fuelType: %s%s", enginePoweredVehicle.getFuelType(), System.lineSeparator()) +
+                String.format("  fuelConsumption: %f km/l%s", enginePoweredVehicle.getFuelConsumption(), System.lineSeparator()) +
+                String.format("  emissions: %f CO2/km", enginePoweredVehicle.getEmissions());
     }
 
     @Override

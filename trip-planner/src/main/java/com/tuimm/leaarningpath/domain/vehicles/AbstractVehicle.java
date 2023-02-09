@@ -81,6 +81,6 @@ public abstract class AbstractVehicle implements Vehicle{
                 String.format("  dailyRentPrice: %f EUR/d%s", this.getDailyRentPrice(), System.lineSeparator()) +
                 String.format("  averageSpeed: %f km/h%s", this.getAverageSpeed(), System.lineSeparator()) +
                 String.format("  autonomy: %f km%s", this.getAutonomy(), System.lineSeparator()) +
-                String.format("  stopTimeInSeconds: %d%s", this.getStopTimeInSeconds(), System.lineSeparator());
+                String.format("  stopTimeInSeconds: %d", this.getStopTimeInSeconds());
     }
 }

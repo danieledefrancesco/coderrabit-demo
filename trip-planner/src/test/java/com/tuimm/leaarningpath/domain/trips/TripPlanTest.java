@@ -103,9 +103,9 @@ class TripPlanTest {
                 String.format(" duration: 100 s%s", System.lineSeparator()) +
                 String.format(" arrivalDateTime: 2023-01-01 09:00:00%s",
                         System.lineSeparator()) +
-                String.format(" totalPrice: %f%s", totalPrice, System.lineSeparator()) +
-                String.format(" totalEmissions: %f CO2/d%s", emissions, System.lineSeparator()) +
-                String.format(" stages: %s%s", stagePlans, System.lineSeparator());
+                String.format(" totalPrice: %f EUR%s", totalPrice, System.lineSeparator()) +
+                String.format(" totalEmissions: %f CO2%s", emissions, System.lineSeparator()) +
+                String.format(" stages: %s", stagePlans);
 
         clearInvocations(tripPlan);
 

@@ -147,7 +147,7 @@ abstract class AbstractVehicleTest {
                 String.format("  dailyRentPrice: %f EUR/d%s", vehicle.getDailyRentPrice(), System.lineSeparator()) +
                 String.format("  averageSpeed: %f km/h%s", vehicle.getAverageSpeed(), System.lineSeparator()) +
                 String.format("  autonomy: %f km%s", vehicle.getAutonomy(), System.lineSeparator()) +
-                String.format("  stopTimeInSeconds: %d%s", vehicle.getStopTimeInSeconds(), System.lineSeparator());
+                String.format("  stopTimeInSeconds: %d", vehicle.getStopTimeInSeconds());
     }
 
     protected abstract AbstractVehicle createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy);
