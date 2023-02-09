@@ -28,6 +28,7 @@ public class AdvanceChallenge {
 
     }
     public static void main(String... args) {
+        Locale.setDefault(Locale.US);
         ServiceLocator.getInstance().commandLineInterfaceSupplier.get().run();
     }
     @Getter

@@ -52,8 +52,8 @@ class AdvanceChallengeTest {
             Assertions.assertEquals(System.out, AdvanceChallenge.ServiceLocator.getInstance().getPrintStreamSupplier().get());
             AdvanceChallenge.ServiceLocator.getInstance().setPrintStreamSupplier(() -> printStream);
             AdvanceChallenge.main();
-            String actualOutput = outputStream.toString();
-            String expectedOutput = inputStreamToText(getResourceAsInputStream("expectedOutput.txt"));
+            String actualOutput = outputStream.toString().replaceAll("\\r\\n?","\n");
+            String expectedOutput = inputStreamToText(getResourceAsInputStream("expectedOutput.txt")).replaceAll("\\r\\n?","\n");
             Assertions.assertEquals(expectedOutput, actualOutput);
         }
         catch (Exception e)
