@@ -1,5 +1,38 @@
 # Advanced Java Challenge
 
+## Usage
+
+Docker and docker-compose are required to run the app.
+
+### Build
+
+to build the containers run the following:
+```
+docker-compose build
+```
+
+### Test
+to run the test run the following:
+```
+docker-compose run sdk mvn clean test
+```
+
+### Run the app
+
+to run the app run the following
+
+(linux / mac)
+```
+API_KEY=<your-api-key> docker-compose run trip-planner
+```
+(powershell)
+```
+$env:API_KEY="<your-api-key>"
+docker-compose run trip-planner
+```
+you can find instructions on how to get an API Key on  https://openrouteservice.org/
+
+---
 Extend the complete BASIC challenge with the following features:
 
 - The trip can have multiple Stages and each one must be done using a specific Vehicle. The user must specify the starting and the destination city for each Stage (assuming the destination of one stage is the starting point of the next one) and,
