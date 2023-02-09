@@ -5,10 +5,10 @@ services:
       context: trip-planner
       target: runtime
     environment:
-      - "GEOCODING_SERVICE_BASE_URI=http://wiremock:8080/geocode-service"
-      - "DIRECTIONS_SERVICE_BASE_URI=http://wiremock:8080/directions-service"
+      - "GEOCODING_SERVICE_BASE_URI=https://api.openrouteservice.org"
+      - "DIRECTIONS_SERVICE_BASE_URI=https://api.openrouteservice.org/v2"
       - "WEATHER_SERVICE_BASE_URI=http://wiremock:8080/weather-service"
-      - "API_KEY=12345678"
+      - "API_KEY=5b3ce3597851110001cf624863425fb2752b4306ba1b2e269f23ed15"
 
   sdk:
     build:

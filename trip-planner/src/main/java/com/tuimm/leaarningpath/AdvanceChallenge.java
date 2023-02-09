@@ -32,7 +32,7 @@ public class AdvanceChallenge {
     HttpClient httpClient = HttpClient.newBuilder().build();
     String weatherServiceBaseUri = Optional.ofNullable(System.getenv("WEATHER_SERVICE_BASE_URI"))
             .orElse("http://localhost:8080/weather-service");
-    String destinationsServiceBaseUri = Optional.ofNullable(System.getenv("DESTINATION_SERVICE_BASE_URI"))
+    String destinationsServiceBaseUri = Optional.ofNullable(System.getenv("DIRECTIONS_SERVICE_BASE_URI"))
             .orElse("http://localhost:8080/directions-service");
     String geocodingServiceBaseUri = Optional.ofNullable(System.getenv("GEOCODING_SERVICE_BASE_URI"))
             .orElse("http://localhost:8080/geocode-service");
