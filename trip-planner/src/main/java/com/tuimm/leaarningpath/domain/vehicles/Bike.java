@@ -2,7 +2,7 @@ package com.tuimm.leaarningpath.domain.vehicles;
 
 import java.util.UUID;
 
-public class Bike extends AbstractVehicle {
+public class Bike extends Vehicle {
     public Bike(UUID id,
                 String model,
                 int maxPeople,

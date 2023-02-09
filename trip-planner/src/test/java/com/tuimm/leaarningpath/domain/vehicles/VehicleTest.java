@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-abstract class AbstractVehicleTest {
+abstract class VehicleTest {
     @Test
     void getters_shouldReturnExpectedValues() {
         UUID expectedId = UUID.randomUUID();
@@ -15,7 +15,7 @@ abstract class AbstractVehicleTest {
         double expectedAverageSpeed = 2;
         double expectedAutonomy = 4;
 
-        AbstractVehicle vehicle = createVehicle(expectedId, expectedModel, expectedMaxPeople, expectedDailyRentPrice, expectedAverageSpeed, expectedAutonomy);
+        Vehicle vehicle = createVehicle(expectedId, expectedModel, expectedMaxPeople, expectedDailyRentPrice, expectedAverageSpeed, expectedAutonomy);
 
         Assertions.assertEquals(expectedId, vehicle.getId());
         Assertions.assertEquals(expectedModel, vehicle.getModel());
@@ -38,7 +38,7 @@ abstract class AbstractVehicleTest {
         double expectedAverageSpeed = 2;
         double expectedAutonomy = 4;
 
-        AbstractVehicle vehicle = createVehicle(expectedId, expectedModel, expectedMaxPeople, expectedDailyRentPrice, expectedAverageSpeed, expectedAutonomy);
+        Vehicle vehicle = createVehicle(expectedId, expectedModel, expectedMaxPeople, expectedDailyRentPrice, expectedAverageSpeed, expectedAutonomy);
         String expectedString = getExpectedToString(vehicle);
         Assertions.assertEquals(expectedString, vehicle.toString());
     }
@@ -118,7 +118,7 @@ abstract class AbstractVehicleTest {
         double averageSpeed = 10;
         int numberOfPeople = 2;
         double expectedReducedAverageSpeed = averageSpeed * (1 - getExpectedAverageSpeedReductionFactor() * (numberOfPeople - 1));
-        AbstractVehicle vehicle = createVehicle(UUID.randomUUID(), "model", 2, 0, averageSpeed, 11);
+        Vehicle vehicle = createVehicle(UUID.randomUUID(), "model", 2, 0, averageSpeed, 11);
 
         Assertions.assertEquals(expectedReducedAverageSpeed, vehicle.computeAverageSpeedForPassengersAmount(numberOfPeople));
     }
@@ -139,7 +139,7 @@ abstract class AbstractVehicleTest {
                 actualException.getMessage());
     }
     
-    protected String getExpectedToString(AbstractVehicle vehicle) {
+    protected String getExpectedToString(Vehicle vehicle) {
         return String.format("%s:%s", vehicle.getClass().getSimpleName(), System.lineSeparator()) +
                 String.format("  id: %s%s", vehicle.getId(), System.lineSeparator()) +
                 String.format("  model: %s%s", vehicle.getModel(), System.lineSeparator()) +
@@ -150,7 +150,7 @@ abstract class AbstractVehicleTest {
                 String.format("  stopTimeInSeconds: %d", vehicle.getStopTimeInSeconds());
     }
 
-    protected abstract AbstractVehicle createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy);
+    protected abstract Vehicle createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy);
 
     protected abstract double getExpectedAverageSpeedReductionFactor();
 

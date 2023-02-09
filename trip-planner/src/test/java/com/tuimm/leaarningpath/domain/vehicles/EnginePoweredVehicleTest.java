@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-abstract class EnginePoweredVehicleTest extends AbstractVehicleTest {
+abstract class EnginePoweredVehicleTest extends VehicleTest {
     @Test
     void enginePoweredVehicleGetters_shouldReturnExpectedValues() {
         Plate expectedPlate = getExpectedPlate();
@@ -154,7 +154,7 @@ abstract class EnginePoweredVehicleTest extends AbstractVehicleTest {
     }
 
     @Override
-    protected String getExpectedToString(AbstractVehicle vehicle) {
+    protected String getExpectedToString(Vehicle vehicle) {
         EnginePoweredVehicle enginePoweredVehicle = (EnginePoweredVehicle) vehicle;
         return super.getExpectedToString(enginePoweredVehicle) +
                 System.lineSeparator() +

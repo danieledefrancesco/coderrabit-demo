@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-class BikeTest extends AbstractVehicleTest {
+class BikeTest extends VehicleTest {
 
     @Test
     void getEmissions_shouldReturnZero() {

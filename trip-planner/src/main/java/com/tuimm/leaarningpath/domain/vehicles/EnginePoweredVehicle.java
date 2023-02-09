@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public abstract class EnginePoweredVehicle extends AbstractVehicle {
+public abstract class EnginePoweredVehicle extends Vehicle {
     private final int stopTimeInSeconds;
     private final Plate plate;
     private final FuelType fuelType;
