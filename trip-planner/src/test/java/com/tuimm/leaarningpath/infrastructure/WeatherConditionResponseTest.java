@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 class WeatherConditionResponseTest {
     @Test
     void weatherCondition_shouldBeDeserializedCorrectly() throws Exception {
-        String weatherCondition = "sunny";
-        String json = String.format("{ \"weather_condition\": \"%s\" }", weatherCondition);
+        String weatherCondition = "Sunny";
+        String json = String.format("{ \"condition\": \"%s\" }", weatherCondition);
         ObjectMapper mapper = new ObjectMapper();
         WeatherConditionResponse weatherConditionResponse = mapper.readValue(json, WeatherConditionResponse.class);
-        Assertions.assertEquals(weatherCondition, weatherConditionResponse.getWeatherCondition());
+        Assertions.assertEquals(weatherCondition, weatherConditionResponse.getCondition());
     }
 }

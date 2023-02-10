@@ -60,9 +60,7 @@ public class TripPlansServiceImpl implements TripPlansService {
                                             TripDefinition tripDefinition) {
         Place from = placesService.fromName(stageDefinition.getFrom());
         Place to = placesService.fromName(stageDefinition.getTo());
-        WeatherCondition weatherCondition = weatherConditionsService.getWeatherCondition(
-                to.getGeoCoordinate().getLatitude(),
-                to.getGeoCoordinate().getLongitude());
+        WeatherCondition weatherCondition = weatherConditionsService.getWeatherCondition();
 
         return vehicles.stream()
                 .map(vehicle -> createStagePlan(start, vehicle, from, to, weatherCondition, tripDefinition.getNumberOfPeople()))

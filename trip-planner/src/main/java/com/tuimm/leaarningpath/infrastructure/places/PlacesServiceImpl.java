@@ -24,6 +24,6 @@ public class PlacesServiceImpl implements PlacesService {
         SearchResponse searchResponse = HttpClientUtils.executeGet(httpClient, uri, SearchResponse.class);
 
         List<Double> coordinates = searchResponse.getFeatures().get(0).getGeometry().getCoordinates();
-        return Place.create(name, GeoCoordinate.of(coordinates.get(0), coordinates.get(1)));
+        return Place.create(name, GeoCoordinate.of(coordinates.get(1), coordinates.get(0)));
     }
 }

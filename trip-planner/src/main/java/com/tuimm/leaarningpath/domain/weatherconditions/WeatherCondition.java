@@ -31,6 +31,11 @@ public enum WeatherCondition {
         public boolean requiresCoverage() {
             return false;
         }
+    }, WINDY {
+        @Override
+        public boolean requiresCoverage() {
+            return false;
+        }
     };
     public abstract boolean requiresCoverage();
 }

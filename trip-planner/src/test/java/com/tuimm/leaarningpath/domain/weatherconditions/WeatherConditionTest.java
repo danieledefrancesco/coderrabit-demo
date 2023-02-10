@@ -13,5 +13,6 @@ class WeatherConditionTest {
         Assertions.assertFalse(WeatherCondition.CLOUDY.requiresCoverage());
         Assertions.assertFalse(WeatherCondition.PARTLY_CLOUDY.requiresCoverage());
         Assertions.assertFalse(WeatherCondition.SUNNY.requiresCoverage());
+        Assertions.assertFalse(WeatherCondition.WINDY.requiresCoverage());
     }
 }

@@ -2,11 +2,11 @@
   "priority": 10,
   "request": {
     "method": "GET",
-    "urlPattern": "/weather-service/weather?.*"
+    "urlPattern": "/weather-service/random"
   },
   "response": {
     "status": 200,
-    "body": "{\"weather_condition\": \"RAINY\"}",
+    "body": "{\"condition\": \"Partly sunny\"}",
     "headers": {
       "Content-Type": "application/json"
     }

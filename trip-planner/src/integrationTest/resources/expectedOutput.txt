@@ -82,19 +82,19 @@ The following vehicles are present in the garage:
   autonomy: 150.000000 km
   stopTimeInSeconds: 28800]
 Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:TripPlan:
- duration: 26989238 s
- arrivalDateTime: 2023-11-09 06:00:38
- totalPrice: 54211.587500 EUR
- totalEmissions: 34604360.000000 CO2
+ duration: 26618 s
+ arrivalDateTime: 2023-01-01 04:23:38
+ totalPrice: 32.441588 EUR
+ totalEmissions: 34604.360000 CO2
  stages: [StagePlan:
  from: Rome
  to: Milan
- distance: 588517.100000 km
- duration: 18360218 s
- arrivalDateTime: 2023-08-01 09:03:38
- totalPrice: 36909.391250 EUR
- totalEmissions: 23540684.000000 CO2
- destinationWeatherCondition: CLOUDY
+ distance: 588.517100 km
+ duration: 18108 s
+ arrivalDateTime: 2023-01-01 02:01:48
+ totalPrice: 22.069391 EUR
+ totalEmissions: 23540.684000 CO2
+ destinationWeatherCondition: PARTLY_SUNNY
  warnForWeatherCondition: false
  vehicle: Car:
   id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
@@ -110,12 +110,12 @@ Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:Insert stage (<from
   emissions: 40.000000 CO2/km, StagePlan:
  from: Milan
  to: Zurich
- distance: 276591.900000 km
- duration: 8629020 s
- arrivalDateTime: 2023-11-09 06:00:38
- totalPrice: 17302.196250 EUR
- totalEmissions: 11063676.000000 CO2
- destinationWeatherCondition: PARTLY_CLOUDY
+ distance: 276.591900 km
+ duration: 8510 s
+ arrivalDateTime: 2023-01-01 04:23:38
+ totalPrice: 10.372196 EUR
+ totalEmissions: 11063.676000 CO2
+ destinationWeatherCondition: PARTLY_SUNNY
  warnForWeatherCondition: false
  vehicle: Car:
   id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
@@ -130,19 +130,19 @@ Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:Insert stage (<from
   fuelConsumption: 20.000000 km/l
   emissions: 40.000000 CO2/km]
 Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:TripPlan:
- duration: 104766468 s
- arrivalDateTime: 2026-04-27 10:47:48
- totalPrice: 66069.391250 EUR
- totalEmissions: 23540684.000000 CO2
+ duration: 99848 s
+ arrivalDateTime: 2023-01-02 12:44:08
+ totalPrice: 22.069391 EUR
+ totalEmissions: 23540.684000 CO2
  stages: [StagePlan:
  from: Rome
  to: Milan
- distance: 588517.100000 km
- duration: 16549396 s
- arrivalDateTime: 2023-07-11 10:03:16
- totalPrice: 35439.391250 EUR
- totalEmissions: 23540684.000000 CO2
- destinationWeatherCondition: CLOUDY
+ distance: 588.517100 km
+ duration: 16297 s
+ arrivalDateTime: 2023-01-01 01:31:37
+ totalPrice: 22.069391 EUR
+ totalEmissions: 23540.684000 CO2
+ destinationWeatherCondition: PARTLY_SUNNY
  warnForWeatherCondition: false
  vehicle: Car:
   id: d0e82fb9-c4e5-4d20-9522-b09e8a857b02
@@ -158,12 +158,12 @@ Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:Insert stage (<from
   emissions: 40.000000 CO2/km, StagePlan:
  from: Milan
  to: Zurich
- distance: 324393.400000 km
- duration: 88217072 s
- arrivalDateTime: 2026-04-27 10:47:48
- totalPrice: 30630.000000 EUR
+ distance: 324.393400 km
+ duration: 83551 s
+ arrivalDateTime: 2023-01-02 12:44:08
+ totalPrice: 0.000000 EUR
  totalEmissions: 0.000000 CO2
- destinationWeatherCondition: PARTLY_CLOUDY
+ destinationWeatherCondition: PARTLY_SUNNY
  warnForWeatherCondition: false
  vehicle: Bike:
   id: d0e82fb9-c4e5-4d20-9522-b09e8a857b01

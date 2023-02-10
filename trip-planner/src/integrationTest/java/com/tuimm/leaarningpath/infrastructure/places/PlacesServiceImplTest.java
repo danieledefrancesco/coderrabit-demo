@@ -25,9 +25,8 @@ class PlacesServiceImplTest {
     }
 
     @Test
-    void fromName_shouldReturnExpectedPlace()
-    {
-        Place expectedPlace = Place.create("Rome", GeoCoordinate.of(12.52809, 41.878243));
+    void fromName_shouldReturnExpectedPlace() {
+        Place expectedPlace = Place.create("Rome", GeoCoordinate.of(41.878243, 12.52809));
         Place actualPlace = placesService.fromName("Rome");
         Assertions.assertEquals(expectedPlace, actualPlace);
     }

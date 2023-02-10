@@ -29,9 +29,9 @@ class RoutesServiceImplTest {
     @Test
     void getRouteFromRomeToMilanByCar_shouldReturnExpectedRoute() {
         assertsExpectedResponseMatchesActualResponse(Route.builder()
-                .from(Place.create("Rome", GeoCoordinate.of(12.52809,41.878243)))
-                .to(Place.create("Milan", GeoCoordinate.of(9.170685,45.473702)))
-                .distanceInKilometers(588517.1)
+                .from(Place.create("Rome", GeoCoordinate.of(41.878243, 12.52809)))
+                .to(Place.create("Milan", GeoCoordinate.of(45.473702, 9.170685)))
+                .distanceInKilometers(588.5171)
                 .drivingProfile(DrivingProfile.CAR_PROFILE)
                 .build());
     }
@@ -39,9 +39,9 @@ class RoutesServiceImplTest {
     @Test
     void getRouteFromRomeToMilanByBike_shouldReturnExpectedRoute() {
         assertsExpectedResponseMatchesActualResponse(Route.builder()
-                .from(Place.create("Rome", GeoCoordinate.of(12.52809,41.878243)))
-                .to(Place.create("Milan", GeoCoordinate.of(9.170685,45.473702)))
-                .distanceInKilometers(754499.7)
+                .from(Place.create("Rome", GeoCoordinate.of(41.878243, 12.52809)))
+                .to(Place.create("Milan", GeoCoordinate.of(45.473702, 9.170685)))
+                .distanceInKilometers(754.4997)
                 .drivingProfile(DrivingProfile.BIKE_PROFILE)
                 .build());
     }
@@ -49,15 +49,14 @@ class RoutesServiceImplTest {
     @Test
     void getRouteFromRomeToMilanByPullman_shouldReturnExpectedRoute() {
         assertsExpectedResponseMatchesActualResponse(Route.builder()
-                .from(Place.create("Rome", GeoCoordinate.of(12.52809,41.878243)))
-                .to(Place.create("Milan", GeoCoordinate.of(9.170685,45.473702)))
-                .distanceInKilometers(582950.2)
+                .from(Place.create("Rome", GeoCoordinate.of(41.878243, 12.52809)))
+                .to(Place.create("Milan", GeoCoordinate.of(45.473702, 9.170685)))
+                .distanceInKilometers(582.9502)
                 .drivingProfile(DrivingProfile.HGV_PROFILE)
                 .build());
     }
 
-    private void assertsExpectedResponseMatchesActualResponse(Route expectedRoute)
-    {
+    private void assertsExpectedResponseMatchesActualResponse(Route expectedRoute) {
         Route actualRoute = routesService.getRoute(
                 expectedRoute.getFrom(),
                 expectedRoute.getTo(),

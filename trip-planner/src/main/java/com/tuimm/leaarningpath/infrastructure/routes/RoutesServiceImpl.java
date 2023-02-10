@@ -34,7 +34,7 @@ public class RoutesServiceImpl implements RoutesService {
                 .from(from)
                 .to(to)
                 .drivingProfile(drivingProfile)
-                .distanceInKilometers(segmentResponse.getDistance())
+                .distanceInKilometers(segmentResponse.getDistance() / 1000)
                 .build();
     }
 
@@ -44,10 +44,10 @@ public class RoutesServiceImpl implements RoutesService {
                     baseUri,
                     profile,
                     apiKey,
-                    from.getGeoCoordinate().getLatitude(),
                     from.getGeoCoordinate().getLongitude(),
-                    to.getGeoCoordinate().getLatitude(),
-                    to.getGeoCoordinate().getLongitude()).toString());
+                    from.getGeoCoordinate().getLatitude(),
+                    to.getGeoCoordinate().getLongitude(),
+                    to.getGeoCoordinate().getLatitude()).toString());
         }
     }
 

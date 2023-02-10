@@ -101,10 +101,8 @@ class TripPlansServiceImplTest {
         when(routesService.getRoute(MILAN, ZURICH, MILAN_TO_ZURICH.getDrivingProfile()))
                 .thenReturn(MILAN_TO_ZURICH);
 
-        when(weatherConditionsService.getWeatherCondition(MILAN.getGeoCoordinate().getLatitude(), MILAN.getGeoCoordinate().getLongitude()))
-                .thenReturn(WeatherCondition.CLOUDY);
-        when(weatherConditionsService.getWeatherCondition(ZURICH.getGeoCoordinate().getLatitude(), ZURICH.getGeoCoordinate().getLongitude()))
-                .thenReturn(WeatherCondition.PARTLY_CLOUDY);
+        when(weatherConditionsService.getWeatherCondition())
+                .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
 
         when(builder.startDateTime(tripStart)).thenReturn(builder);
         when(builder.startDateTime(secondStageStart)).thenReturn(builder);
@@ -134,14 +132,8 @@ class TripPlansServiceImplTest {
         verify(routesService, times(1))
                 .getRoute(MILAN, ZURICH, MILAN_TO_ZURICH.getDrivingProfile());
 
-        verify(weatherConditionsService, times(1))
-                .getWeatherCondition(
-                        MILAN.getGeoCoordinate().getLatitude(),
-                        MILAN.getGeoCoordinate().getLongitude());
-        verify(weatherConditionsService, times(1))
-                .getWeatherCondition(
-                        ZURICH.getGeoCoordinate().getLatitude(),
-                        ZURICH.getGeoCoordinate().getLongitude());
+        verify(weatherConditionsService, times(2))
+                .getWeatherCondition();
 
         verify(builder, times(1)).startDateTime(tripStart);
         verify(builder, times(1)).startDateTime(secondStageStart);

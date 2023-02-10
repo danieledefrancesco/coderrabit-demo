@@ -7,22 +7,17 @@ import lombok.RequiredArgsConstructor;
 
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.util.Formatter;
-import java.util.Locale;
+
 @RequiredArgsConstructor
 public class WeatherConditionServiceImpl implements WeatherConditionsService {
     private final HttpClient httpClient;
     private final String baseUri;
 
     @Override
-    public WeatherCondition getWeatherCondition(double latitude, double longitude) {
-        try (Formatter formatter = new Formatter(Locale.US)) {
-            URI uri = URI.create(formatter.format("%s/weather?lat=%f&lon=%f",
-                    baseUri,
-                    latitude,
-                    longitude).toString());
-            WeatherConditionResponse weatherConditionResponse = HttpClientUtils.executeGet(httpClient, uri, WeatherConditionResponse.class);
-            return WeatherCondition.valueOf(weatherConditionResponse.getWeatherCondition());
-        }
+    public WeatherCondition getWeatherCondition() {
+        URI uri = URI.create(String.format("%s/random", baseUri));
+        WeatherConditionResponse weatherConditionResponse = HttpClientUtils.executeGet(httpClient, uri, WeatherConditionResponse.class);
+        String condition = weatherConditionResponse.getCondition().toUpperCase().replace(" ", "_");
+        return WeatherCondition.valueOf(condition);
     }
 }

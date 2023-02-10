@@ -20,6 +20,6 @@ class WeatherConditionServiceImplTest {
     @Test
     void getWeather_shouldReturnExpectedValue_whenTheServiceReturns200() {
         Assertions.assertEquals(WeatherCondition.PARTLY_SUNNY,
-                weatherConditionService.getWeatherCondition(10,10));
+                weatherConditionService.getWeatherCondition());
     }
 }
