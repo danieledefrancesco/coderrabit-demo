@@ -187,4 +187,14 @@ Error while creating the bike: maxPeople must be greater than 0
 Error while creating the car: the value is not valid
 Error while creating the pullman: the value is not valid
 Error while creating the scooter: the value is not valid
+Insert stage (<from> <to> <CHEAPEST|FASTEST|LEAST_POLLUTING>:An exception occurred: java.lang.NullPointerException
+The valid commands are the following:
+set-fuel-cost <PETROL|DIESEL|LPG> <cost>
+create-bike <model> <max_people> <daily_rent_price> <average_speed> <autonomy>
+create-car <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+create-pullman <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+create-scooter <model> <max_people> <daily_rent_price> <average_speed> <autonomy> <stop_time_in_seconds> <plate> <PETROL|DIESEL|LPG> <emissions> <fuel_consumption>
+show-garage
+plan-trip <start-date-time|yyyy-MM-ddThh:mm:ss> <numberOfPeople> <numberOfStages>
+exit
 exiting

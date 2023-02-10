@@ -22,7 +22,16 @@ public class CommandLineInterface {
     public void run() {
         showExamples();
         Scanner scanner = new Scanner(inputStream);
-        while (processNextLine(scanner)) ;
+        boolean exit = false;
+        while (!exit) {
+            try {
+                exit = !processNextLine(scanner);
+            }
+            catch (Exception e) {
+                outputStream.printf("An exception occurred: %s%n", e.getClass().getName());
+                showExamples();
+            }
+        }
     }
 
     private boolean processNextLine(Scanner scanner) {
