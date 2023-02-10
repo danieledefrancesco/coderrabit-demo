@@ -16,6 +16,7 @@ to run the test run the following:
 ```
 docker-compose run sdk mvn clean test
 ```
+you can visualize the coverage report at `trip-planner/target/site/jacoco/index.html`
 
 ### Run the app
 
