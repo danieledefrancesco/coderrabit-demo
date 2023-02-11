@@ -1,7 +1,6 @@
 package com.tuimm.learningpath.api.vehicles;
 
 import com.tuimm.learningpath.contracts.vehicles.CreateBikeRequest;
-import com.tuimm.learningpath.contracts.vehicles.CreateVehicleResponse;
 import com.tuimm.learningpath.contracts.vehicles.GetVehiclesResponse;
 import com.tuimm.learningpath.contracts.vehicles.VehicleResponse;
 import com.tuimm.learningpath.domain.vehicles.Vehicle;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
 
 import java.util.Collection;
 
@@ -33,17 +34,24 @@ public class VehicleController {
                 .stream()
                 .map(vehiclesMapper::mapVehicle)
                 .toList();
-        return new ResponseEntity<>(new GetVehiclesResponse(vehicleResponses), HttpStatus.OK);
+        GetVehiclesResponse response = new GetVehiclesResponse();
+        response.setVehicles(vehicleResponses);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/bikes")
-    public ResponseEntity<CreateVehicleResponse> createBike(@RequestBody CreateBikeRequest request) {
+    public ResponseEntity<Object> createBike(@RequestBody CreateBikeRequest request) {
         Vehicle vehicle = vehiclesService.addBike(request.getModel(),
                 request.getMaxPeople(),
                 request.getDailyRentPrice(),
                 request.getAverageSpeed(),
                 request.getAutonomy());
-        return new ResponseEntity<>(new CreateVehicleResponse(vehicle.getId()), HttpStatus.OK);
+        UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/../{id}")
+                .buildAndExpand(vehicle.getId())
+                .normalize();
+        return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
     }
 
 

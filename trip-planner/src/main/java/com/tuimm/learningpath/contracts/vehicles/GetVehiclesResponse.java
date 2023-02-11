@@ -2,13 +2,13 @@ package com.tuimm.learningpath.contracts.vehicles;
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.Collection;
 
-@RequiredArgsConstructor
 @Getter
+@Setter
 public class GetVehiclesResponse {
     @NonNull
-    private final Collection<VehicleResponse> vehicles;
+    private Collection<VehicleResponse> vehicles;
 }

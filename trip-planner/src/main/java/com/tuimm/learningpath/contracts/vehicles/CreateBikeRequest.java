@@ -2,17 +2,17 @@ package com.tuimm.learningpath.contracts.vehicles;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
 public class CreateBikeRequest {
-    private final String model;
+    private String model;
     @JsonProperty("max_people")
-    private final int maxPeople;
+    private int maxPeople;
     @JsonProperty("daily_rent_price")
-    private final double dailyRentPrice;
-    private final double autonomy;
+    private double dailyRentPrice;
+    private double autonomy;
     @JsonProperty("average_speed")
-    private final double averageSpeed;
+    private double averageSpeed;
 }

@@ -2,13 +2,13 @@ package com.tuimm.learningpath.contracts.vehicles;
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Getter
+@Setter
 public class CreateVehicleResponse {
     @NonNull
-    private final UUID id;
+    private UUID id;
 }
