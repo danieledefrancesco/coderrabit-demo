@@ -19,6 +19,7 @@ public abstract class VehicleResponse {
     private double dailyRentPrice;
     @JsonProperty("stop_time_in_seconds")
     private int stopTimeInSeconds;
+    private double autonomy;
     public abstract String getType();
 
 }
