@@ -1,22 +1,15 @@
 package com.tuimm.learningpath.infrastructure.weatherconditions;
 
 import com.tuimm.learningpath.domain.weatherconditions.WeatherCondition;
+import com.tuimm.learningpath.infrastructure.IntegrationTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.net.http.HttpClient;
-import java.util.Optional;
 
-class WeatherConditionServiceImplTest {
-    private final String baseUri = Optional.ofNullable(System.getenv("WEATHER_SERVICE_BASE_URI"))
-            .orElse("http://localhost:8080/weather-service");
+class WeatherConditionServiceImplTest extends IntegrationTest {
+    @Autowired
     private WeatherConditionServiceImpl weatherConditionService;
-
-    @BeforeEach
-    void setUp() {
-        weatherConditionService = new WeatherConditionServiceImpl(HttpClient.newBuilder().build(), baseUri);
-    }
     @Test
     void getWeather_shouldReturnExpectedValue_whenTheServiceReturns200() {
         Assertions.assertEquals(WeatherCondition.PARTLY_SUNNY,

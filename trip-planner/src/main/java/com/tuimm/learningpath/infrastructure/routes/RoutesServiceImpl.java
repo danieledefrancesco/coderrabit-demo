@@ -5,18 +5,27 @@ import com.tuimm.learningpath.domain.routes.Route;
 import com.tuimm.learningpath.domain.routes.RoutesService;
 import com.tuimm.learningpath.domain.vehicles.DrivingProfile;
 import com.tuimm.learningpath.infrastructure.HttpClientUtils;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.util.Formatter;
 import java.util.Locale;
 
-@RequiredArgsConstructor
+@Component
 public class RoutesServiceImpl implements RoutesService {
     private final HttpClient httpClient;
     private final String baseUri;
     private final String apiKey;
+
+    public RoutesServiceImpl(HttpClient httpClient,
+                             @Value("${routesService.baseUri}") String baseUri,
+                             @Value("${routesService.apiKey}") String apiKey) {
+        this.httpClient = httpClient;
+        this.baseUri = baseUri;
+        this.apiKey = apiKey;
+    }
 
     @Override
     public Route getRoute(Place from, Place to, DrivingProfile drivingProfile) {

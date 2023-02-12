@@ -4,16 +4,25 @@ import com.tuimm.learningpath.domain.places.GeoCoordinate;
 import com.tuimm.learningpath.domain.places.Place;
 import com.tuimm.learningpath.domain.places.PlacesService;
 import com.tuimm.learningpath.infrastructure.HttpClientUtils;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.util.List;
-@RequiredArgsConstructor
+@Component
 public class PlacesServiceImpl implements PlacesService {
     private final HttpClient httpClient;
     private final String baseUri;
     private final String apiKey;
+
+    public PlacesServiceImpl(HttpClient httpClient,
+                             @Value("${placesService.baseUri}") String baseUri,
+                             @Value("${placesService.apiKey}") String apiKey) {
+        this.httpClient = httpClient;
+        this.baseUri = baseUri;
+        this.apiKey = apiKey;
+    }
 
     @Override
     public Place fromName(String name) {

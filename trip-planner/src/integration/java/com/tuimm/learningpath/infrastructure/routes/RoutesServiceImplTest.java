@@ -4,27 +4,14 @@ import com.tuimm.learningpath.domain.places.GeoCoordinate;
 import com.tuimm.learningpath.domain.places.Place;
 import com.tuimm.learningpath.domain.routes.Route;
 import com.tuimm.learningpath.domain.vehicles.DrivingProfile;
+import com.tuimm.learningpath.infrastructure.IntegrationTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.net.http.HttpClient;
-import java.util.Optional;
-
-class RoutesServiceImplTest {
-    private final String baseUri = Optional.ofNullable(System.getenv("DIRECTIONS_SERVICE_BASE_URI"))
-            .orElse("http://localhost:8080/directions-service");
-    private final String apiKey = Optional.ofNullable(System.getenv("API_KEY"))
-            .orElse("12345678");
+class RoutesServiceImplTest extends IntegrationTest {
+    @Autowired
     private RoutesServiceImpl routesService;
-
-    @BeforeEach
-    void setUp() {
-        routesService = new RoutesServiceImpl(
-                HttpClient.newBuilder().build(),
-                baseUri,
-                apiKey);
-    }
 
     @Test
     void getRouteFromRomeToMilanByCar_shouldReturnExpectedRoute() {

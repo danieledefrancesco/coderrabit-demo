@@ -2,28 +2,14 @@ package com.tuimm.learningpath.infrastructure.places;
 
 import com.tuimm.learningpath.domain.places.GeoCoordinate;
 import com.tuimm.learningpath.domain.places.Place;
+import com.tuimm.learningpath.infrastructure.IntegrationTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.net.http.HttpClient;
-import java.util.Optional;
-
-class PlacesServiceImplTest {
-    private final String baseUri = Optional.ofNullable(System.getenv("GEOCODING_SERVICE_BASE_URI"))
-            .orElse("http://localhost:8080/geocode-service");
-    private final String apiKey = Optional.ofNullable(System.getenv("API_KEY"))
-            .orElse("12345678");
+class PlacesServiceImplTest extends IntegrationTest {
+    @Autowired
     private PlacesServiceImpl placesService;
-
-    @BeforeEach
-    void setUp() {
-        placesService = new PlacesServiceImpl(
-                HttpClient.newBuilder().build(),
-                baseUri,
-                apiKey);
-    }
-
     @Test
     void fromName_shouldReturnExpectedPlace() {
         Place expectedPlace = Place.create("Rome", GeoCoordinate.of(41.878243, 12.52809));

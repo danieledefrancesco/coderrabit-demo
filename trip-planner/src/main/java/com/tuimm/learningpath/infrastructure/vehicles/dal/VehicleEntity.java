@@ -1,6 +1,5 @@
 package com.tuimm.learningpath.infrastructure.vehicles.dal;
 
-import com.tuimm.learningpath.domain.vehicles.FuelType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -21,7 +20,7 @@ public class VehicleEntity {
     private double autonomy;
     private int stopTimeInSeconds;
     private String plate;
-    private FuelType fuelType;
+    private String fuelType;
     private double emissions;
     private double fuelConsumption;
     private VehicleType type;
