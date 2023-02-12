@@ -29,6 +29,7 @@ services:
       - "WIREMOCK_BASE_URI=http://wiremock:8080"
       - "API_KEY=12345678"
       - "POSTGRES_CONNECTION_STRING=jdbc:postgresql://postgres:5432/postgres"
+      - "POSTGRES_HOST=postgres"
     depends_on:
       - wiremock
       - postgres
