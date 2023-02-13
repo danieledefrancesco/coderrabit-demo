@@ -1,8 +1,10 @@
 package com.tuimm.learningpath.stepdefinitions.vehicles;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.tuimm.learningpath.contracts.vehicles.CreateBikeRequest;
+import com.tuimm.learningpath.contracts.vehicles.*;
 import com.tuimm.learningpath.domain.vehicles.*;
+import com.tuimm.learningpath.infrastructure.vehicles.dal.VehicleDao;
+import com.tuimm.learningpath.infrastructure.vehicles.dal.VehicleEntity;
 import com.tuimm.learningpath.stepdefinitions.Definition;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -17,6 +19,9 @@ import java.util.stream.StreamSupport;
 public class VehiclesStepsDefinition extends Definition {
     @Autowired
     private Garage garage;
+    @Autowired
+    private VehicleDao dao;
+
     @Given("a create bike request")
     public void aCreateBikeRequest(DataTable table) {
         Map<String, String> tableAsMap = table.asMaps(String.class, String.class).get(0);
@@ -29,6 +34,21 @@ public class VehiclesStepsDefinition extends Definition {
         scenarioContext.getDriver().setRequestBody(createBikeRequest);
     }
 
+    @Given("a create car request")
+    public void aCreateCarRequest(DataTable table) {
+        prepareCreateVehicleRequest(new CreateCarRequest(), table);
+    }
+
+    @Given("a create pullman request")
+    public void aCreatePullmanRequest(DataTable table) {
+        prepareCreateVehicleRequest(new CreatePullmanRequest(), table);
+    }
+
+    @Given("a create scooter request")
+    public void aCreateScooterRequest(DataTable table) {
+        prepareCreateVehicleRequest(new CreateScooterRequest(), table);
+    }
+
     @Then("the response should contain the new vehicle's id in the location header")
     public void theResponseShouldContainerTheNewVehiclesIdLocationHeader() {
         String locationHeader = scenarioContext.getDriver().getLastResponse()
@@ -39,7 +59,17 @@ public class VehiclesStepsDefinition extends Definition {
 
         Assertions.assertEquals(0, locationHeader.indexOf(baseUriAndPath));
         String vehicleIdAsString = locationHeader.substring(baseUriAndPath.length() + 1);
-        Assertions.assertDoesNotThrow(() -> UUID.fromString(vehicleIdAsString));
+        UUID id = Assertions.assertDoesNotThrow(() -> UUID.fromString(vehicleIdAsString));
+        scenarioContext.set(UUID.class, id);
+    }
+
+    @Then("a {word} record should be present in the database with that id")
+    public void aRecordShouldBePresentInTheDatabaseWithThatId(String vehicleType) {
+        UUID id = scenarioContext.get(UUID.class);
+        VehicleEntity entity = dao.findById(id).orElse(null);
+        Assertions.assertNotNull(entity);
+        Assertions.assertEquals(VehicleEntity.VehicleType.valueOf(vehicleType.toUpperCase()),
+                entity.getType());
     }
 
     @Given("the existing bikes")
@@ -83,7 +113,6 @@ public class VehiclesStepsDefinition extends Definition {
                 .map(VehiclesStepsDefinition::mapToScooter)
                 .forEach(garage::addVehicle);
     }
-
 
     private static Bike mapToBike(Map<String, String> map) {
         return new Bike(UUID.fromString(map.get("id")),
@@ -146,5 +175,20 @@ public class VehiclesStepsDefinition extends Definition {
     private static boolean vehicleMatchesRow(Map<String, String> row, JsonNode vehicle) {
         return row.keySet().stream().allMatch(key ->
                 row.get(key).equals(vehicle.get(key).asText()));
+    }
+
+    private void prepareCreateVehicleRequest(CreateEnginePoweredVehicleRequest request, DataTable table) {
+        Map<String, String> tableAsMap = table.asMaps(String.class, String.class).get(0);
+        request.setModel(tableAsMap.get("model"));
+        request.setMaxPeople(Integer.parseInt(tableAsMap.get("maxPeople")));
+        request.setDailyRentPrice(Double.parseDouble(tableAsMap.get("dailyRentPrice")));
+        request.setAutonomy(Double.parseDouble(tableAsMap.get("autonomy")));
+        request.setAverageSpeed(Double.parseDouble(tableAsMap.get("averageSpeed")));
+        request.setStopTimeInSeconds(Integer.parseInt(tableAsMap.get("stopTimeInSeconds")));
+        request.setPlate(tableAsMap.get("plate"));
+        request.setFuelType(FuelType.valueOf(tableAsMap.get("fuelType")));
+        request.setEmissions(Double.parseDouble(tableAsMap.get("emissions")));
+        request.setFuelConsumption(Double.parseDouble(tableAsMap.get("fuelConsumption")));
+        scenarioContext.getDriver().setRequestBody(request);
     }
 }

@@ -1,12 +1,10 @@
 package com.tuimm.learningpath.api.vehicles;
 
-import com.tuimm.learningpath.contracts.vehicles.CreateBikeRequest;
-import com.tuimm.learningpath.contracts.vehicles.GetVehiclesResponse;
-import com.tuimm.learningpath.contracts.vehicles.VehicleResponse;
+import com.tuimm.learningpath.contracts.vehicles.*;
 import com.tuimm.learningpath.domain.vehicles.Vehicle;
 import com.tuimm.learningpath.domain.vehicles.VehiclesService;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,12 +19,19 @@ import java.util.Collection;
 
 @Controller
 @RequestMapping(value = "/vehicles")
-@RequiredArgsConstructor
 public class VehicleController {
-    @NonNull
     private final VehiclesService vehiclesService;
-    @NonNull
     private final VehiclesMapper vehiclesMapper;
+    private final String vehicleCreatedLocationHeaderEndPath;
+
+    public VehicleController(@NonNull VehiclesService vehiclesService,
+                             @NonNull VehiclesMapper vehiclesMapper,
+                             @Value("${vehicleController.vehicleCreatedLocationHeaderEndPath}")
+                             @NonNull String vehicleCreatedLocationHeaderEndPath) {
+        this.vehiclesService = vehiclesService;
+        this.vehiclesMapper = vehiclesMapper;
+        this.vehicleCreatedLocationHeaderEndPath = vehicleCreatedLocationHeaderEndPath;
+    }
 
     @GetMapping
     public ResponseEntity<GetVehiclesResponse> getVehicles() {
@@ -38,7 +43,6 @@ public class VehicleController {
         response.setVehicles(vehicleResponses);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     @PostMapping("/bikes")
     public ResponseEntity<Object> createBike(@RequestBody CreateBikeRequest request) {
         Vehicle vehicle = vehiclesService.addBike(request.getModel(),
@@ -48,13 +52,66 @@ public class VehicleController {
                 request.getAutonomy());
         UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/../{id}")
+                .path(vehicleCreatedLocationHeaderEndPath)
                 .buildAndExpand(vehicle.getId())
                 .normalize();
         return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
     }
-
-
-
-
+    @PostMapping("/cars")
+    public ResponseEntity<Object> createBikeCar(@RequestBody CreateCarRequest request) {
+        Vehicle vehicle = vehiclesService.addCar(request.getModel(),
+                request.getMaxPeople(),
+                request.getDailyRentPrice(),
+                request.getAverageSpeed(),
+                request.getAutonomy(),
+                request.getStopTimeInSeconds(),
+                request.getPlate(),
+                request.getFuelType(),
+                request.getEmissions(),
+                request.getFuelConsumption());
+        UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path(vehicleCreatedLocationHeaderEndPath)
+                .buildAndExpand(vehicle.getId())
+                .normalize();
+        return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
+    }
+    @PostMapping("/pullmans")
+    public ResponseEntity<Object> createPullman(@RequestBody CreatePullmanRequest request) {
+        Vehicle vehicle = vehiclesService.addPullman(request.getModel(),
+                request.getMaxPeople(),
+                request.getDailyRentPrice(),
+                request.getAverageSpeed(),
+                request.getAutonomy(),
+                request.getStopTimeInSeconds(),
+                request.getPlate(),
+                request.getFuelType(),
+                request.getEmissions(),
+                request.getFuelConsumption());
+        UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path(vehicleCreatedLocationHeaderEndPath)
+                .buildAndExpand(vehicle.getId())
+                .normalize();
+        return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
+    }
+    @PostMapping("/scooters")
+    public ResponseEntity<Object> createBikeCar(@RequestBody CreateScooterRequest request) {
+        Vehicle vehicle = vehiclesService.addScooter(request.getModel(),
+                request.getMaxPeople(),
+                request.getDailyRentPrice(),
+                request.getAverageSpeed(),
+                request.getAutonomy(),
+                request.getStopTimeInSeconds(),
+                request.getPlate(),
+                request.getFuelType(),
+                request.getEmissions(),
+                request.getFuelConsumption());
+        UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path(vehicleCreatedLocationHeaderEndPath)
+                .buildAndExpand(vehicle.getId())
+                .normalize();
+        return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
+    }
 }

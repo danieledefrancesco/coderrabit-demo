@@ -7,3 +7,4 @@ Feature: Create a bike
     When making a POST request to the "/vehicles/bikes" endpoint
     Then the status code should be 201
     And the response should contain the new vehicle's id in the location header
+    And a bike record should be present in the database with that id
