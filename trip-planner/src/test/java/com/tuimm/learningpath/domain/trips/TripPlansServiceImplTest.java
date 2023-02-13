@@ -15,10 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -147,8 +144,9 @@ class TripPlansServiceImplTest {
     }
     @Test
     void planTrip_shouldThrowIllegalOperationException_whenNoSuitableVehicleIsAvailable() {
+        StageDefinition stageDefinition = mock(StageDefinition.class);
         TripDefinition tripDefinition = TripDefinition.create(LocalDateTime.of(2023, 1, 1, 9, 0, 0),
-                new LinkedList<>(),
+                Collections.singletonList(stageDefinition),
                 2);
         when(garage.getSuitableVehicles(2)).thenReturn(new LinkedList<>());
         Exception actualException = Assertions.assertThrows(UnsupportedOperationException.class,
