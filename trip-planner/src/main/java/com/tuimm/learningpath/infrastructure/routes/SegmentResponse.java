@@ -1,10 +1,12 @@
 package com.tuimm.learningpath.infrastructure.routes;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@Builder
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SegmentResponse {
-    private final double distance;
+    private double distance;
 }

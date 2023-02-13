@@ -1,14 +1,14 @@
 package com.tuimm.learningpath.infrastructure.places;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Builder
+@Setter
 @Getter
-@JsonDeserialize(using = SearchResponseDeserializer.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchResponse {
     private List<FeatureResponse> features;
 }

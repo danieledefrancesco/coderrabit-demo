@@ -1,14 +1,14 @@
 package com.tuimm.learningpath.infrastructure.routes;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@Builder
-@JsonDeserialize(using = DirectionsResponseDeserializer.class)
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DirectionsResponse {
-    private final List<FeatureResponse> features;
+    private List<FeatureResponse> features;
 }

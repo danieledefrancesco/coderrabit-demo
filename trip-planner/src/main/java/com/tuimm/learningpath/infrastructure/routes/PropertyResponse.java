@@ -1,12 +1,14 @@
 package com.tuimm.learningpath.infrastructure.routes;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@Builder
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PropertyResponse {
-    private final List<SegmentResponse> segments;
+    private List<SegmentResponse> segments;
 }
