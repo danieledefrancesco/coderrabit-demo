@@ -3,6 +3,7 @@ package com.tuimm.learningpath.api.vehicles;
 import com.tuimm.learningpath.contracts.vehicles.*;
 import com.tuimm.learningpath.domain.vehicles.Vehicle;
 import com.tuimm.learningpath.domain.vehicles.VehiclesService;
+import jakarta.validation.Valid;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class VehicleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/bikes")
-    public ResponseEntity<Object> createBike(@RequestBody CreateBikeRequest request) {
+    public ResponseEntity<Object> createBike(@Valid @RequestBody CreateBikeRequest request) {
         Vehicle vehicle = vehiclesService.addBike(request.getModel(),
                 request.getMaxPeople(),
                 request.getDailyRentPrice(),
@@ -58,7 +59,7 @@ public class VehicleController {
         return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
     }
     @PostMapping("/cars")
-    public ResponseEntity<Object> createBikeCar(@RequestBody CreateCarRequest request) {
+    public ResponseEntity<Object> createBikeCar(@Valid @RequestBody CreateCarRequest request) {
         Vehicle vehicle = vehiclesService.addCar(request.getModel(),
                 request.getMaxPeople(),
                 request.getDailyRentPrice(),
@@ -77,7 +78,7 @@ public class VehicleController {
         return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
     }
     @PostMapping("/pullmans")
-    public ResponseEntity<Object> createPullman(@RequestBody CreatePullmanRequest request) {
+    public ResponseEntity<Object> createPullman(@Valid @RequestBody CreatePullmanRequest request) {
         Vehicle vehicle = vehiclesService.addPullman(request.getModel(),
                 request.getMaxPeople(),
                 request.getDailyRentPrice(),
@@ -96,7 +97,7 @@ public class VehicleController {
         return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
     }
     @PostMapping("/scooters")
-    public ResponseEntity<Object> createBikeCar(@RequestBody CreateScooterRequest request) {
+    public ResponseEntity<Object> createBikeCar(@Valid @RequestBody CreateScooterRequest request) {
         Vehicle vehicle = vehiclesService.addScooter(request.getModel(),
                 request.getMaxPeople(),
                 request.getDailyRentPrice(),
