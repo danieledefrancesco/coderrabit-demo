@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static org.mockito.Mockito.*;
+
 class BikeTest extends VehicleTest {
 
     @Test
@@ -20,6 +22,19 @@ class BikeTest extends VehicleTest {
         double expectedPrice = 21;
         Bike bike = createVehicle(UUID.randomUUID(), "model", 1, dailyRentPrice, 3, 4);
         Assertions.assertEquals(expectedPrice, bike.computePrice(numberOfDays, 100000), 0);
+    }
+
+    @Test
+    void acceptVisitor_shouldInvokeVisitor() {
+        VehicleVisitor<Object> visitor = mock(VehicleVisitor.class);
+        Object expectedResult = new Object();
+        Bike bike = createVehicle(UUID.randomUUID(), "model", 1, 2, 3, 4);
+        when(visitor.visit(bike)).thenReturn(expectedResult);
+
+        Object actualResult = bike.acceptVisitor(visitor);
+
+        Assertions.assertEquals(expectedResult, actualResult);
+        verify(visitor, times(1)).visit(bike);
     }
 
     @Override

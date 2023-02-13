@@ -28,6 +28,11 @@ public class Bike extends Vehicle {
     }
 
     @Override
+    public <T> T acceptVisitor(VehicleVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
+
+    @Override
     public boolean hasCoverage() {
         return false;
     }
