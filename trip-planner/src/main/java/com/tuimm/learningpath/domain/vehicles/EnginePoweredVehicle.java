@@ -1,5 +1,7 @@
 package com.tuimm.learningpath.domain.vehicles;
 
+import com.tuimm.learningpath.common.validators.NumberValidator;
+import com.tuimm.learningpath.common.validators.ObjectValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -27,27 +29,13 @@ public abstract class EnginePoweredVehicle extends Vehicle {
                                    double fuelConsumption) {
 
         super(id, model, maxPeople, dailyRentPrice, averageSpeed, autonomy);
-        if (stopTimeInSeconds < 0) {
-            throw new IllegalArgumentException("stopTimeInSeconds must be greater than or equal to 0");
-        }
-        if (plate == null) {
-            throw new IllegalArgumentException("plate cannot be null");
-        }
-        if (fuelType == null) {
-            throw new IllegalArgumentException("fuelType cannot be null");
-        }
-        if (emissions < 0) {
-            throw new IllegalArgumentException("emissions must be greater than or equal to 0");
-        }
-        if (fuelConsumption < 0) {
-            throw new IllegalArgumentException("fuelConsumption must be greater than or equal to 0");
-        }
-        this.stopTimeInSeconds = stopTimeInSeconds;
-        this.plate = plate;
-        this.fuelType = fuelType;
-        this.emissions = emissions;
-        this.fuelConsumption = fuelConsumption;
+        this.stopTimeInSeconds = NumberValidator.create("stopTimeInSeconds", stopTimeInSeconds).ensureGreaterThenOrEqualTo(0).getValue();
+        this.plate = ObjectValidator.create("plate", plate).ensureNotNull().getValue();
+        this.fuelType = ObjectValidator.create("fuelType", fuelType).ensureNotNull().getValue();
+        this.emissions = NumberValidator.create("emissions", emissions).ensureGreaterThenOrEqualTo(0d).getValue();
+        this.fuelConsumption = NumberValidator.create("fuelConsumption", fuelConsumption).ensureGreaterThenOrEqualTo(0d).getValue();
     }
+
     @Override
     public double computePrice(int numberOfDays, double kilometers) {
         double fuelPrice = this.getFuelType().getCost() * (kilometers / this.getFuelConsumption());

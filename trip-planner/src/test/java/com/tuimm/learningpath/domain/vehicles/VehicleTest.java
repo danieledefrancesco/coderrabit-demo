@@ -59,6 +59,14 @@ abstract class VehicleTest {
     }
 
     @Test
+    void constructor_shouldThrowIllegalArgumentException_whenModelIsBlank() {
+        UUID id = UUID.randomUUID();
+        Exception actualException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> createVehicle(id, " ", 1, 1, 10, 11));
+        Assertions.assertEquals("model cannot be blank", actualException.getMessage());
+    }
+
+    @Test
     void constructor_shouldThrowIllegalArgumentException_whenMaxPeopleIsLowerThanZero() {
         UUID id = UUID.randomUUID();
         Exception actualException = Assertions.assertThrows(IllegalArgumentException.class,
@@ -79,7 +87,7 @@ abstract class VehicleTest {
         UUID id = UUID.randomUUID();
         Exception actualException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> createVehicle(id, "model", 1, -1, 10, 11));
-        Assertions.assertEquals("dailyRentPrice must be greater than or equal to 0", actualException.getMessage());
+        Assertions.assertEquals("dailyRentPrice must be greater than or equal to 0.0", actualException.getMessage());
     }
 
     @Test
@@ -87,7 +95,7 @@ abstract class VehicleTest {
         UUID id = UUID.randomUUID();
         Exception actualException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> createVehicle(id, "model", 1, 0, -1, 11));
-        Assertions.assertEquals("averageSpeed must be greater than 0", actualException.getMessage());
+        Assertions.assertEquals("averageSpeed must be greater than 0.0", actualException.getMessage());
     }
 
     @Test
@@ -95,7 +103,7 @@ abstract class VehicleTest {
         UUID id = UUID.randomUUID();
         Exception actualException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> createVehicle(id, "model", 1, 1, 0, 11));
-        Assertions.assertEquals("averageSpeed must be greater than 0", actualException.getMessage());
+        Assertions.assertEquals("averageSpeed must be greater than 0.0", actualException.getMessage());
     }
 
     @Test
@@ -103,7 +111,7 @@ abstract class VehicleTest {
         UUID id = UUID.randomUUID();
         Exception actualException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> createVehicle(id, "model", 1, 0, 1, -1));
-        Assertions.assertEquals("autonomy must be greater than 0", actualException.getMessage());
+        Assertions.assertEquals("autonomy must be greater than 0.0", actualException.getMessage());
     }
 
     @Test
@@ -111,7 +119,7 @@ abstract class VehicleTest {
         UUID id = UUID.randomUUID();
         Exception actualException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> createVehicle(id, "model", 1, 0, 1, 0));
-        Assertions.assertEquals("autonomy must be greater than 0", actualException.getMessage());
+        Assertions.assertEquals("autonomy must be greater than 0.0", actualException.getMessage());
     }
     @Test
     void computeAverageSpeedForPassengersAmount_shouldReturnExpectedValue_whenNumberOfPassengersIsAllowed() {

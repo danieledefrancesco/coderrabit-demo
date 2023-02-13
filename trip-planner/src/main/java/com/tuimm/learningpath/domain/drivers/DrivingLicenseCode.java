@@ -1,4 +1,4 @@
-package com.tuimm.learningpath.domain.vehicles;
+package com.tuimm.learningpath.domain.drivers;
 
 import com.tuimm.learningpath.common.validators.StringValidator;
 import lombok.EqualsAndHashCode;
@@ -6,20 +6,15 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-public abstract class Plate {
+public class DrivingLicenseCode {
+    private static final String PATTERN = "";
     private final String value;
 
-    protected Plate(String value)
-    {
+    public DrivingLicenseCode(String value) {
         this.value = StringValidator.create("value", value)
                 .ensureNotNull()
-                .ensureMatchesPattern(getPlateRegex())
+                .ensureNotBlank()
+                .ensureMatchesPattern(PATTERN)
                 .getValue();
-    }
-    protected abstract String getPlateRegex();
-
-    @Override
-    public String toString() {
-        return value;
     }
 }

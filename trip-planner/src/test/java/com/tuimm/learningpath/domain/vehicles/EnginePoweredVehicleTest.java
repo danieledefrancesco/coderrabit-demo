@@ -104,7 +104,7 @@ abstract class EnginePoweredVehicleTest extends VehicleTest {
                         FuelType.PETROL,
                         -1,
                         0));
-        Assertions.assertEquals("emissions must be greater than or equal to 0", actualException.getMessage());
+        Assertions.assertEquals("emissions must be greater than or equal to 0.0", actualException.getMessage());
     }
 
     @Test
@@ -123,7 +123,7 @@ abstract class EnginePoweredVehicleTest extends VehicleTest {
                         FuelType.PETROL,
                         0,
                         -1));
-        Assertions.assertEquals("fuelConsumption must be greater than or equal to 0", actualException.getMessage());
+        Assertions.assertEquals("fuelConsumption must be greater than or equal to 0.0", actualException.getMessage());
     }
 
     @Test

@@ -1,4 +1,6 @@
 package com.tuimm.learningpath.domain.vehicles;
+import com.tuimm.learningpath.common.validators.NumberValidator;
+import com.tuimm.learningpath.common.validators.StringValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -22,27 +24,12 @@ public abstract class Vehicle {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         }
-        if (model == null) {
-            throw new IllegalArgumentException("model cannot be null");
-        }
-        if (maxPeople <= 0) {
-            throw new IllegalArgumentException("maxPeople must be greater than 0");
-        }
-        if (dailyRentPrice < 0) {
-            throw new IllegalArgumentException("dailyRentPrice must be greater than or equal to 0");
-        }
-        if (averageSpeed <= 0) {
-            throw new IllegalArgumentException("averageSpeed must be greater than 0");
-        }
-        if (autonomy <= 0) {
-            throw new IllegalArgumentException("autonomy must be greater than 0");
-        }
         this.id = id;
-        this.model = model;
-        this.maxPeople = maxPeople;
-        this.dailyRentPrice = dailyRentPrice;
-        this.averageSpeed = averageSpeed;
-        this.autonomy = autonomy;
+        this.model = StringValidator.create("model", model).ensureNotNull().ensureNotBlank().getValue();
+        this.maxPeople = NumberValidator.create("maxPeople", maxPeople).ensureGreaterThen(0).getValue();
+        this.dailyRentPrice = NumberValidator.create("dailyRentPrice", dailyRentPrice).ensureGreaterThenOrEqualTo(0d).getValue();
+        this.averageSpeed = NumberValidator.create("averageSpeed", averageSpeed).ensureGreaterThen(0d).getValue();
+        this.autonomy = NumberValidator.create("autonomy", autonomy).ensureGreaterThen(0d).getValue();
     }
 
     public double computeAverageSpeedForPassengersAmount(int passengersAmount) {
