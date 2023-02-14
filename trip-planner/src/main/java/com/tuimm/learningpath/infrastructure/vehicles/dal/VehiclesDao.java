@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface VehicleDao extends CrudRepository<VehicleEntity, UUID> {
+public interface VehiclesDao extends CrudRepository<VehicleEntity, UUID> {
     Iterable<VehicleEntity> findByMaxPeopleGreaterThanEqual(int maxPeople);
 }

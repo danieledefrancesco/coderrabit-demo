@@ -3,7 +3,7 @@ package com.tuimm.learningpath.infrastructure.vehicles;
 import com.googlecode.concurrenttrees.common.Iterables;
 import com.tuimm.learningpath.domain.vehicles.*;
 import com.tuimm.learningpath.infrastructure.IntegrationTest;
-import com.tuimm.learningpath.infrastructure.vehicles.dal.VehicleDao;
+import com.tuimm.learningpath.infrastructure.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.infrastructure.vehicles.dal.VehicleEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ class JPAGarageTest extends IntegrationTest {
     @Autowired
     private JPAGarage garage;
     @Autowired
-    private VehicleDao dao;
+    private VehiclesDao dao;
 
     @BeforeEach
     public void cleanUp() {

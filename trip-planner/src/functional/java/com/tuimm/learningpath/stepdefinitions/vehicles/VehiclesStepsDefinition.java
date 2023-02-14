@@ -3,7 +3,7 @@ package com.tuimm.learningpath.stepdefinitions.vehicles;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.tuimm.learningpath.contracts.vehicles.*;
 import com.tuimm.learningpath.domain.vehicles.*;
-import com.tuimm.learningpath.infrastructure.vehicles.dal.VehicleDao;
+import com.tuimm.learningpath.infrastructure.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.infrastructure.vehicles.dal.VehicleEntity;
 import com.tuimm.learningpath.stepdefinitions.Definition;
 import io.cucumber.datatable.DataTable;
@@ -20,7 +20,7 @@ public class VehiclesStepsDefinition extends Definition {
     @Autowired
     private Garage garage;
     @Autowired
-    private VehicleDao dao;
+    private VehiclesDao dao;
 
     @Given("a create bike request")
     public void aCreateBikeRequest(DataTable table) {

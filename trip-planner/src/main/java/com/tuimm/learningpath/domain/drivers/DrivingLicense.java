@@ -1,5 +1,6 @@
 package com.tuimm.learningpath.domain.drivers;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 
 @Getter
-@RequiredArgsConstructor(staticName = "create")
+@RequiredArgsConstructor
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DrivingLicense {
     @EqualsAndHashCode.Include

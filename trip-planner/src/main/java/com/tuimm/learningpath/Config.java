@@ -1,6 +1,7 @@
 package com.tuimm.learningpath;
 
 import com.tuimm.learningpath.api.vehicles.VehiclesMapper;
+import com.tuimm.learningpath.infrastructure.drivers.DriverEntityMapper;
 import com.tuimm.learningpath.infrastructure.vehicles.VehicleEntitiesMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,11 @@ public class Config {
     @Bean
     public VehicleEntitiesMapper vehicleEntitiesMapper() {
         return Mappers.getMapper(VehicleEntitiesMapper.class);
+    }
+
+    @Bean
+    public DriverEntityMapper driverEntityMapper() {
+        return Mappers.getMapper(DriverEntityMapper.class);
     }
 
     @Bean
