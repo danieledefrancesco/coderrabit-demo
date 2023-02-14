@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CreateVehicleResponse {
+public class CreateVehicleResponseDto {
     @NonNull
     private UUID id;
 }

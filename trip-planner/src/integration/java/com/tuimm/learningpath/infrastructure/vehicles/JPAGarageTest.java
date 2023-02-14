@@ -130,17 +130,19 @@ class JPAGarageTest extends IntegrationTest {
     }
 
     private Car createCar(UUID id, int maxPeople) {
-        return new Car(id,
-                model,
-                maxPeople,
-                dailyRentPrice,
-                averageSpeed,
-                autonomy,
-                stopTimeInSeconds,
-                GenericPlate.from(plate),
-                FuelType.valueOf(fuelType),
-                emissions,
-                fuelConsumption);
+        return Car.builder()
+                .plate(GenericPlate.from(plate))
+                .fuelType(FuelType.valueOf(fuelType))
+                .fuelConsumption(fuelConsumption)
+                .emissions(emissions)
+                .stopTimeInSeconds(stopTimeInSeconds)
+                .id(id)
+                .model(model)
+                .maxPeople(maxPeople)
+                .dailyRentPrice(dailyRentPrice)
+                .averageSpeed(averageSpeed)
+                .autonomy(autonomy)
+                .build();
     }
 
     private VehicleEntity createVehicle(UUID id, VehicleEntity.VehicleType type, int maxPeople) {

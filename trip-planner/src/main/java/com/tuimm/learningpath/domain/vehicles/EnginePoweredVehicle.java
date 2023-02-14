@@ -4,6 +4,8 @@ import com.tuimm.learningpath.common.validators.NumberValidator;
 import com.tuimm.learningpath.common.validators.ObjectValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
@@ -16,24 +18,13 @@ public abstract class EnginePoweredVehicle extends Vehicle {
     private final double emissions;
     private final double fuelConsumption;
 
-    protected EnginePoweredVehicle(UUID id,
-                                   String model,
-                                   int maxPeople,
-                                   double dailyRentPrice,
-                                   double averageSpeed,
-                                   double autonomy,
-                                   int stopTimeInSeconds,
-                                   Plate plate,
-                                   FuelType fuelType,
-                                   double emissions,
-                                   double fuelConsumption) {
-
-        super(id, model, maxPeople, dailyRentPrice, averageSpeed, autonomy);
-        this.stopTimeInSeconds = NumberValidator.create("stopTimeInSeconds", stopTimeInSeconds).ensureGreaterThenOrEqualTo(0).getValue();
-        this.plate = ObjectValidator.create("plate", plate).ensureNotNull().getValue();
-        this.fuelType = ObjectValidator.create("fuelType", fuelType).ensureNotNull().getValue();
-        this.emissions = NumberValidator.create("emissions", emissions).ensureGreaterThenOrEqualTo(0d).getValue();
-        this.fuelConsumption = NumberValidator.create("fuelConsumption", fuelConsumption).ensureGreaterThenOrEqualTo(0d).getValue();
+    protected EnginePoweredVehicle(Builder<?,?> builder) {
+        super(builder);
+        this.stopTimeInSeconds = NumberValidator.create("stopTimeInSeconds", builder.stopTimeInSeconds).ensureGreaterThenOrEqualTo(0).getValue();
+        this.plate = ObjectValidator.create("plate", builder.plate).ensureNotNull().getValue();
+        this.fuelType = ObjectValidator.create("fuelType", builder.fuelType).ensureNotNull().getValue();
+        this.emissions = NumberValidator.create("emissions", builder.emissions).ensureGreaterThenOrEqualTo(0d).getValue();
+        this.fuelConsumption = NumberValidator.create("fuelConsumption", builder.fuelConsumption).ensureGreaterThenOrEqualTo(0d).getValue();
     }
 
     @Override
@@ -50,5 +41,16 @@ public abstract class EnginePoweredVehicle extends Vehicle {
                 String.format("  fuelType: %s%s", this.getFuelType(), System.lineSeparator()) +
                 String.format("  fuelConsumption: %f km/l%s", this.getFuelConsumption(), System.lineSeparator()) +
                 String.format("  emissions: %f CO2/km", this.getEmissions());
+    }
+
+    @Getter
+    @Setter
+    @Accessors(fluent = true)
+    public abstract static class Builder<T1 extends Vehicle, T2 extends Plate> extends Vehicle.Builder<T1> {
+        private int stopTimeInSeconds;
+        private T2 plate;
+        private FuelType fuelType;
+        private double emissions;
+        private double fuelConsumption;
     }
 }

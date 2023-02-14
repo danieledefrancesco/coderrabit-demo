@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateCarRequest extends CreateEnginePoweredVehicleRequest {
+public class CreateCarRequestDto extends CreateEnginePoweredVehicleRequestDto {
     @NotNull
     @Pattern(regexp = "^[A-Z]{2}[0-9]{3}[A-Z]{2}$")
     private String plate;

@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class CreateEnginePoweredVehicleRequest extends CreateVehicleRequest {
+public abstract class CreateEnginePoweredVehicleRequestDto extends CreateVehicleRequestDto {
     @JsonProperty("stop_time_in_seconds")
     @PositiveOrZero
     private int stopTimeInSeconds;

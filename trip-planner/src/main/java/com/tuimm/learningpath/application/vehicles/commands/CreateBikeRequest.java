@@ -1,4 +1,4 @@
-package com.tuimm.learningpath.contracts.vehicles;
+package com.tuimm.learningpath.application.vehicles.commands;
 
 public class CreateBikeRequest extends CreateVehicleRequest {
 }

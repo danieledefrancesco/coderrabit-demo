@@ -25,28 +25,28 @@ public class VehiclesStepsDefinition extends Definition {
     @Given("a create bike request")
     public void aCreateBikeRequest(DataTable table) {
         Map<String, String> tableAsMap = table.asMaps(String.class, String.class).get(0);
-        CreateBikeRequest createBikeRequest = new CreateBikeRequest();
-        createBikeRequest.setModel(tableAsMap.get("model"));
-        createBikeRequest.setMaxPeople(Integer.parseInt(tableAsMap.get("maxPeople")));
-        createBikeRequest.setDailyRentPrice(Double.parseDouble(tableAsMap.get("dailyRentPrice")));
-        createBikeRequest.setAutonomy(Double.parseDouble(tableAsMap.get("autonomy")));
-        createBikeRequest.setAverageSpeed(Double.parseDouble(tableAsMap.get("averageSpeed")));
-        scenarioContext.getDriver().setRequestBody(createBikeRequest);
+        CreateBikeRequestDto createBikeRequestDto = new CreateBikeRequestDto();
+        createBikeRequestDto.setModel(tableAsMap.get("model"));
+        createBikeRequestDto.setMaxPeople(Integer.parseInt(tableAsMap.get("maxPeople")));
+        createBikeRequestDto.setDailyRentPrice(Double.parseDouble(tableAsMap.get("dailyRentPrice")));
+        createBikeRequestDto.setAutonomy(Double.parseDouble(tableAsMap.get("autonomy")));
+        createBikeRequestDto.setAverageSpeed(Double.parseDouble(tableAsMap.get("averageSpeed")));
+        scenarioContext.getDriver().setRequestBody(createBikeRequestDto);
     }
 
     @Given("a create car request")
     public void aCreateCarRequest(DataTable table) {
-        prepareCreateVehicleRequest(new CreateCarRequest(), table);
+        prepareCreateVehicleRequest(new CreateCarRequestDto(), table);
     }
 
     @Given("a create pullman request")
     public void aCreatePullmanRequest(DataTable table) {
-        prepareCreateVehicleRequest(new CreatePullmanRequest(), table);
+        prepareCreateVehicleRequest(new CreatePullmanRequestDto(), table);
     }
 
     @Given("a create scooter request")
     public void aCreateScooterRequest(DataTable table) {
-        prepareCreateVehicleRequest(new CreateScooterRequest(), table);
+        prepareCreateVehicleRequest(new CreateScooterRequestDto(), table);
     }
 
     @Then("the response should contain the new vehicle's id in the location header")
@@ -115,55 +115,63 @@ public class VehiclesStepsDefinition extends Definition {
     }
 
     private static Bike mapToBike(Map<String, String> map) {
-        return new Bike(UUID.fromString(map.get("id")),
-                map.get("model"),
-                Integer.parseInt(map.get("maxPeople")),
-                Double.parseDouble(map.get("dailyRentPrice")),
-                Double.parseDouble(map.get("averageSpeed")),
-                Double.parseDouble(map.get("autonomy")));
+        return Bike.builder()
+                .id(UUID.fromString(map.get("id")))
+                .model(map.get("model"))
+                .maxPeople(Integer.parseInt(map.get("maxPeople")))
+                .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
+                .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
+                .autonomy(Double.parseDouble(map.get("autonomy")))
+                .build();
     }
 
 
     private static Car mapToCar(Map<String, String> map) {
-        return new Car(UUID.fromString(map.get("id")),
-                map.get("model"),
-                Integer.parseInt(map.get("maxPeople")),
-                Double.parseDouble(map.get("dailyRentPrice")),
-                Double.parseDouble(map.get("averageSpeed")),
-                Double.parseDouble(map.get("autonomy")),
-                Integer.parseInt(map.get("stopTimeInSeconds")),
-                GenericPlate.from(map.get("plate")),
-                FuelType.valueOf(map.get("fuelType")),
-                Double.parseDouble(map.get("emissions")),
-                Double.parseDouble(map.get("fuelConsumption")));
+        return Car.builder()
+                .stopTimeInSeconds(Integer.parseInt(map.get("stopTimeInSeconds")))
+                .plate(GenericPlate.from(map.get("plate")))
+                .fuelType(FuelType.valueOf(map.get("fuelType")))
+                .emissions(Double.parseDouble(map.get("emissions")))
+                .fuelConsumption(Double.parseDouble(map.get("fuelConsumption")))
+                .id(UUID.fromString(map.get("id")))
+                .model(map.get("model"))
+                .maxPeople(Integer.parseInt(map.get("maxPeople")))
+                .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
+                .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
+                .autonomy(Double.parseDouble(map.get("autonomy")))
+                .build();
     }
 
     private static Pullman mapToPullman(Map<String, String> map) {
-        return new Pullman(UUID.fromString(map.get("id")),
-                map.get("model"),
-                Integer.parseInt(map.get("maxPeople")),
-                Double.parseDouble(map.get("dailyRentPrice")),
-                Double.parseDouble(map.get("averageSpeed")),
-                Double.parseDouble(map.get("autonomy")),
-                Integer.parseInt(map.get("stopTimeInSeconds")),
-                GenericPlate.from(map.get("plate")),
-                FuelType.valueOf(map.get("fuelType")),
-                Double.parseDouble(map.get("emissions")),
-                Double.parseDouble(map.get("fuelConsumption")));
+        return Pullman.builder()
+                .stopTimeInSeconds(Integer.parseInt(map.get("stopTimeInSeconds")))
+                .plate(GenericPlate.from(map.get("plate")))
+                .fuelType(FuelType.valueOf(map.get("fuelType")))
+                .emissions(Double.parseDouble(map.get("emissions")))
+                .fuelConsumption(Double.parseDouble(map.get("fuelConsumption")))
+                .id(UUID.fromString(map.get("id")))
+                .model(map.get("model"))
+                .maxPeople(Integer.parseInt(map.get("maxPeople")))
+                .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
+                .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
+                .autonomy(Double.parseDouble(map.get("autonomy")))
+                .build();
     }
 
     private static Scooter mapToScooter(Map<String, String> map) {
-        return new Scooter(UUID.fromString(map.get("id")),
-                map.get("model"),
-                Integer.parseInt(map.get("maxPeople")),
-                Double.parseDouble(map.get("dailyRentPrice")),
-                Double.parseDouble(map.get("averageSpeed")),
-                Double.parseDouble(map.get("autonomy")),
-                Integer.parseInt(map.get("stopTimeInSeconds")),
-                ScooterPlate.from(map.get("plate")),
-                FuelType.valueOf(map.get("fuelType")),
-                Double.parseDouble(map.get("emissions")),
-                Double.parseDouble(map.get("fuelConsumption")));
+        return Scooter.builder()
+                .stopTimeInSeconds(Integer.parseInt(map.get("stopTimeInSeconds")))
+                .plate(ScooterPlate.from(map.get("plate")))
+                .fuelType(FuelType.valueOf(map.get("fuelType")))
+                .emissions(Double.parseDouble(map.get("emissions")))
+                .fuelConsumption(Double.parseDouble(map.get("fuelConsumption")))
+                .id(UUID.fromString(map.get("id")))
+                .model(map.get("model"))
+                .maxPeople(Integer.parseInt(map.get("maxPeople")))
+                .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
+                .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
+                .autonomy(Double.parseDouble(map.get("autonomy")))
+                .build();
     }
 
 
@@ -177,7 +185,7 @@ public class VehiclesStepsDefinition extends Definition {
                 row.get(key).equals(vehicle.get(key).asText()));
     }
 
-    private void prepareCreateVehicleRequest(CreateEnginePoweredVehicleRequest request, DataTable table) {
+    private void prepareCreateVehicleRequest(CreateEnginePoweredVehicleRequestDto request, DataTable table) {
         Map<String, String> tableAsMap = table.asMaps(String.class, String.class).get(0);
         request.setModel(tableAsMap.get("model"));
         request.setMaxPeople(Integer.parseInt(tableAsMap.get("maxPeople")));

@@ -1,8 +1,10 @@
 package com.tuimm.learningpath.api.vehicles;
 
+import com.tuimm.learningpath.application.vehicles.queries.GetVehiclesResponse;
+import com.tuimm.learningpath.common.mediator.Mediator;
 import com.tuimm.learningpath.contracts.vehicles.*;
+import com.tuimm.learningpath.application.vehicles.queries.GetAllVehiclesRequest;
 import com.tuimm.learningpath.domain.vehicles.Vehicle;
-import com.tuimm.learningpath.domain.vehicles.VehiclesService;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,98 +18,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
 
-import java.util.Collection;
-
 @Controller
 @RequestMapping(value = "/vehicles")
 public class VehicleController {
-    private final VehiclesService vehiclesService;
     private final VehiclesMapper vehiclesMapper;
     private final String vehicleCreatedLocationHeaderEndPath;
+    private final Mediator mediator;
 
-    public VehicleController(@NonNull VehiclesService vehiclesService,
-                             @NonNull VehiclesMapper vehiclesMapper,
+    public VehicleController(@NonNull VehiclesMapper vehiclesMapper,
                              @Value("${vehicleController.vehicleCreatedLocationHeaderEndPath}")
-                             @NonNull String vehicleCreatedLocationHeaderEndPath) {
-        this.vehiclesService = vehiclesService;
+                             @NonNull String vehicleCreatedLocationHeaderEndPath,
+                             @NonNull Mediator mediator) {
         this.vehiclesMapper = vehiclesMapper;
         this.vehicleCreatedLocationHeaderEndPath = vehicleCreatedLocationHeaderEndPath;
+        this.mediator = mediator;
     }
 
     @GetMapping
-    public ResponseEntity<GetVehiclesResponse> getVehicles() {
-        Collection<VehicleResponse> vehicleResponses = vehiclesService.getAllVehicles()
-                .stream()
-                .map(vehiclesMapper::mapVehicle)
-                .toList();
-        GetVehiclesResponse response = new GetVehiclesResponse();
-        response.setVehicles(vehicleResponses);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<GetVehiclesResponseDto> getVehicles() {
+        GetVehiclesResponse getVehiclesResponse = mediator.send(GetAllVehiclesRequest.create());
+        GetVehiclesResponseDto responseDto = vehiclesMapper.mapGetVehiclesResponse(getVehiclesResponse);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
     @PostMapping("/bikes")
-    public ResponseEntity<Object> createBike(@Valid @RequestBody CreateBikeRequest request) {
-        Vehicle vehicle = vehiclesService.addBike(request.getModel(),
-                request.getMaxPeople(),
-                request.getDailyRentPrice(),
-                request.getAverageSpeed(),
-                request.getAutonomy());
-        UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path(vehicleCreatedLocationHeaderEndPath)
-                .buildAndExpand(vehicle.getId())
-                .normalize();
-        return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
+    public ResponseEntity<Object> createBike(@Valid @RequestBody CreateBikeRequestDto request) {
+        Vehicle newVehicle = mediator.send(vehiclesMapper.mapCreateBikeRequest(request));
+        return vehicleCreated(newVehicle);
     }
     @PostMapping("/cars")
-    public ResponseEntity<Object> createBikeCar(@Valid @RequestBody CreateCarRequest request) {
-        Vehicle vehicle = vehiclesService.addCar(request.getModel(),
-                request.getMaxPeople(),
-                request.getDailyRentPrice(),
-                request.getAverageSpeed(),
-                request.getAutonomy(),
-                request.getStopTimeInSeconds(),
-                request.getPlate(),
-                request.getFuelType(),
-                request.getEmissions(),
-                request.getFuelConsumption());
-        UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path(vehicleCreatedLocationHeaderEndPath)
-                .buildAndExpand(vehicle.getId())
-                .normalize();
-        return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
+    public ResponseEntity<Object> createBikeCar(@Valid @RequestBody CreateCarRequestDto request) {
+        Vehicle newVehicle = mediator.send(vehiclesMapper.mapCreateCarRequest(request));
+        return vehicleCreated(newVehicle);
     }
     @PostMapping("/pullmans")
-    public ResponseEntity<Object> createPullman(@Valid @RequestBody CreatePullmanRequest request) {
-        Vehicle vehicle = vehiclesService.addPullman(request.getModel(),
-                request.getMaxPeople(),
-                request.getDailyRentPrice(),
-                request.getAverageSpeed(),
-                request.getAutonomy(),
-                request.getStopTimeInSeconds(),
-                request.getPlate(),
-                request.getFuelType(),
-                request.getEmissions(),
-                request.getFuelConsumption());
-        UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path(vehicleCreatedLocationHeaderEndPath)
-                .buildAndExpand(vehicle.getId())
-                .normalize();
-        return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
+    public ResponseEntity<Object> createPullman(@Valid @RequestBody CreatePullmanRequestDto request) {
+        Vehicle newVehicle = mediator.send(vehiclesMapper.mapCreatePullmanRequest(request));
+        return vehicleCreated(newVehicle);
     }
     @PostMapping("/scooters")
-    public ResponseEntity<Object> createBikeCar(@Valid @RequestBody CreateScooterRequest request) {
-        Vehicle vehicle = vehiclesService.addScooter(request.getModel(),
-                request.getMaxPeople(),
-                request.getDailyRentPrice(),
-                request.getAverageSpeed(),
-                request.getAutonomy(),
-                request.getStopTimeInSeconds(),
-                request.getPlate(),
-                request.getFuelType(),
-                request.getEmissions(),
-                request.getFuelConsumption());
+    public ResponseEntity<Object> createBikeCar(@Valid @RequestBody CreateScooterRequestDto request) {
+        Vehicle newVehicle = mediator.send(vehiclesMapper.mapCreateScooterRequest(request));
+        return vehicleCreated(newVehicle);
+    }
+
+    private ResponseEntity<Object> vehicleCreated(Vehicle vehicle) {
         UriComponents uriComponentsBuilder = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path(vehicleCreatedLocationHeaderEndPath)

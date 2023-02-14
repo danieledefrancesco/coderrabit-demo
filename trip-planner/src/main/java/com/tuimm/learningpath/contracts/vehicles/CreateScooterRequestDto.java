@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreatePullmanRequest extends CreateEnginePoweredVehicleRequest {
+public class CreateScooterRequestDto extends CreateEnginePoweredVehicleRequestDto {
     @NotNull
-    @Pattern(regexp = "^[A-Z]{2}[0-9]{3}[A-Z]{2}$")
+    @Pattern(regexp = "^[A-Z]{2}[0-9]{4}$")
     private String plate;
 }

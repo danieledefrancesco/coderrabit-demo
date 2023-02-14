@@ -1,6 +1,5 @@
 package com.tuimm.learningpath.domain.vehicles;
 
-import java.util.UUID;
 public class Car extends EnginePoweredVehicle {
     private static final DrivingPolicy DRIVING_POLICY = DrivingPolicy.builder()
             .drivingProfile(DrivingProfile.CAR_PROFILE)
@@ -8,28 +7,8 @@ public class Car extends EnginePoweredVehicle {
             .suitableForBadWeather(true)
             .build();
 
-    public Car(UUID id,
-               String model,
-               int maxPeople,
-               double dailyRentPrice,
-               double averageSpeed,
-               double autonomy,
-               int stopTimeInSeconds,
-               GenericPlate plate,
-               FuelType fuelType,
-               double emissions,
-               double fuelConsumption) {
-        super(id,
-                model,
-                maxPeople,
-                dailyRentPrice,
-                averageSpeed,
-                autonomy,
-                stopTimeInSeconds,
-                plate,
-                fuelType,
-                emissions,
-                fuelConsumption);
+    public Car(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -40,5 +19,19 @@ public class Car extends EnginePoweredVehicle {
     @Override
     public DrivingPolicy getDrivingPolicy() {
         return Car.DRIVING_POLICY;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder extends EnginePoweredVehicle.Builder<Car, GenericPlate> {
+        private Builder() {
+
+        }
+        @Override
+        public Car build() {
+            return new Car(this);
+        }
     }
 }

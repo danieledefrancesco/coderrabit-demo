@@ -1,8 +1,8 @@
 package com.tuimm.learningpath.contracts.vehicles;
 
-public class BikeResponse extends VehicleResponse {
+public class CarResponseDtoDtoDto extends EnginePoweredVehicleResponseDtoDto {
     @Override
     public String getType() {
-        return "Bike";
+        return "Car";
     }
 }

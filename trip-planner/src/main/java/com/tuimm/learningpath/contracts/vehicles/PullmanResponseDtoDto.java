@@ -1,6 +1,6 @@
 package com.tuimm.learningpath.contracts.vehicles;
 
-public class PullmanResponse extends EnginePoweredVehicleResponse {
+public class PullmanResponseDtoDto extends EnginePoweredVehicleResponseDtoDto {
     @Override
     public String getType() {
         return "Pullman";

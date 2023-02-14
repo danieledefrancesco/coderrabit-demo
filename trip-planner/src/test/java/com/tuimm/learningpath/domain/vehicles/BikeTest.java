@@ -24,7 +24,14 @@ class BikeTest extends VehicleTest {
 
     @Override
     protected Bike createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy) {
-        return new Bike(id, model, maxPeople, dailyRentPrice, averageSpeed, autonomy);
+        return Bike.builder()
+                .id(id)
+                .model(model)
+                .maxPeople(maxPeople)
+                .autonomy(autonomy)
+                .averageSpeed(averageSpeed)
+                .dailyRentPrice(dailyRentPrice)
+                .build();
     }
 
     @Override

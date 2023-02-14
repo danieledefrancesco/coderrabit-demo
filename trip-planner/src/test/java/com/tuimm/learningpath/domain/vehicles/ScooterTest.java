@@ -27,16 +27,18 @@ class ScooterTest extends EnginePoweredVehicleTest {
 
     @Override
     protected EnginePoweredVehicle createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy, int stopTimeInSeconds, Plate plate, FuelType fuelType, double emissions, double fuelConsumption) {
-        return new Scooter(id,
-                model,
-                maxPeople,
-                dailyRentPrice,
-                averageSpeed,
-                autonomy,
-                stopTimeInSeconds,
-                (ScooterPlate) plate,
-                fuelType,
-                emissions,
-                fuelConsumption);
+        return Scooter.builder()
+                .fuelConsumption(fuelConsumption)
+                .emissions(emissions)
+                .fuelType(fuelType)
+                .stopTimeInSeconds(stopTimeInSeconds)
+                .plate((ScooterPlate) plate)
+                .id(id)
+                .dailyRentPrice(dailyRentPrice)
+                .model(model)
+                .maxPeople(maxPeople)
+                .averageSpeed(averageSpeed)
+                .autonomy(autonomy)
+                .build();
     }
 }

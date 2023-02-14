@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class EnginePoweredVehicleResponse extends VehicleResponse {
+public abstract class EnginePoweredVehicleResponseDtoDto extends VehicleResponseDto {
     private String plate;
     @JsonProperty("fuel_type")
     private String fuelType;

@@ -1,19 +1,24 @@
 package com.tuimm.learningpath.api.vehicles;
 
+import com.tuimm.learningpath.application.vehicles.commands.CreateBikeRequest;
+import com.tuimm.learningpath.application.vehicles.commands.CreateCarRequest;
+import com.tuimm.learningpath.application.vehicles.commands.CreatePullmanRequest;
+import com.tuimm.learningpath.application.vehicles.commands.CreateScooterRequest;
+import com.tuimm.learningpath.application.vehicles.queries.GetVehiclesResponse;
 import com.tuimm.learningpath.contracts.vehicles.*;
 import com.tuimm.learningpath.domain.vehicles.*;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface VehiclesMapper {
-    BikeResponse mapBike(Bike bike);
-    CarResponse mapCar(Car car);
-    PullmanResponse mapPullman(Pullman pullman);
-    ScooterResponse mapScooter(Scooter scooter);
+    BikeResponseDtoDto mapBike(Bike bike);
+    CarResponseDtoDtoDto mapCar(Car car);
+    PullmanResponseDtoDto mapPullman(Pullman pullman);
+    ScooterResponseDtoDto mapScooter(Scooter scooter);
     default String map(Plate plate) {
         return plate.getValue();
     }
-    default VehicleResponse mapVehicle(Vehicle vehicle) {
+    default VehicleResponseDto mapVehicle(Vehicle vehicle) {
         if (vehicle instanceof Bike bike) {
             return mapBike(bike);
         }
@@ -28,4 +33,9 @@ public interface VehiclesMapper {
         }
         return null;
     }
+    CreateBikeRequest mapCreateBikeRequest(CreateBikeRequestDto requestDto);
+    CreateCarRequest mapCreateCarRequest(CreateCarRequestDto requestDto);
+    CreatePullmanRequest mapCreatePullmanRequest(CreatePullmanRequestDto requestDto);
+    CreateScooterRequest mapCreateScooterRequest(CreateScooterRequestDto requestDto);
+    GetVehiclesResponseDto mapGetVehiclesResponse(GetVehiclesResponse response);
 }

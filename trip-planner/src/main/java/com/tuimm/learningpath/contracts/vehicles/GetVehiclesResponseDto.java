@@ -8,7 +8,7 @@ import java.util.Collection;
 
 @Getter
 @Setter
-public class GetVehiclesResponse {
+public class GetVehiclesResponseDto {
     @NonNull
-    private Collection<VehicleResponse> vehicles;
+    private Collection<VehicleResponseDto> vehicles;
 }

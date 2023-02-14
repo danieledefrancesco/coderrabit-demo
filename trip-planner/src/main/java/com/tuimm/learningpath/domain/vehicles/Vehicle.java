@@ -1,9 +1,12 @@
 package com.tuimm.learningpath.domain.vehicles;
 import com.tuimm.learningpath.common.validators.NumberValidator;
+import com.tuimm.learningpath.common.validators.ObjectValidator;
 import com.tuimm.learningpath.common.validators.StringValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
@@ -20,16 +23,13 @@ public abstract class Vehicle {
     private final double averageSpeed;
     private final double autonomy;
 
-    protected Vehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy) {
-        if (id == null) {
-            throw new IllegalArgumentException("id cannot be null");
-        }
-        this.id = id;
-        this.model = StringValidator.create("model", model).ensureNotNull().ensureNotBlank().getValue();
-        this.maxPeople = NumberValidator.create("maxPeople", maxPeople).ensureGreaterThen(0).getValue();
-        this.dailyRentPrice = NumberValidator.create("dailyRentPrice", dailyRentPrice).ensureGreaterThenOrEqualTo(0d).getValue();
-        this.averageSpeed = NumberValidator.create("averageSpeed", averageSpeed).ensureGreaterThen(0d).getValue();
-        this.autonomy = NumberValidator.create("autonomy", autonomy).ensureGreaterThen(0d).getValue();
+    protected Vehicle(Builder<?> builder) {
+        this.id = ObjectValidator.create("id", builder.id).ensureNotNull().getValue();
+        this.model = StringValidator.create("model", builder.model).ensureNotNull().ensureNotBlank().getValue();
+        this.maxPeople = NumberValidator.create("maxPeople", builder.maxPeople).ensureGreaterThen(0).getValue();
+        this.dailyRentPrice = NumberValidator.create("dailyRentPrice", builder.dailyRentPrice).ensureGreaterThenOrEqualTo(0d).getValue();
+        this.averageSpeed = NumberValidator.create("averageSpeed", builder.averageSpeed).ensureGreaterThen(0d).getValue();
+        this.autonomy = NumberValidator.create("autonomy", builder.autonomy).ensureGreaterThen(0d).getValue();
     }
 
     public double computeAverageSpeedForPassengersAmount(int passengersAmount) {
@@ -66,5 +66,19 @@ public abstract class Vehicle {
                 String.format("  averageSpeed: %f km/h%s", this.getAverageSpeed(), System.lineSeparator()) +
                 String.format("  autonomy: %f km%s", this.getAutonomy(), System.lineSeparator()) +
                 String.format("  stopTimeInSeconds: %d", this.getStopTimeInSeconds());
+    }
+
+    @Accessors(fluent = true)
+    @Getter
+    @Setter
+    public abstract static class Builder<T extends Vehicle> {
+        private UUID id;
+        private String model;
+        private int maxPeople;
+        private double dailyRentPrice;
+        private double averageSpeed;
+        private double autonomy;
+
+        public abstract T build();
     }
 }

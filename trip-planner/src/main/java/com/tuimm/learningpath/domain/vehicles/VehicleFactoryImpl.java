@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.function.Consumer;
+
 @Component
 @RequiredArgsConstructor
 public class VehicleFactoryImpl implements VehicleFactory {
@@ -12,89 +14,34 @@ public class VehicleFactoryImpl implements VehicleFactory {
     private final RandomIdGenerator randomIdGenerator;
 
     @Override
-    public Bike createBike(String model,
-                           int maxPeople,
-                           double dailyRentPrice,
-                           double averageSpeed,
-                           double autonomy) {
-        return new Bike(randomIdGenerator.generateRandomId(),
-                model,
-                maxPeople,
-                dailyRentPrice,
-                averageSpeed,
-                autonomy);
+    public Bike createBike(Consumer<Bike.Builder> builderDirector) {
+        Bike.Builder builder = Bike.builder();
+        builderDirector.accept(builder);
+        builder.id(randomIdGenerator.generateRandomId());
+        return builder.build();
     }
 
     @Override
-    public Car createCar(String model,
-                         int maxPeople,
-                         double dailyRentPrice,
-                         double averageSpeed,
-                         double autonomy,
-                         int stopTimeInSeconds,
-                         String plate,
-                         FuelType fuelType,
-                         double emissions,
-                         double fuelConsumption) {
-        return new Car(randomIdGenerator.generateRandomId(),
-                model,
-                maxPeople,
-                dailyRentPrice,
-                averageSpeed,
-                autonomy,
-                stopTimeInSeconds,
-                GenericPlate.from(plate),
-                fuelType,
-                emissions,
-                fuelConsumption);
+    public Car createCar(Consumer<Car.Builder> builderDirector) {
+        Car.Builder builder = Car.builder();
+        builderDirector.accept(builder);
+        builder.id(randomIdGenerator.generateRandomId());
+        return builder.build();
     }
 
     @Override
-    public Pullman createPullman(String model,
-                                 int maxPeople,
-                                 double dailyRentPrice,
-                                 double averageSpeed,
-                                 double autonomy,
-                                 int stopTimeInSeconds,
-                                 String plate,
-                                 FuelType fuelType,
-                                 double emissions,
-                                 double fuelConsumption) {
-        return new Pullman(randomIdGenerator.generateRandomId(),
-                model,
-                maxPeople,
-                dailyRentPrice,
-                averageSpeed,
-                autonomy,
-                stopTimeInSeconds,
-                GenericPlate.from(plate),
-                fuelType,
-                emissions,
-                fuelConsumption);
+    public Pullman createPullman(Consumer<Pullman.Builder> builderDirector) {
+        Pullman.Builder builder = Pullman.builder();
+        builderDirector.accept(builder);
+        builder.id(randomIdGenerator.generateRandomId());
+        return builder.build();
     }
 
     @Override
-    public Scooter createScooter(String model,
-                                 int maxPeople,
-                                 double dailyRentPrice,
-                                 double averageSpeed,
-                                 double autonomy,
-                                 int stopTimeInSeconds,
-                                 String plate,
-                                 FuelType fuelType,
-                                 double emissions,
-                                 double fuelConsumption) {
-        return new Scooter(randomIdGenerator.generateRandomId(),
-                model,
-                maxPeople,
-                dailyRentPrice,
-                averageSpeed,
-                autonomy,
-                stopTimeInSeconds,
-                ScooterPlate.from(plate),
-                fuelType,
-                emissions,
-                fuelConsumption);
+    public Scooter createScooter(Consumer<Scooter.Builder> builderDirector) {
+        Scooter.Builder builder = Scooter.builder();
+        builderDirector.accept(builder);
+        builder.id(randomIdGenerator.generateRandomId());
+        return builder.build();
     }
-
 }
