@@ -25,8 +25,7 @@ abstract class VehicleTest {
         Assertions.assertEquals(expectedAutonomy, vehicle.getAutonomy(), 0);
         Assertions.assertEquals(getExpectedAverageSpeedReductionFactor(), vehicle.getAverageSpeedReductionFactor(), 0);
         Assertions.assertEquals(getExpectedStopTimeInSeconds(), vehicle.getStopTimeInSeconds());
-        Assertions.assertEquals(getExpectedDrivingProfile(), vehicle.getDrivingProfile());
-        Assertions.assertEquals(getExpectedHasCoverage(), vehicle.hasCoverage());
+        Assertions.assertEquals(getExpectedDrivingPolicy(), vehicle.getDrivingPolicy());
     }
     
     @Test
@@ -164,7 +163,5 @@ abstract class VehicleTest {
 
     protected abstract int getExpectedStopTimeInSeconds();
 
-    protected abstract DrivingProfile getExpectedDrivingProfile();
-
-    protected abstract boolean getExpectedHasCoverage();
+    protected abstract DrivingPolicy getExpectedDrivingPolicy();
 }

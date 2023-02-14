@@ -50,7 +50,7 @@ public class StagePlan {
     }
 
     public boolean warnForWeatherCondition() {
-        return getDestinationWeatherCondition().requiresCoverage() && !getVehicle().hasCoverage();
+        return getDestinationWeatherCondition().isBadWeather() && !getVehicle().getDrivingPolicy().isSuitableForBadWeather();
     }
 
     @Override

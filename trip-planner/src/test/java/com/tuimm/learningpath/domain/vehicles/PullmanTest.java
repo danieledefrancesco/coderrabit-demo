@@ -9,13 +9,13 @@ class PullmanTest extends EnginePoweredVehicleTest {
     }
 
     @Override
-    protected DrivingProfile getExpectedDrivingProfile() {
-        return DrivingProfile.HGV_PROFILE;
-    }
+    protected DrivingPolicy getExpectedDrivingPolicy() {
 
-    @Override
-    protected boolean getExpectedHasCoverage() {
-        return true;
+        return DrivingPolicy.builder()
+                .suitableForBadWeather(true)
+                .minimumDrivingAge(21)
+                .drivingProfile(DrivingProfile.HGV_PROFILE)
+                .build();
     }
 
     @Override

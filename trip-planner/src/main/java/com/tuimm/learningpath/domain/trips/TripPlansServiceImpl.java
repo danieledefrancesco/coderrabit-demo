@@ -74,7 +74,7 @@ public class TripPlansServiceImpl implements TripPlansService {
                                       Place to,
                                       WeatherCondition weatherCondition,
                                       int numberOfPeople) {
-        Route route = routesService.getRoute(from, to, vehicle.getDrivingProfile());
+        Route route = routesService.getRoute(from, to, vehicle.getDrivingPolicy().getDrivingProfile());
         return stagePlanBuilderSupplier.get()
                 .startDateTime(start)
                 .destinationWeatherCondition(weatherCondition)

@@ -3,6 +3,11 @@ package com.tuimm.learningpath.domain.vehicles;
 import java.util.UUID;
 
 public class Pullman extends EnginePoweredVehicle {
+    private static final DrivingPolicy DRIVING_POLICY = DrivingPolicy.builder()
+            .suitableForBadWeather(true)
+            .minimumDrivingAge(21)
+            .drivingProfile(DrivingProfile.HGV_PROFILE)
+            .build();
     public Pullman(UUID id,
                    String model,
                    int maxPeople,
@@ -33,12 +38,7 @@ public class Pullman extends EnginePoweredVehicle {
     }
 
     @Override
-    public boolean hasCoverage() {
-        return true;
-    }
-
-    @Override
-    public DrivingProfile getDrivingProfile() {
-        return DrivingProfile.HGV_PROFILE;
+    public DrivingPolicy getDrivingPolicy() {
+        return Pullman.DRIVING_POLICY;
     }
 }

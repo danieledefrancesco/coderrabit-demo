@@ -2,6 +2,7 @@ package com.tuimm.learningpath.domain.trips;
 
 import com.tuimm.learningpath.domain.places.Place;
 import com.tuimm.learningpath.domain.routes.Route;
+import com.tuimm.learningpath.domain.vehicles.DrivingPolicy;
 import com.tuimm.learningpath.domain.vehicles.Vehicle;
 import com.tuimm.learningpath.domain.weatherconditions.WeatherCondition;
 import org.junit.jupiter.api.Assertions;
@@ -126,16 +127,22 @@ class StagePlanTest {
 
     @Test
     void warnForDestinationWeatherCondition_shouldReturnTrue_whenTheDestinationWeatherRequiresCoverageAndTheVehicleHasNotCoverage() {
-        when(vehicle.hasCoverage()).thenReturn(false);
+        DrivingPolicy policy = DrivingPolicy.builder()
+                .suitableForBadWeather(false)
+                .build();
+        when(vehicle.getDrivingPolicy()).thenReturn(policy);
         Assertions.assertTrue(stagePlan.warnForWeatherCondition());
-        verify(vehicle, times(1)).hasCoverage();
+        verify(vehicle, times(1)).getDrivingPolicy();
     }
 
     @Test
     void warnForDestinationWeatherCondition_shouldReturnFalse_whenTheDestinationWeatherRequiresCoverageAndTheVehicleHasCoverage() {
-        when(vehicle.hasCoverage()).thenReturn(true);
+        DrivingPolicy policy = DrivingPolicy.builder()
+                .suitableForBadWeather(true)
+                .build();
+        when(vehicle.getDrivingPolicy()).thenReturn(policy);
         Assertions.assertFalse(stagePlan.warnForWeatherCondition());
-        verify(vehicle, times(1)).hasCoverage();
+        verify(vehicle, times(1)).getDrivingPolicy();
     }
 
     @Test
@@ -169,6 +176,7 @@ class StagePlanTest {
         when(stagePlan.getArrivalDateTime()).thenReturn(expectedArrivalDateTime);
         when(stagePlan.getPrice()).thenReturn(expectedPrice);
         when(stagePlan.getEmissions()).thenReturn(expectedEmissions);
+        when(vehicle.getDrivingPolicy()).thenReturn(DrivingPolicy.builder().build());
         when(stagePlan.warnForWeatherCondition()).thenReturn(expectedWarnForWeatherCondition);
 
         String expectedString = String.format("StagePlan:%s", System.lineSeparator()) +

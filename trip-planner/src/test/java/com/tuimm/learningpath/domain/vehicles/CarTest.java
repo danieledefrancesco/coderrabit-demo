@@ -9,13 +9,13 @@ class CarTest extends EnginePoweredVehicleTest {
     }
 
     @Override
-    protected DrivingProfile getExpectedDrivingProfile() {
-        return DrivingProfile.CAR_PROFILE;
-    }
+    protected DrivingPolicy getExpectedDrivingPolicy() {
 
-    @Override
-    protected boolean getExpectedHasCoverage() {
-        return true;
+        return DrivingPolicy.builder()
+                .suitableForBadWeather(true)
+                .minimumDrivingAge(18)
+                .drivingProfile(DrivingProfile.CAR_PROFILE)
+                .build();
     }
 
     @Override

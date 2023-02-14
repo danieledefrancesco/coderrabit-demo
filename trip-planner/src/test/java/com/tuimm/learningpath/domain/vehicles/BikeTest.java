@@ -38,12 +38,12 @@ class BikeTest extends VehicleTest {
     }
 
     @Override
-    protected DrivingProfile getExpectedDrivingProfile() {
-        return DrivingProfile.BIKE_PROFILE;
-    }
+    protected DrivingPolicy getExpectedDrivingPolicy() {
 
-    @Override
-    protected boolean getExpectedHasCoverage() {
-        return false;
+        return DrivingPolicy.builder()
+                .suitableForBadWeather(false)
+                .minimumDrivingAge(0)
+                .drivingProfile(DrivingProfile.BIKE_PROFILE)
+                .build();
     }
 }

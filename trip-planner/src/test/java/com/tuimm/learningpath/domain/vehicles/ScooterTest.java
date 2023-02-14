@@ -9,13 +9,13 @@ class ScooterTest extends EnginePoweredVehicleTest {
     }
 
     @Override
-    protected DrivingProfile getExpectedDrivingProfile() {
-        return DrivingProfile.CAR_PROFILE;
-    }
+    protected DrivingPolicy getExpectedDrivingPolicy() {
 
-    @Override
-    protected boolean getExpectedHasCoverage() {
-        return false;
+        return DrivingPolicy.builder()
+                .suitableForBadWeather(false)
+                .minimumDrivingAge(16)
+                .drivingProfile(DrivingProfile.CAR_PROFILE)
+                .build();
     }
 
     @Override

@@ -3,6 +3,12 @@ package com.tuimm.learningpath.domain.vehicles;
 import java.util.UUID;
 
 public class Bike extends Vehicle {
+    private static final DrivingPolicy DRIVING_POLICY = DrivingPolicy.builder()
+            .suitableForBadWeather(false)
+            .minimumDrivingAge(0)
+            .drivingProfile(DrivingProfile.BIKE_PROFILE)
+            .build();
+
     public Bike(UUID id,
                 String model,
                 int maxPeople,
@@ -28,13 +34,7 @@ public class Bike extends Vehicle {
     }
 
     @Override
-    public boolean hasCoverage() {
-        return false;
-    }
-
-    @Override
-    public DrivingProfile getDrivingProfile() {
-
-        return DrivingProfile.BIKE_PROFILE;
+    public DrivingPolicy getDrivingPolicy() {
+        return Bike.DRIVING_POLICY;
     }
 }

@@ -53,9 +53,8 @@ public abstract class Vehicle {
     }
     abstract double getAverageSpeedReductionFactor();
     public abstract int getStopTimeInSeconds();
-    public abstract DrivingProfile getDrivingProfile();
-    public abstract boolean hasCoverage();
     public abstract double getEmissions();
+    public abstract DrivingPolicy getDrivingPolicy();
 
     @Override
     public String toString() {

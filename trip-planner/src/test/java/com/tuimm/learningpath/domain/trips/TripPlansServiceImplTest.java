@@ -5,6 +5,7 @@ import com.tuimm.learningpath.domain.places.Place;
 import com.tuimm.learningpath.domain.places.PlacesService;
 import com.tuimm.learningpath.domain.routes.Route;
 import com.tuimm.learningpath.domain.routes.RoutesService;
+import com.tuimm.learningpath.domain.vehicles.DrivingPolicy;
 import com.tuimm.learningpath.domain.vehicles.DrivingProfile;
 import com.tuimm.learningpath.domain.vehicles.Garage;
 import com.tuimm.learningpath.domain.vehicles.Vehicle;
@@ -84,7 +85,10 @@ class TripPlansServiceImplTest {
 
         TripPlan expectedTripPlan = TripPlan.create(Arrays.asList(firstStagePlan, secondStagePlan));
 
-        when(suitableVehicle.getDrivingProfile()).thenReturn(DrivingProfile.CAR_PROFILE);
+        DrivingPolicy drivingPolicy = DrivingPolicy.builder()
+                .drivingProfile(DrivingProfile.CAR_PROFILE)
+                .build();
+        when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
 
         when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
         when(firstStagePlan.getArrivalDateTime()).thenReturn(secondStageStart);
@@ -118,7 +122,7 @@ class TripPlansServiceImplTest {
         verify(garage, times(1)).getSuitableVehicles(numberOfPeople);
         verify(firstStagePlan, times(1)).getArrivalDateTime();
 
-        verify(suitableVehicle, times(2)).getDrivingProfile();
+        verify(suitableVehicle, times(2)).getDrivingPolicy();
 
         verify(placesService, times(1)).fromName(ROME.getName());
         verify(placesService, times(2)).fromName(MILAN.getName());

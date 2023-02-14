@@ -1,8 +1,13 @@
 package com.tuimm.learningpath.domain.vehicles;
 
 import java.util.UUID;
-
 public class Car extends EnginePoweredVehicle {
+    private static final DrivingPolicy DRIVING_POLICY = DrivingPolicy.builder()
+            .drivingProfile(DrivingProfile.CAR_PROFILE)
+            .minimumDrivingAge(18)
+            .suitableForBadWeather(true)
+            .build();
+
     public Car(UUID id,
                String model,
                int maxPeople,
@@ -33,12 +38,7 @@ public class Car extends EnginePoweredVehicle {
     }
 
     @Override
-    public boolean hasCoverage() {
-        return true;
-    }
-
-    @Override
-    public DrivingProfile getDrivingProfile() {
-        return DrivingProfile.CAR_PROFILE;
+    public DrivingPolicy getDrivingPolicy() {
+        return Car.DRIVING_POLICY;
     }
 }
