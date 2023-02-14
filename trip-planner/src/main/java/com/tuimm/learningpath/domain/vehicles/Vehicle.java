@@ -56,7 +56,6 @@ public abstract class Vehicle {
     public abstract DrivingProfile getDrivingProfile();
     public abstract boolean hasCoverage();
     public abstract double getEmissions();
-    public abstract <T> T acceptVisitor(VehicleVisitor<T> visitor);
 
     @Override
     public String toString() {

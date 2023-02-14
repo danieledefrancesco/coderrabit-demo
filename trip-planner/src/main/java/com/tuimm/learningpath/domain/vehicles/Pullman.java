@@ -38,11 +38,6 @@ public class Pullman extends EnginePoweredVehicle {
     }
 
     @Override
-    public <T> T acceptVisitor(VehicleVisitor<T> visitor) {
-        return visitor.visit(this);
-    }
-
-    @Override
     public DrivingProfile getDrivingProfile() {
         return DrivingProfile.HGV_PROFILE;
     }
