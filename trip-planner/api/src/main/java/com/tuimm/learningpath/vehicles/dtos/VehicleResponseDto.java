@@ -1,4 +1,4 @@
-package com.tuimm.learningpath.vehicles;
+package com.tuimm.learningpath.vehicles.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

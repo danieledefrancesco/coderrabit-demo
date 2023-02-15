@@ -1,4 +1,4 @@
-package com.tuimm.learningpath.vehicles;
+package com.tuimm.learningpath.vehicles.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -7,9 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateCarRequestDto extends CreateEnginePoweredVehicleRequestDto {
+public class CreatePullmanRequestDto extends CreateEnginePoweredVehicleRequestDto {
     @NotNull
     @Pattern(regexp = "^[A-Z]{2}[0-9]{3}[A-Z]{2}$")
     private String plate;
-
 }

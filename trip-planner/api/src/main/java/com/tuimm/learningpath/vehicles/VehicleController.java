@@ -1,6 +1,7 @@
 package com.tuimm.learningpath.vehicles;
 
 import com.tuimm.learningpath.mediator.Mediator;
+import com.tuimm.learningpath.vehicles.dtos.*;
 import com.tuimm.learningpath.vehicles.queries.GetAllVehiclesRequest;
 import com.tuimm.learningpath.vehicles.queries.GetVehiclesResponse;
 import jakarta.validation.Valid;

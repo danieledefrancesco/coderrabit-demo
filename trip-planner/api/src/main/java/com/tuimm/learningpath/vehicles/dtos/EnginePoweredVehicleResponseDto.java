@@ -1,4 +1,4 @@
-package com.tuimm.learningpath.vehicles;
+package com.tuimm.learningpath.vehicles.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class EnginePoweredVehicleResponseDtoDto extends VehicleResponseDto {
+public abstract class EnginePoweredVehicleResponseDto extends VehicleResponseDto {
     private String plate;
     @JsonProperty("fuel_type")
     private String fuelType;

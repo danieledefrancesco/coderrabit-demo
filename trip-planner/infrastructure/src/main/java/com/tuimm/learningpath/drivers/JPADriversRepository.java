@@ -31,4 +31,14 @@ public class JPADriversRepository implements DriversRepository {
         DriverEntity driverEntity = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("Driver", id.toString()));
         return driverEntityMapper.mapToDriver(driverEntity);
     }
+
+    @Override
+    public void add(Driver driver) {
+        dao.save(driverEntityMapper.mapToEntity(driver));
+    }
+
+    @Override
+    public void delete(UUID id) {
+        dao.deleteById(id);
+    }
 }

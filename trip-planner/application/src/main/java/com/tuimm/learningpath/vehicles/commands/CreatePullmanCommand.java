@@ -5,10 +5,10 @@ import com.tuimm.learningpath.vehicles.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreatePullmanCommandRequestHandler extends RequestHandler<CreatePullmanRequest, Vehicle> {
+public class CreatePullmanCommand extends RequestHandler<CreatePullmanRequest, Vehicle> {
     private final Garage garage;
     private final VehicleFactory vehicleFactory;
-    public CreatePullmanCommandRequestHandler(Garage garage, VehicleFactory vehicleFactory) {
+    public CreatePullmanCommand(Garage garage, VehicleFactory vehicleFactory) {
         super(CreatePullmanRequest.class);
         this.garage = garage;
         this.vehicleFactory = vehicleFactory;

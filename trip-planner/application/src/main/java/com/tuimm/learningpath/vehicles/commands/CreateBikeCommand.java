@@ -8,10 +8,10 @@ import com.tuimm.learningpath.vehicles.VehicleFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateBikeCommandRequestHandler extends RequestHandler<CreateBikeRequest, Vehicle> {
+public class CreateBikeCommand extends RequestHandler<CreateBikeRequest, Vehicle> {
     private final VehicleFactory vehicleFactory;
     private final Garage garage;
-    public CreateBikeCommandRequestHandler(VehicleFactory vehicleFactory, Garage garage) {
+    public CreateBikeCommand(VehicleFactory vehicleFactory, Garage garage) {
         super(CreateBikeRequest.class);
         this.vehicleFactory = vehicleFactory;
         this.garage = garage;

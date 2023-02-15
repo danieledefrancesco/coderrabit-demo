@@ -1,6 +1,7 @@
-package com.tuimm.learningpath.vehicles;
+package com.tuimm.learningpath.vehicles.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tuimm.learningpath.vehicles.FuelType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;

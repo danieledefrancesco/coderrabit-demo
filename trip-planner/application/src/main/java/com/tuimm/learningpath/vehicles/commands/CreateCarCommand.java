@@ -5,19 +5,19 @@ import com.tuimm.learningpath.vehicles.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateScooterCommandRequestHandler extends RequestHandler<CreateScooterRequest, Vehicle> {
+public class CreateCarCommand extends RequestHandler<CreateCarRequest, Vehicle> {
     private final Garage garage;
     private final VehicleFactory vehicleFactory;
-    public CreateScooterCommandRequestHandler(Garage garage, VehicleFactory vehicleFactory) {
-        super(CreateScooterRequest.class);
+    public CreateCarCommand(Garage garage, VehicleFactory vehicleFactory) {
+        super(CreateCarRequest.class);
         this.garage = garage;
         this.vehicleFactory = vehicleFactory;
     }
 
     @Override
-    public Vehicle handle(CreateScooterRequest request) {
-        Scooter scooter = vehicleFactory.createScooter(builder ->
-                builder.plate(ScooterPlate.from(request.getPlate()))
+    public Vehicle handle(CreateCarRequest request) {
+        Car car = vehicleFactory.createCar(builder ->
+                builder.plate(GenericPlate.from(request.getPlate()))
                         .fuelConsumption(request.getFuelConsumption())
                         .emissions(request.getEmissions())
                         .stopTimeInSeconds(request.getStopTimeInSeconds())
@@ -27,7 +27,7 @@ public class CreateScooterCommandRequestHandler extends RequestHandler<CreateSco
                         .averageSpeed(request.getAverageSpeed())
                         .dailyRentPrice(request.getDailyRentPrice())
                         .maxPeople(request.getMaxPeople()));
-        garage.addVehicle(scooter);
-        return scooter;
+        garage.addVehicle(car);
+        return car;
     }
 }

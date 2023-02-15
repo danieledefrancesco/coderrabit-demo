@@ -5,6 +5,7 @@ import com.tuimm.learningpath.stepdefinitions.Definition;
 import com.tuimm.learningpath.vehicles.*;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
+import com.tuimm.learningpath.vehicles.dtos.*;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
