@@ -63,8 +63,8 @@ public class VehiclesStepsDefinition extends Definition {
         scenarioContext.set(UUID.class, id);
     }
 
-    @Then("a {word} record should be present in the database with that id")
-    public void aRecordShouldBePresentInTheDatabaseWithThatId(String vehicleType) {
+    @Then("a vehicle of type {word} should be present in the database with that id")
+    public void aVehicleOfTypeShouldBePresentInTheDatabaseWithThatId(String vehicleType) {
         UUID id = scenarioContext.get(UUID.class);
         VehicleEntity entity = dao.findById(id).orElse(null);
         Assertions.assertNotNull(entity);

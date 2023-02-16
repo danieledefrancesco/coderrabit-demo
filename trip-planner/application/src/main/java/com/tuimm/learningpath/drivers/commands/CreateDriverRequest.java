@@ -13,6 +13,6 @@ public class CreateDriverRequest implements Request<Driver> {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
-    private CreateDrivingLicenseRequest drivingLicenseRequest;
+    private CreateDrivingLicenseRequest drivingLicense;
     private String citizenship;
 }

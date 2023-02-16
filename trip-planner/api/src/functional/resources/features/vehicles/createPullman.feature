@@ -7,7 +7,7 @@ Feature: Create a pullman
     When making a POST request to the "/vehicles/pullmans" endpoint
     Then the status code should be 201
     And the response should contain the new vehicle's id in the location header
-    And a pullman record should be present in the database with that id
+    And a vehicle of type pullman should be present in the database with that id
 
   Scenario Outline: Scenario Outline:When providing wrong values a 400 error should be returned
     Given a create pullman request

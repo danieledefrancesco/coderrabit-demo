@@ -1,7 +1,9 @@
 package com.tuimm.learningpath.stepdefinitions;
 
 import com.tuimm.learningpath.Driver;
+import com.tuimm.learningpath.drivers.dal.DriversDao;
 import com.tuimm.learningpath.vehicles.Garage;
+import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import io.cucumber.java.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -10,7 +12,9 @@ public class Hooks extends Definition {
     @LocalServerPort
     private int port;
     @Autowired
-    private Garage garage;
+    private VehiclesDao vehiclesDao;
+    @Autowired
+    private DriversDao driversDao;
 
     @Before
     public void initScenarioContext() {
@@ -19,7 +23,8 @@ public class Hooks extends Definition {
     }
 
     @Before
-    public void clearVehicles() {
-        garage.getAllVehicles().forEach(vehicle -> garage.delete(vehicle.getId()));
+    public void clearDatabase() {
+        vehiclesDao.deleteAll();
+        driversDao.deleteAll();
     }
 }

@@ -2,6 +2,7 @@ package com.tuimm.learningpath;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class Driver {
     private HttpResponse<String> lastResponse;
     @Setter
     private Object requestBody;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = createObjectMapper();
     private void executeRequest(HttpRequest request) {
         try {
             lastResponse = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -39,6 +40,13 @@ public class Driver {
         executeRequest(HttpRequest.newBuilder()
                 .POST(getRequestBodyAsJsonString())
                 .header("Content-Type", "application/json")
+                .uri(createUri(path))
+                .build());
+    }
+
+    public void executeDelete(String path) {
+        executeRequest(HttpRequest.newBuilder()
+                .DELETE()
                 .uri(createUri(path))
                 .build());
     }
@@ -64,5 +72,11 @@ public class Driver {
         } catch (JsonProcessingException e) {
             throw new UnsupportedOperationException(e);
         }
+    }
+
+    private static ObjectMapper createObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        return mapper;
     }
 }

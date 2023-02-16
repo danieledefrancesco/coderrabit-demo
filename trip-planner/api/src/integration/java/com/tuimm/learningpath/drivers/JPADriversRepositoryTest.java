@@ -44,7 +44,7 @@ class JPADriversRepositoryTest extends IntegrationTest {
     void getById_returnsExpectedDriver_whenDriverExists() {
         DriverEntity driverEntity = createDriverEntity();
         dao.save(driverEntity);
-        Driver driver = repository.getById(ID);
+        Driver driver = repository.findById(ID);
         assertIsExpectedDriver(driver);
     }
 
@@ -55,7 +55,7 @@ class JPADriversRepositoryTest extends IntegrationTest {
         UUID secondId = UUID.fromString("00000000-0000-0000-0000-000000000002");
         EntityNotFoundException actualException = Assertions.assertThrows(
                 EntityNotFoundException.class,
-                () -> repository.getById(secondId));
+                () -> repository.findById(secondId));
         Assertions.assertEquals("Driver with id 00000000-0000-0000-0000-000000000002 does not exist.",
                 actualException.getMessage());
     }
@@ -67,7 +67,7 @@ class JPADriversRepositoryTest extends IntegrationTest {
         int minimumAge = 18;
         LocalDate todayDate = DATE_OF_BIRTH.plusYears(minimumAge);
         when(todayDateProvider.getTodayDate()).thenReturn(todayDate);
-        Collection<Driver> drivers = repository.getByMinimumAge(minimumAge);
+        Collection<Driver> drivers = repository.findByMinimumAge(minimumAge);
         Assertions.assertEquals(1, drivers.size());
         assertIsExpectedDriver(drivers.stream().findFirst().orElseThrow());
     }
@@ -79,7 +79,7 @@ class JPADriversRepositoryTest extends IntegrationTest {
         int minimumAge = 18;
         LocalDate todayDate = DATE_OF_BIRTH.plusYears(minimumAge).plusDays(1);
         when(todayDateProvider.getTodayDate()).thenReturn(todayDate);
-        Collection<Driver> drivers = repository.getByMinimumAge(minimumAge);
+        Collection<Driver> drivers = repository.findByMinimumAge(minimumAge);
         Assertions.assertEquals(1, drivers.size());
         assertIsExpectedDriver(drivers.stream().findFirst().orElseThrow());
     }
@@ -91,7 +91,7 @@ class JPADriversRepositoryTest extends IntegrationTest {
         int minimumAge = 18;
         LocalDate todayDate = DATE_OF_BIRTH.plusYears(minimumAge).minusDays(1);
         when(todayDateProvider.getTodayDate()).thenReturn(todayDate);
-        Collection<Driver> drivers = repository.getByMinimumAge(minimumAge);
+        Collection<Driver> drivers = repository.findByMinimumAge(minimumAge);
         Assertions.assertEquals(0, drivers.size());
     }
 

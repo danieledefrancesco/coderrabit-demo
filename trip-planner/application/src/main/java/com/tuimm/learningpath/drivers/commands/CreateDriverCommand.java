@@ -2,7 +2,9 @@ package com.tuimm.learningpath.drivers.commands;
 
 import com.tuimm.learningpath.drivers.*;
 import com.tuimm.learningpath.mediator.RequestHandler;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CreateDriverCommand extends RequestHandler<CreateDriverRequest, Driver> {
     private final DriversRepository repository;
     private final DriverFactory factory;
@@ -21,8 +23,8 @@ public class CreateDriverCommand extends RequestHandler<CreateDriverRequest, Dri
                         .firstName(FirstName.from(request.getFirstName()))
                         .lastName(LastName.from(request.getLastName()))
                         .drivingLicense(DrivingLicense.builder()
-                                .code(DrivingLicenseCode.from(request.getDrivingLicenseRequest().getCode()))
-                                .expiryDate(request.getDrivingLicenseRequest().getExpiryDate())
+                                .code(DrivingLicenseCode.from(request.getDrivingLicense().getCode()))
+                                .expiryDate(request.getDrivingLicense().getExpiryDate())
                                 .build()));
         repository.add(driver);
         return driver;

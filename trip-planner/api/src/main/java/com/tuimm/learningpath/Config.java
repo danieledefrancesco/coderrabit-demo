@@ -1,5 +1,7 @@
 package com.tuimm.learningpath;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.tuimm.learningpath.drivers.DriversDtoMapper;
 import com.tuimm.learningpath.vehicles.VehiclesMapper;
 import com.tuimm.learningpath.drivers.DriverEntityMapper;
 import com.tuimm.learningpath.vehicles.VehicleEntitiesMapper;
@@ -30,7 +32,17 @@ public class Config {
     }
 
     @Bean
+    public DriversDtoMapper driversDtoMapper() {
+        return Mappers.getMapper(DriversDtoMapper.class);
+    }
+
+    @Bean
     public HttpClient httpClient() {
         return HttpClient.newBuilder().build();
+    }
+
+    @Bean
+    public com.fasterxml.jackson.databind.Module javaTimeModule() {
+        return new JavaTimeModule();
     }
 }
