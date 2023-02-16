@@ -41,7 +41,7 @@ class JPADriversRepositoryTest extends IntegrationTest {
     }
 
     @Test
-    void getById_returnsExpectedDriver_whenDriverExists() {
+    void findById_returnsExpectedDriver_whenDriverExists() {
         DriverEntity driverEntity = createDriverEntity();
         dao.save(driverEntity);
         Driver driver = repository.findById(ID);
@@ -49,7 +49,7 @@ class JPADriversRepositoryTest extends IntegrationTest {
     }
 
     @Test
-    void getById_throwsEntityNotFoundException_whenDriverDoesNotExist() {
+    void findById_throwsEntityNotFoundException_whenDriverDoesNotExist() {
         DriverEntity driverEntity = createDriverEntity();
         dao.save(driverEntity);
         UUID secondId = UUID.fromString("00000000-0000-0000-0000-000000000002");
@@ -61,37 +61,48 @@ class JPADriversRepositoryTest extends IntegrationTest {
     }
 
     @Test
-    void getByMinimumAge_shouldReturnExpectedDriver_whenDriverHasExactlyRequiredAge() {
+    void findByMinimumAgeAndValidLicense_shouldReturnExpectedDriver_whenDriverHasExactlyRequiredAgeAndValidLicense() {
         DriverEntity driverEntity = createDriverEntity();
         dao.save(driverEntity);
         int minimumAge = 18;
         LocalDate todayDate = DATE_OF_BIRTH.plusYears(minimumAge);
         when(todayDateProvider.getTodayDate()).thenReturn(todayDate);
-        Collection<Driver> drivers = repository.findByMinimumAge(minimumAge);
+        Collection<Driver> drivers = repository.findByMinimumAgeAndValidLicense(minimumAge, EXPIRY_DATE.minusDays(1));
         Assertions.assertEquals(1, drivers.size());
         assertIsExpectedDriver(drivers.stream().findFirst().orElseThrow());
     }
 
     @Test
-    void getByMinimumAge_shouldReturnExpectedDriver_whenDriverHasMoreThanRequiredAge() {
+    void findByMinimumAgeAndValidLicense_shouldReturnExpectedDriver_whenDriverHasMoreThanRequiredAgeAndValidLicense() {
         DriverEntity driverEntity = createDriverEntity();
         dao.save(driverEntity);
         int minimumAge = 18;
         LocalDate todayDate = DATE_OF_BIRTH.plusYears(minimumAge).plusDays(1);
         when(todayDateProvider.getTodayDate()).thenReturn(todayDate);
-        Collection<Driver> drivers = repository.findByMinimumAge(minimumAge);
+        Collection<Driver> drivers = repository.findByMinimumAgeAndValidLicense(minimumAge, EXPIRY_DATE.minusDays(1));
         Assertions.assertEquals(1, drivers.size());
         assertIsExpectedDriver(drivers.stream().findFirst().orElseThrow());
     }
 
     @Test
-    void getByMinimumAge_shouldReturnEmptyCollection_whenDriverHasLessThanRequiredAge() {
+    void findByMinimumAgeAndValidLicense_shouldReturnEmptyCollection_whenDriverHasLessThanRequiredAgeAndValidLicense() {
+        DriverEntity driverEntity = createDriverEntity();
+        dao.save(driverEntity);
+        int minimumAge = 18;
+        LocalDate todayDate = DATE_OF_BIRTH.plusYears(minimumAge).plusDays(1);
+        when(todayDateProvider.getTodayDate()).thenReturn(todayDate);
+        Collection<Driver> drivers = repository.findByMinimumAgeAndValidLicense(minimumAge, EXPIRY_DATE.plusDays(1));
+        Assertions.assertEquals(0, drivers.size());
+    }
+
+    @Test
+    void findByMinimumAgeAndValidLicense_shouldReturnEmptyCollection_whenDriverHasMoreThanRequiredAgeAndNoValidLicense() {
         DriverEntity driverEntity = createDriverEntity();
         dao.save(driverEntity);
         int minimumAge = 18;
         LocalDate todayDate = DATE_OF_BIRTH.plusYears(minimumAge).minusDays(1);
         when(todayDateProvider.getTodayDate()).thenReturn(todayDate);
-        Collection<Driver> drivers = repository.findByMinimumAge(minimumAge);
+        Collection<Driver> drivers = repository.findByMinimumAgeAndValidLicense(minimumAge, EXPIRY_DATE.minusDays(1));
         Assertions.assertEquals(0, drivers.size());
     }
 

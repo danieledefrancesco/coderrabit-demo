@@ -28,9 +28,9 @@ public class JPADriversRepository implements DriversRepository {
     }
 
     @Override
-    public Collection<Driver> findByMinimumAge(int minimumAge) {
+    public Collection<Driver> findByMinimumAgeAndValidLicense(int minimumAge, LocalDate tripEndDate) {
         LocalDate maxBirthdayDate = todayDateProvider.getTodayDate().minusYears(minimumAge).plusDays(1);
-        Iterable<DriverEntity> driverEntities = dao.getByDateOfBirthBefore(maxBirthdayDate);
+        Iterable<DriverEntity> driverEntities = dao.getByDateOfBirthBeforeAndDrivingLicenseExpiryDateAfter(maxBirthdayDate, tripEndDate);
         return StreamSupport.stream(driverEntities.spliterator(), false)
                 .map(driverEntityMapper::mapToDriver)
                 .toList();

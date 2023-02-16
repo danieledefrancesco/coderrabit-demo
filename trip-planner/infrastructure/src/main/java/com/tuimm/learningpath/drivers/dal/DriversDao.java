@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface DriversDao extends CrudRepository<DriverEntity, UUID> {
-    Iterable<DriverEntity> getByDateOfBirthBefore(LocalDate date);
+    Iterable<DriverEntity> getByDateOfBirthBeforeAndDrivingLicenseExpiryDateAfter(LocalDate dateOfBirth, LocalDate drivingLicenseExpiryDate);
     Optional<DriverEntity> findFirstByDrivingLicenseCode(String code);
 }
