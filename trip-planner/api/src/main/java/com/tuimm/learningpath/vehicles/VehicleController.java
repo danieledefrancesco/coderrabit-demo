@@ -1,6 +1,7 @@
 package com.tuimm.learningpath.vehicles;
 
 import com.tuimm.learningpath.mediator.Mediator;
+import com.tuimm.learningpath.vehicles.commands.DeleteVehicleRequest;
 import com.tuimm.learningpath.vehicles.dtos.*;
 import com.tuimm.learningpath.vehicles.queries.GetAllVehiclesRequest;
 import com.tuimm.learningpath.vehicles.queries.GetVehicleByIdRequest;
@@ -63,6 +64,12 @@ public class VehicleController {
     public ResponseEntity<Object> createBikeCar(@Valid @RequestBody CreateScooterRequestDto request) {
         Vehicle newVehicle = mediator.send(vehiclesMapper.mapCreateScooterRequest(request));
         return vehicleCreated(newVehicle);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteVehicle(@PathVariable("id") UUID id) {
+        mediator.send(DeleteVehicleRequest.fromId(id));
+        return ResponseEntity.noContent().build();
     }
 
     private ResponseEntity<Object> vehicleCreated(Vehicle vehicle) {

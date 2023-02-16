@@ -7,6 +7,7 @@ import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.vehicles.dtos.*;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
@@ -118,6 +119,12 @@ public class VehiclesStepsDefinition extends Definition {
                 .stream()
                 .map(VehiclesStepsDefinition::mapToScooter)
                 .forEach(garage::addVehicle);
+    }
+
+    @Then("the vehicle with id {word} should no longer exist")
+    public void theVehicleWithIdShouldNoLongerExist(String id) {
+        VehicleEntity entity = dao.findById(UUID.fromString(id)).orElse(null);
+        Assertions.assertNull(entity);
     }
 
     private static Bike mapToBike(Map<String, String> map) {
