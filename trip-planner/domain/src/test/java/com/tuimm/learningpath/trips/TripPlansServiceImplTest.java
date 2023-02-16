@@ -1,5 +1,7 @@
 package com.tuimm.learningpath.trips;
 
+import com.tuimm.learningpath.drivers.Driver;
+import com.tuimm.learningpath.drivers.DriversRepository;
 import com.tuimm.learningpath.places.GeoCoordinate;
 import com.tuimm.learningpath.places.Place;
 import com.tuimm.learningpath.places.PlacesService;
@@ -26,6 +28,7 @@ class TripPlansServiceImplTest {
     private WeatherConditionsService weatherConditionsService;
     private RoutesService routesService;
     private PlacesService placesService;
+    private DriversRepository driversRepository;
     private StagePlan.StagePlanBuilder builder;
     private static final Place ROME = Place.create("Rome",
             GeoCoordinate.of(10,10));
@@ -55,16 +58,18 @@ class TripPlansServiceImplTest {
         weatherConditionsService = mock(WeatherConditionsService.class);
         routesService = mock(RoutesService.class);
         placesService = mock(PlacesService.class);
+        driversRepository = mock(DriversRepository.class);
         builder = mock(StagePlan.StagePlanBuilder.class);
         tripPlansService = new TripPlansServiceImpl(garage,
                 weatherConditionsService,
                 placesService,
                 routesService,
+                driversRepository,
                 () -> builder);
     }
 
     @Test
-    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesExist() {
+    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesExistAndDriverExists() {
         LocalDateTime tripStart =
                 LocalDateTime.of(2023, 1, 1, 9, 0, 0);
         LocalDateTime secondStageStart =
@@ -77,19 +82,22 @@ class TripPlansServiceImplTest {
         int numberOfPeople = 2;
         TripDefinition tripDefinition = TripDefinition.create(tripStart, stageDefinitions, 2);
         Vehicle suitableVehicle = mock(Vehicle.class);
-        List<Vehicle> suitableVehicles = new LinkedList<>();
-        suitableVehicles.add(suitableVehicle);
+        DrivingPolicy drivingPolicy = DrivingPolicy.builder()
+                .drivingProfile(DrivingProfile.CAR_PROFILE)
+                .minimumDrivingAge(18)
+                .build();
+        when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
+        List<Vehicle> suitableVehicles = Collections.singletonList(suitableVehicle);
+
+        Driver driver = mock(Driver.class);
+        List<Driver> drivers = Collections.singletonList(driver);
 
         StagePlan firstStagePlan = mock(StagePlan.class);
         StagePlan secondStagePlan = mock(StagePlan.class);
 
         TripPlan expectedTripPlan = TripPlan.create(Arrays.asList(firstStagePlan, secondStagePlan));
 
-        DrivingPolicy drivingPolicy = DrivingPolicy.builder()
-                .drivingProfile(DrivingProfile.CAR_PROFILE)
-                .build();
         when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
-
         when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
         when(firstStagePlan.getArrivalDateTime()).thenReturn(secondStageStart);
 
@@ -105,6 +113,9 @@ class TripPlansServiceImplTest {
         when(weatherConditionsService.getWeatherCondition())
                 .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
 
+        when(driversRepository.findByMinimumAgeAndValidLicense(18, tripStart.toLocalDate())).thenReturn(drivers);
+        when(driversRepository.findByMinimumAgeAndValidLicense(18, secondStageStart.toLocalDate())).thenReturn(drivers);
+
         when(builder.startDateTime(tripStart)).thenReturn(builder);
         when(builder.startDateTime(secondStageStart)).thenReturn(builder);
         when(builder.numberOfPeople(tripDefinition.getNumberOfPeople())).thenReturn(builder);
@@ -113,6 +124,7 @@ class TripPlansServiceImplTest {
         when(builder.route(ROME_TO_MILAN)).thenReturn(builder);
         when(builder.route(MILAN_TO_ZURICH)).thenReturn(builder);
         when(builder.vehicle(suitableVehicle)).thenReturn(builder);
+        when(builder.driver(driver)).thenReturn(builder);
         when(builder.build()).thenReturn(firstStagePlan, secondStagePlan);
 
         TripPlan actualTripPlan = tripPlansService.planTrip(tripDefinition);
@@ -122,11 +134,13 @@ class TripPlansServiceImplTest {
         verify(garage, times(1)).getSuitableVehicles(numberOfPeople);
         verify(firstStagePlan, times(1)).getArrivalDateTime();
 
-        verify(suitableVehicle, times(2)).getDrivingPolicy();
+        verify(suitableVehicle, times(6)).getDrivingPolicy();
 
         verify(placesService, times(1)).fromName(ROME.getName());
         verify(placesService, times(2)).fromName(MILAN.getName());
         verify(placesService, times(1)).fromName(ZURICH.getName());
+
+        verify(driversRepository, times(2)).findByMinimumAgeAndValidLicense(18, tripStart.toLocalDate());
 
         verify(routesService, times(1))
                 .getRoute(ROME, MILAN, ROME_TO_MILAN.getDrivingProfile());
@@ -144,6 +158,7 @@ class TripPlansServiceImplTest {
         verify(builder, times(1)).route(ROME_TO_MILAN);
         verify(builder, times(1)).route(MILAN_TO_ZURICH);
         verify(builder, times(2)).vehicle(suitableVehicle);
+        verify(builder, times(2)).driver(driver);
         verify(builder, times(2)).build();
     }
     @Test

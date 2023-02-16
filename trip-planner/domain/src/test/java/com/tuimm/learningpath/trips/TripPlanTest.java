@@ -86,33 +86,4 @@ class TripPlanTest {
         Assertions.assertEquals(expectedArrivalDateTime, tripPlan.getArrivalDateTime());
         verify(lastStage, times(1)).getArrivalDateTime();
     }
-
-    @Test
-    void toString_shouldReturnExpectedValue() {
-        Duration tripDuration = Duration.ofSeconds(100);
-        LocalDateTime arrivalDateTime = LocalDateTime.parse("2023-01-01T09:00:00");
-        double totalPrice = 10;
-        double emissions = 15;
-
-        when(tripPlan.getTripDuration()).thenReturn(tripDuration);
-        when(tripPlan.getArrivalDateTime()).thenReturn(arrivalDateTime);
-        when(tripPlan.getTotalPrice()).thenReturn(totalPrice);
-        when(tripPlan.getTotalEmissions()).thenReturn(emissions);
-
-        String expected = String.format("TripPlan:%s", System.lineSeparator()) +
-                String.format(" duration: 100 s%s", System.lineSeparator()) +
-                String.format(" arrivalDateTime: 2023-01-01 09:00:00%s",
-                        System.lineSeparator()) +
-                String.format(" totalPrice: %f EUR%s", totalPrice, System.lineSeparator()) +
-                String.format(" totalEmissions: %f CO2%s", emissions, System.lineSeparator()) +
-                String.format(" stages: %s", stagePlans);
-
-        clearInvocations(tripPlan);
-
-        Assertions.assertEquals(expected, tripPlan.toString());
-        verify(tripPlan, times(1)).getTripDuration();
-        verify(tripPlan, times(1)).getArrivalDateTime();
-        verify(tripPlan, times(1)).getTotalPrice();
-        verify(tripPlan, times(1)).getTotalEmissions();
-    }
 }

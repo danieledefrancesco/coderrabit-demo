@@ -56,18 +56,6 @@ public abstract class Vehicle {
     public abstract double getEmissions();
     public abstract DrivingPolicy getDrivingPolicy();
 
-    @Override
-    public String toString() {
-        return String.format("%s:%s", this.getClass().getSimpleName(), System.lineSeparator()) +
-                String.format("  id: %s%s", this.getId(), System.lineSeparator()) +
-                String.format("  model: %s%s", this.getModel(), System.lineSeparator()) +
-                String.format("  maxPeople: %d%s", this.getMaxPeople(), System.lineSeparator()) +
-                String.format("  dailyRentPrice: %f EUR/d%s", this.getDailyRentPrice(), System.lineSeparator()) +
-                String.format("  averageSpeed: %f km/h%s", this.getAverageSpeed(), System.lineSeparator()) +
-                String.format("  autonomy: %f km%s", this.getAutonomy(), System.lineSeparator()) +
-                String.format("  stopTimeInSeconds: %d", this.getStopTimeInSeconds());
-    }
-
     @Accessors(fluent = true)
     @Getter
     @Setter

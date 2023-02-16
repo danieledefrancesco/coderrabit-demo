@@ -11,4 +11,7 @@ public class DrivingPolicy {
     private final DrivingProfile drivingProfile;
     private final int minimumDrivingAge;
     private final boolean suitableForBadWeather;
+    public boolean requiresDrivingLicense() {
+        return minimumDrivingAge > 0;
+    }
 }

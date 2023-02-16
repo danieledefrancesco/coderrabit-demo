@@ -152,18 +152,6 @@ abstract class EnginePoweredVehicleTest extends VehicleTest {
                 fuelConsumption);
         Assertions.assertEquals(expectedPrice, vehicle.computePrice(numberOfDays, kilometers), 0);
     }
-
-    @Override
-    protected String getExpectedToString(Vehicle vehicle) {
-        EnginePoweredVehicle enginePoweredVehicle = (EnginePoweredVehicle) vehicle;
-        return super.getExpectedToString(enginePoweredVehicle) +
-                System.lineSeparator() +
-                String.format("  plate: %s%s", enginePoweredVehicle.getPlate(), System.lineSeparator()) +
-                String.format("  fuelType: %s%s", enginePoweredVehicle.getFuelType(), System.lineSeparator()) +
-                String.format("  fuelConsumption: %f km/l%s", enginePoweredVehicle.getFuelConsumption(), System.lineSeparator()) +
-                String.format("  emissions: %f CO2/km", enginePoweredVehicle.getEmissions());
-    }
-
     @Override
     protected EnginePoweredVehicle createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy) {
         return createVehicle(id,

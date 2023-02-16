@@ -27,20 +27,6 @@ abstract class VehicleTest {
         Assertions.assertEquals(getExpectedStopTimeInSeconds(), vehicle.getStopTimeInSeconds());
         Assertions.assertEquals(getExpectedDrivingPolicy(), vehicle.getDrivingPolicy());
     }
-    
-    @Test
-    void toString_shouldReturnExpectedString() {
-        UUID expectedId = UUID.randomUUID();
-        String expectedModel = "model";
-        int expectedMaxPeople = 1;
-        double expectedDailyRentPrice = 2;
-        double expectedAverageSpeed = 2;
-        double expectedAutonomy = 4;
-
-        Vehicle vehicle = createVehicle(expectedId, expectedModel, expectedMaxPeople, expectedDailyRentPrice, expectedAverageSpeed, expectedAutonomy);
-        String expectedString = getExpectedToString(vehicle);
-        Assertions.assertEquals(expectedString, vehicle.toString());
-    }
 
     @Test
     void constructor_shouldThrowIllegalArgumentException_whenIdIsNull() {
@@ -145,18 +131,6 @@ abstract class VehicleTest {
         Assertions.assertEquals(expectedMessage,
                 actualException.getMessage());
     }
-    
-    protected String getExpectedToString(Vehicle vehicle) {
-        return String.format("%s:%s", vehicle.getClass().getSimpleName(), System.lineSeparator()) +
-                String.format("  id: %s%s", vehicle.getId(), System.lineSeparator()) +
-                String.format("  model: %s%s", vehicle.getModel(), System.lineSeparator()) +
-                String.format("  maxPeople: %d%s", vehicle.getMaxPeople(), System.lineSeparator()) +
-                String.format("  dailyRentPrice: %f EUR/d%s", vehicle.getDailyRentPrice(), System.lineSeparator()) +
-                String.format("  averageSpeed: %f km/h%s", vehicle.getAverageSpeed(), System.lineSeparator()) +
-                String.format("  autonomy: %f km%s", vehicle.getAutonomy(), System.lineSeparator()) +
-                String.format("  stopTimeInSeconds: %d", vehicle.getStopTimeInSeconds());
-    }
-
     protected abstract Vehicle createVehicle(UUID id, String model, int maxPeople, double dailyRentPrice, double averageSpeed, double autonomy);
 
     protected abstract double getExpectedAverageSpeedReductionFactor();

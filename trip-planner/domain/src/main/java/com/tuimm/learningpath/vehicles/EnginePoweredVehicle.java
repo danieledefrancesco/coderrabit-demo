@@ -31,16 +31,6 @@ public abstract class EnginePoweredVehicle extends Vehicle {
         return super.computePrice(numberOfDays, kilometers) + fuelPrice;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() +
-                System.lineSeparator() +
-                String.format("  plate: %s%s", this.getPlate(), System.lineSeparator()) +
-                String.format("  fuelType: %s%s", this.getFuelType(), System.lineSeparator()) +
-                String.format("  fuelConsumption: %f km/l%s", this.getFuelConsumption(), System.lineSeparator()) +
-                String.format("  emissions: %f CO2/km", this.getEmissions());
-    }
-
     @Getter
     @Setter
     @Accessors(fluent = true)

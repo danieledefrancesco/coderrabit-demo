@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor(staticName = "create")
@@ -36,16 +35,5 @@ public class TripPlan {
         return stages.stream()
                 .mapToDouble(StagePlan::getEmissions)
                 .sum();
-    }
-
-    public String toString() {
-        return String.format("TripPlan:%s", System.lineSeparator()) +
-                String.format(" duration: %d s%s", this.getTripDuration().toSeconds(), System.lineSeparator()) +
-                String.format(" arrivalDateTime: %s%s",
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss").format(this.getArrivalDateTime()),
-                        System.lineSeparator()) +
-                String.format(" totalPrice: %f EUR%s", this.getTotalPrice(), System.lineSeparator()) +
-                String.format(" totalEmissions: %f CO2%s", this.getTotalEmissions(), System.lineSeparator()) +
-                String.format(" stages: %s", this.stages);
     }
 }

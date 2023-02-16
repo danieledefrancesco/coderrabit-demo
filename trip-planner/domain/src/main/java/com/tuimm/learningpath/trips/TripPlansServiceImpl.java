@@ -1,5 +1,7 @@
 package com.tuimm.learningpath.trips;
 
+import com.tuimm.learningpath.drivers.Driver;
+import com.tuimm.learningpath.drivers.DriversRepository;
 import com.tuimm.learningpath.places.PlacesService;
 import com.tuimm.learningpath.places.Place;
 import com.tuimm.learningpath.routes.Route;
@@ -11,6 +13,7 @@ import com.tuimm.learningpath.weatherconditions.WeatherConditionsService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +30,8 @@ public class TripPlansServiceImpl implements TripPlansService {
     private final PlacesService placesService;
     @NonNull
     private final RoutesService routesService;
+    @NonNull
+    private final DriversRepository driversRepository;
     @NonNull
     private final Supplier<StagePlan.StagePlanBuilder> stagePlanBuilderSupplier;
 
@@ -75,12 +80,21 @@ public class TripPlansServiceImpl implements TripPlansService {
                                       WeatherCondition weatherCondition,
                                       int numberOfPeople) {
         Route route = routesService.getRoute(from, to, vehicle.getDrivingPolicy().getDrivingProfile());
+        Driver driver = getDriverForVehicle(vehicle, start.toLocalDate());
         return stagePlanBuilderSupplier.get()
                 .startDateTime(start)
                 .destinationWeatherCondition(weatherCondition)
                 .route(route)
                 .vehicle(vehicle)
                 .numberOfPeople(numberOfPeople)
+                .driver(driver)
                 .build();
+    }
+
+    private Driver getDriverForVehicle(Vehicle vehicle, LocalDate start) {
+        Collection<Driver> candidateDrivers = vehicle.getDrivingPolicy().requiresDrivingLicense() ?
+                driversRepository.findByMinimumAgeAndValidLicense(vehicle.getDrivingPolicy().getMinimumDrivingAge(), start) :
+                driversRepository.findAll();
+        return candidateDrivers.stream().findFirst().orElseThrow(UnsupportedOperationException::new);
     }
 }
