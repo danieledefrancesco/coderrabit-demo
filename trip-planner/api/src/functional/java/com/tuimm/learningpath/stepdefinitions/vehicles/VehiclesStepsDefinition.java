@@ -90,8 +90,14 @@ public class VehiclesStepsDefinition extends Definition {
     public void theResponseShouldContainTheFollowingBikes(DataTable table) {
         JsonNode response = scenarioContext.getDriver().getLastResponseAs(JsonNode.class);
         table.asMaps(String.class, String.class)
-                .forEach(row -> Assertions.assertTrue(responseContainsRow(response, row)));
+                .forEach(row -> assertResponseContainsRow(response, row));
     }
+    @Then("the response should contain the following bike")
+    public void theResponseShouldContainTheFollowingBike(DataTable table) {
+        JsonNode response = scenarioContext.getDriver().getLastResponseAs(JsonNode.class);
+        assertVehicleMatchesRow(table.asMaps(String.class, String.class).get(0), response);
+    }
+
     @Given("the existing cars")
     public void theExistingCars(DataTable table) {
         table.asMaps(String.class, String.class)
@@ -175,14 +181,16 @@ public class VehiclesStepsDefinition extends Definition {
     }
 
 
-    private static boolean responseContainsRow(JsonNode response, Map<String, String> row) {
-        return StreamSupport.stream(response.get("vehicles").spliterator(), false)
-                .anyMatch(vehicle -> vehicleMatchesRow(row, vehicle));
+    private static void assertResponseContainsRow(JsonNode response, Map<String, String> row) {
+        StreamSupport.stream(response.get("vehicles").spliterator(), false)
+                .filter(vehicle -> vehicle.get("id").asText().equals(row.get("id")))
+                .findFirst()
+                .ifPresentOrElse(vehicle -> assertVehicleMatchesRow(row, vehicle),
+                        () -> { throw new UnsupportedOperationException("no such vehicle"); });
     }
 
-    private static boolean vehicleMatchesRow(Map<String, String> row, JsonNode vehicle) {
-        return row.keySet().stream().allMatch(key ->
-                row.get(key).equals(vehicle.get(key).asText()));
+    private static void assertVehicleMatchesRow(Map<String, String> row, JsonNode vehicle) {
+        row.keySet().stream().forEach(key -> Assertions.assertEquals(row.get(key), vehicle.get(key).asText()));
     }
 
     private void prepareCreateVehicleRequest(CreateEnginePoweredVehicleRequestDto request, DataTable table) {

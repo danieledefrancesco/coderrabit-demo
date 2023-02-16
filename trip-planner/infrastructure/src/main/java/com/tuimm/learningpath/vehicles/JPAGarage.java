@@ -1,5 +1,6 @@
 package com.tuimm.learningpath.vehicles;
 
+import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,11 @@ import java.util.*;
 public class JPAGarage implements Garage {
     private final VehiclesDao vehiclesDao;
     private final VehicleEntitiesMapper vehiclesMapper;
+
+    @Override
+    public Vehicle findById(UUID id) {
+        return vehiclesMapper.mapToVehicle(getVehicleEntityOrThrowEntityNotFoundException(id));
+    }
 
     @Override
     public Collection<Vehicle> getAllVehicles() {
@@ -32,7 +38,11 @@ public class JPAGarage implements Garage {
 
     @Override
     public void delete(UUID id) {
-        vehiclesDao.deleteById(id);
+        vehiclesDao.delete(getVehicleEntityOrThrowEntityNotFoundException(id));
+    }
+
+    private VehicleEntity getVehicleEntityOrThrowEntityNotFoundException(UUID id) {
+        return vehiclesDao.findById(id).orElseThrow(() -> new EntityNotFoundException("Vehicle", id.toString()));
     }
 
     private List<Vehicle> mapToVehicles(Iterable<VehicleEntity> entities) {

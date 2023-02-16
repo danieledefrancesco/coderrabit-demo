@@ -3,19 +3,18 @@ package com.tuimm.learningpath.vehicles;
 import com.tuimm.learningpath.mediator.Mediator;
 import com.tuimm.learningpath.vehicles.dtos.*;
 import com.tuimm.learningpath.vehicles.queries.GetAllVehiclesRequest;
+import com.tuimm.learningpath.vehicles.queries.GetVehicleByIdRequest;
 import com.tuimm.learningpath.vehicles.queries.GetVehiclesResponse;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
+
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/vehicles")
@@ -37,7 +36,13 @@ public class VehicleController {
     public ResponseEntity<GetVehiclesResponseDto> getVehicles() {
         GetVehiclesResponse getVehiclesResponse = mediator.send(GetAllVehiclesRequest.create());
         GetVehiclesResponseDto responseDto = vehiclesMapper.mapGetVehiclesResponse(getVehiclesResponse);
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<VehicleResponseDto> getVehicle(@PathVariable("id") UUID id) {
+        VehicleResponseDto vehicle = vehiclesMapper.mapVehicle(mediator.send(GetVehicleByIdRequest.fromId(id)));
+        return ResponseEntity.ok(vehicle);
     }
     @PostMapping("/bikes")
     public ResponseEntity<Object> createBike(@Valid @RequestBody CreateBikeRequestDto request) {
