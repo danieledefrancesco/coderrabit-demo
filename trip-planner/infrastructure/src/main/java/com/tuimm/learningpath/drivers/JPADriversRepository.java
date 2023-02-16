@@ -43,10 +43,13 @@ public class JPADriversRepository implements DriversRepository {
 
     @Override
     public void add(Driver driver) {
-        dao.findFirstByDrivingLicenseCode(driver.getDrivingLicense().getCode().getValue())
-                .ifPresent(driverEntity -> {
-                    throw new EntityAlreadyExistsException("DrivingLicense", driver.getDrivingLicense().getCode().getValue());
-                });
+        if (driver.getDrivingLicense() != null) {
+            dao.findFirstByDrivingLicenseCode(driver.getDrivingLicense().getCode().getValue())
+                    .ifPresent(driverEntity -> {
+                        throw new EntityAlreadyExistsException("DrivingLicense", driver.getDrivingLicense().getCode().getValue());
+                    });
+        }
+
         dao.save(driverEntityMapper.mapToEntity(driver));
     }
 

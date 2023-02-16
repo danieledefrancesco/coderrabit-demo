@@ -19,7 +19,6 @@ public class Driver {
     private final LastName lastName;
     @NonNull
     private final LocalDate dateOfBirth;
-    @NonNull
     private final DrivingLicense drivingLicense;
     @NonNull
     private final Citizenship citizenship;

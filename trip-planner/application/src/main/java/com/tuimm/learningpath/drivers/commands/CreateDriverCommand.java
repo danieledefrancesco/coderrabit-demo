@@ -22,11 +22,18 @@ public class CreateDriverCommand extends RequestHandler<CreateDriverRequest, Dri
                         .dateOfBirth(request.getDateOfBirth())
                         .firstName(FirstName.from(request.getFirstName()))
                         .lastName(LastName.from(request.getLastName()))
-                        .drivingLicense(DrivingLicense.builder()
-                                .code(DrivingLicenseCode.from(request.getDrivingLicense().getCode()))
-                                .expiryDate(request.getDrivingLicense().getExpiryDate())
-                                .build()));
+                        .drivingLicense(createDrivingLicense(request.getDrivingLicense())));
         repository.add(driver);
         return driver;
+    }
+
+    private static DrivingLicense createDrivingLicense(CreateDrivingLicenseRequest request) {
+        if (request == null) {
+            return null;
+        }
+        return DrivingLicense.builder()
+                .code(DrivingLicenseCode.from(request.getCode()))
+                .expiryDate(request.getExpiryDate())
+                .build();
     }
 }

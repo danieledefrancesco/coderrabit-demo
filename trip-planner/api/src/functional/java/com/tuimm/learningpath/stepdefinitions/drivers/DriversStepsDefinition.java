@@ -71,11 +71,22 @@ public class DriversStepsDefinition extends Definition {
         scenarioContext.set(UUID.class, id);
     }
 
-    @Then("a driver should be present in the database with that id")
-    public void aDriverShouldBePresentInTheDatabaseWithThatId() {
+    @Then("a driver should be present in the database with that id and the following properties")
+    public void aDriverShouldBePresentInTheDatabaseWithThatIdAndTheFollowingProperties(DataTable table) {
+        Map<String, String> map = table.asMaps().get(0);
         UUID id = scenarioContext.get(UUID.class);
         DriverEntity entity = driversDao.findById(id).orElse(null);
         Assertions.assertNotNull(entity);
+        Assertions.assertEquals(map.get("firstName"), entity.getFirstName());
+        Assertions.assertEquals(map.get("lastName"), entity.getLastName());
+        Assertions.assertEquals(LocalDate.parse(map.get("dateOfBirth")), entity.getDateOfBirth());
+        Assertions.assertEquals(map.get("citizenship"), entity.getCitizenship());
+        if (map.get("licenseCode").equals("null")) {
+            Assertions.assertNull(entity.getDrivingLicense());
+        } else {
+            Assertions.assertEquals(map.get("licenseCode"), entity.getDrivingLicense().getCode());
+            Assertions.assertEquals(LocalDate.parse(map.get("licenseExpiryDate")), entity.getDrivingLicense().getExpiryDate());
+        }
     }
 
 
@@ -87,29 +98,33 @@ public class DriversStepsDefinition extends Definition {
     }
 
     private static DriverEntity toDriverEntity(Map<String, String> map) {
-        DrivingLicenseEntity drivingLicense = new DrivingLicenseEntity();
         DriverEntity driverEntity = new DriverEntity();
-        driverEntity.setDrivingLicense(drivingLicense);
         driverEntity.setId(UUID.fromString(map.get("id")));
         driverEntity.setFirstName(map.get("firstName"));
         driverEntity.setLastName(map.get("lastName"));
         driverEntity.setCitizenship(map.get("citizenship"));
         driverEntity.setDateOfBirth(LocalDate.parse(map.get("dateOfBirth")));
-        drivingLicense.setCode(map.get("licenseCode"));
-        drivingLicense.setExpiryDate(LocalDate.parse(map.get("licenseExpiryDate")));
+        if (!map.get("licenseCode").equals("null")) {
+            DrivingLicenseEntity drivingLicense = new DrivingLicenseEntity();
+            driverEntity.setDrivingLicense(drivingLicense);
+            drivingLicense.setCode(map.get("licenseCode"));
+            drivingLicense.setExpiryDate(LocalDate.parse(map.get("licenseExpiryDate")));
+        }
         return driverEntity;
     }
 
     private static CreateDriverRequestDto toCreateDriverRequest(Map<String, String> map) {
-        CreateDrivingLicenseRequestDto drivingLicense = new CreateDrivingLicenseRequestDto();
         CreateDriverRequestDto createDriverRequest = new CreateDriverRequestDto();
-        createDriverRequest.setDrivingLicense(drivingLicense);
         createDriverRequest.setFirstName(map.get("firstName"));
         createDriverRequest.setLastName(map.get("lastName"));
         createDriverRequest.setCitizenship(map.get("citizenship"));
         createDriverRequest.setDateOfBirth(LocalDate.parse(map.get("dateOfBirth")));
-        drivingLicense.setCode(map.get("licenseCode"));
-        drivingLicense.setExpiryDate(LocalDate.parse(map.get("licenseExpiryDate")));
+        if (!map.get("licenseCode").equals("null")) {
+            CreateDrivingLicenseRequestDto drivingLicense = new CreateDrivingLicenseRequestDto();
+            createDriverRequest.setDrivingLicense(drivingLicense);
+            drivingLicense.setCode(map.get("licenseCode"));
+            drivingLicense.setExpiryDate(LocalDate.parse(map.get("licenseExpiryDate")));
+        }
         return createDriverRequest;
     }
 }
