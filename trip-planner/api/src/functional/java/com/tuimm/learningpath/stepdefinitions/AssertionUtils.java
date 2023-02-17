@@ -14,7 +14,7 @@ public class AssertionUtils {
         for (String key : map.keySet()) {
             Assertions.assertNotNull(getNode(node, key), String.format("Field %s is not present in the response", key));
             Assertions.assertEquals(map.get(key),
-                    getNode(node, key).textValue(),
+                    getNode(node, key).asText(),
                     String.format("Check for field %s has failed", key));
         }
     }

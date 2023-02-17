@@ -51,7 +51,7 @@ public class StagePlan {
         return startDateTime.plus(getDuration());
     }
 
-    public boolean isDestinationWeatherConditionSuitableForVehicle() {
+    public boolean isVehicleNotSuitableForDestinationWeatherCondition() {
         return getDestinationWeatherCondition().isBadWeather() && !getVehicle().getDrivingPolicy().isSuitableForBadWeather();
     }
 }

@@ -1,5 +1,6 @@
 package com.tuimm.learningpath.trips.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,5 +12,6 @@ import java.util.Collection;
 public class CreateTripRequestDto {
     private LocalDateTime start;
     private Collection<CreateStageRequestDto> stages;
+    @JsonProperty("number_of_people")
     private int numberOfPeople;
 }

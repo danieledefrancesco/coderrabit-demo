@@ -31,7 +31,7 @@ public class TripsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TripResponseDto> getById(@RequestParam("id")UUID id) {
+    public ResponseEntity<TripResponseDto> getById(@PathVariable("id")UUID id) {
         TripResponseDto response = mapper.mapToTripResponseDto(mediator.send(GetTripByIdRequest.create(id)));
         return ResponseEntity.ok(response);
     }
@@ -47,7 +47,7 @@ public class TripsController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@RequestParam("id")UUID id) {
+    public ResponseEntity<Object> delete(@PathVariable("id")UUID id) {
         mediator.send(DeleteTripRequest.create(id));
         return ResponseEntity.noContent().build();
     }

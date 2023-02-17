@@ -1,4 +1,4 @@
-Feature: Get all drivers
+Feature: Get Driver by Id
 
   Scenario Outline: When retrieving a drive by id, a 200 Ok response should be returned along with the driver data, if it is stored in the database
     Given the existing drivers

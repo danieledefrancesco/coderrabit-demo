@@ -133,7 +133,7 @@ class StagePlanTest {
                 .suitableForBadWeather(false)
                 .build();
         when(vehicle.getDrivingPolicy()).thenReturn(policy);
-        Assertions.assertTrue(stagePlan.isDestinationWeatherConditionSuitableForVehicle());
+        Assertions.assertTrue(stagePlan.isVehicleNotSuitableForDestinationWeatherCondition());
         verify(vehicle, times(1)).getDrivingPolicy();
     }
 
@@ -143,13 +143,13 @@ class StagePlanTest {
                 .suitableForBadWeather(true)
                 .build();
         when(vehicle.getDrivingPolicy()).thenReturn(policy);
-        Assertions.assertFalse(stagePlan.isDestinationWeatherConditionSuitableForVehicle());
+        Assertions.assertFalse(stagePlan.isVehicleNotSuitableForDestinationWeatherCondition());
         verify(vehicle, times(1)).getDrivingPolicy();
     }
 
     @Test
     void warnForDestinationWeatherCondition_shouldReturnFalse_whenTheDestinationWeatherDoesNotRequireCoverage() {
         when(stagePlan.getDestinationWeatherCondition()).thenReturn(WeatherCondition.SUNNY);
-        Assertions.assertFalse(stagePlan.isDestinationWeatherConditionSuitableForVehicle());
+        Assertions.assertFalse(stagePlan.isVehicleNotSuitableForDestinationWeatherCondition());
     }
 }
