@@ -14,7 +14,7 @@ Feature: Get Trip by Id
     And the PETROL cost is 1.92
     And the LPG cost is 0.8
 
-  Scenario: When retrieving a trip by id, a 200 Ok response should be returned along with the driver data, if it is stored in the database
+  Scenario: When retrieving a trip by id, a 200 Ok response should be returned along trip plan data, if it is stored in the database
     Given the existing trip 20000000-0000-0000-0000-000000000001 with the following stages
       | destinationWeatherCondition | distanceInKilometers | driverId                             | drivingProfile | fromLatitude        | fromLongitude       | fromName | numberOfPeople | startDateTime       | toLatitude          | toLongitude         | toName | vehicleId                            |
       | PARTLY_SUNNY                | 276.59190000000001   | 00000000-0000-0000-0000-000000000002 | CAR_PROFILE    | 45.473702000000003  | 9.17068500000000064 | Milan    | 2              | 2023-01-01T20:37:22 | 47.3737539999999981 | 8.53708699999999965 | Zurich | 10000000-0000-0000-0000-000000000003 |
@@ -26,3 +26,8 @@ Feature: Get Trip by Id
       | Milan      | Zurich   | 276.5919                     | 10000000-0000-0000-0000-000000000003 | Panda         | 300.0            | AA000BB       | 30.0              | Car          | 4                  | 90.0                  | 100.0                    | 250                          | LPG               | 19.0                     | 00000000-0000-0000-0000-000000000002 | American           | John              | Smith            | 2001-01-01           | DEF456                      | 2025-12-12                         | 11.645974736842106 | 8297.757  | 2023-01-01T20:37:22 | PARTLY_SUNNY                  | 2                | 0              | 2023-01-02T00:02:14 | false                                                  |
       | Rome       | Milan    | 588.5171                     | 10000000-0000-0000-0000-000000000002 | SH125         | 300.0            | AA0000        | 10.0              | Scooter      | 2                  | 60.0                  | 50.0                     | 300                          | PETROL            | 25.0                     | 00000000-0000-0000-0000-000000000001 | Italian            | Mario             | Rossi            | 2006-01-01           | ABC123                      | 2023-12-12                         | 45.19811328        | 5885.171  | 2023-01-01T09:00:00 | PARTLY_SUNNY                  | 2                | 1              | 2023-01-01T20:37:22 | false                                                  |
 
+  Scenario: When retrieving a trip by id, a 404 Not Found response should be returned, if the trip is not stored in the database
+    When making a GET request to the "/trips/20000000-0000-0000-0000-000000000001" endpoint
+    Then the status code should be 404
+    And the error message should be "Trip with id 20000000-0000-0000-0000-000000000001 does not exist."
+    And the error status should be 404

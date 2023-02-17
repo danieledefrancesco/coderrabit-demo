@@ -13,6 +13,7 @@ import com.tuimm.learningpath.trips.dtos.CreateTripRequestDto;
 import com.tuimm.learningpath.trips.dtos.PreferredPlanPolicy;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
@@ -100,7 +101,28 @@ public class TripsStepsDefinition extends Definition {
         stages.forEach(stage -> AssertionUtils.assertMapMatchesJson(maps.stream()
                 .filter(map -> stage.get("start_date_time").asText().equals(map.get("start_date_time")))
                 .findFirst()
-                .get(), stage));
+                .orElseThrow(), stage));
+    }
+
+    @Then("the response should consist of one trip with id {word} and the following stages")
+    public void theResponseShouldConsistsOfOneTripWithTheFollowingStages(String tripIdAsString, DataTable table) {
+        JsonNode response = scenarioContext.getDriver().getLastResponseAs(JsonNode.class).get("trips");
+        Assertions.assertEquals(1, response.size());
+        JsonNode trip = response.get(0);
+        Assertions.assertEquals(tripIdAsString, trip.get("id").asText());
+        JsonNode stages = trip.get("plan").get("stages");
+        List<Map<String, String>> maps = table.asMaps();
+        Assertions.assertEquals(maps.size(), stages.size());
+        stages.forEach(stage -> AssertionUtils.assertMapMatchesJson(maps.stream()
+                .filter(map -> stage.get("start_date_time").asText().equals(map.get("start_date_time")))
+                .findFirst()
+                .orElseThrow(), stage));
+    }
+
+    @Then("the trip with id {word} should no longer be present in the database")
+    public void theTripWithIdShouldNoLongerBePresentInTheDatabase(String tripIdAsString) {
+        UUID tripId = UUID.fromString(tripIdAsString);
+        Assertions.assertNull(tripsDao.findById(tripId).orElse(null));
     }
 
     private void assertStagePlanEntityMatchesMap(StagePlanEntity stagePlanEntity, Map<String, String> map) {
