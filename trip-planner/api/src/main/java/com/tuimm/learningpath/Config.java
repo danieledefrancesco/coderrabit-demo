@@ -2,7 +2,10 @@ package com.tuimm.learningpath;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tuimm.learningpath.drivers.DriversDtoMapper;
-import com.tuimm.learningpath.vehicles.VehiclesMapper;
+import com.tuimm.learningpath.trips.StagePlan;
+import com.tuimm.learningpath.trips.TripEntityMapper;
+import com.tuimm.learningpath.trips.TripsDtoMapper;
+import com.tuimm.learningpath.vehicles.VehiclesDtoMapper;
 import com.tuimm.learningpath.drivers.DriverEntityMapper;
 import com.tuimm.learningpath.vehicles.VehicleEntitiesMapper;
 import org.mapstruct.factory.Mappers;
@@ -11,14 +14,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.net.http.HttpClient;
+import java.util.function.Supplier;
 
 @Configuration
 @ComponentScan("com.tuimm.learningpath")
 public class Config {
 
     @Bean
-    public VehiclesMapper vehiclesMapper() {
-        return Mappers.getMapper(VehiclesMapper.class);
+    public VehiclesDtoMapper vehiclesMapper() {
+        return Mappers.getMapper(VehiclesDtoMapper.class);
     }
 
     @Bean
@@ -37,6 +41,12 @@ public class Config {
     }
 
     @Bean
+    public TripEntityMapper tripEntityMapper() { return Mappers.getMapper(TripEntityMapper.class); }
+
+    @Bean
+    public TripsDtoMapper tripsDtoMapper() { return Mappers.getMapper(TripsDtoMapper.class); }
+
+    @Bean
     public HttpClient httpClient() {
         return HttpClient.newBuilder().build();
     }
@@ -44,5 +54,10 @@ public class Config {
     @Bean
     public com.fasterxml.jackson.databind.Module javaTimeModule() {
         return new JavaTimeModule();
+    }
+
+    @Bean
+    public Supplier<StagePlan.StagePlanBuilder> stagePlanBuilderSupplier() {
+        return StagePlan::builder;
     }
 }

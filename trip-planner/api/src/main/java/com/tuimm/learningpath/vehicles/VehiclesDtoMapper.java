@@ -9,7 +9,7 @@ import com.tuimm.learningpath.vehicles.queries.GetVehiclesResponse;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface VehiclesMapper {
+public interface VehiclesDtoMapper {
     BikeResponseDto mapBike(Bike bike);
     CarResponseDto mapCar(Car car);
     PullmanResponseDto mapPullman(Pullman pullman);

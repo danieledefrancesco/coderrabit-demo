@@ -10,7 +10,6 @@ import lombok.NonNull;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Builder
 @Getter
@@ -24,7 +23,6 @@ public class StagePlan {
     @NonNull
     private final Vehicle vehicle;
     private final int numberOfPeople;
-
     @NonNull
     private final Driver driver;
 
@@ -53,7 +51,7 @@ public class StagePlan {
         return startDateTime.plus(getDuration());
     }
 
-    public boolean warnForWeatherCondition() {
+    public boolean isDestinationWeatherConditionSuitableForVehicle() {
         return getDestinationWeatherCondition().isBadWeather() && !getVehicle().getDrivingPolicy().isSuitableForBadWeather();
     }
 }

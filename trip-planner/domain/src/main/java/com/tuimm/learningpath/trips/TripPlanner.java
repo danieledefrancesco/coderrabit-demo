@@ -1,5 +1,5 @@
 package com.tuimm.learningpath.trips;
 
-public interface TripPlansService {
+public interface TripPlanner {
     TripPlan planTrip(TripDefinition tripDefinition);
 }

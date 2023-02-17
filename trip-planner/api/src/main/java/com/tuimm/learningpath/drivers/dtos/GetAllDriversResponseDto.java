@@ -8,5 +8,5 @@ import java.util.Collection;
 @Getter
 @Setter
 public class GetAllDriversResponseDto {
-    private Collection<DriverDto> drivers;
+    private Collection<DriverResponseDto> drivers;
 }

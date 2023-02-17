@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class DriverDto {
+public class DriverResponseDto {
     private UUID id;
     @JsonProperty("first_name")
     private String firstName;

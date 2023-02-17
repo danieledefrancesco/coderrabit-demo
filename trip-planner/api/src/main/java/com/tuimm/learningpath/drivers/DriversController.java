@@ -2,7 +2,7 @@ package com.tuimm.learningpath.drivers;
 
 import com.tuimm.learningpath.drivers.commands.DeleteDriverRequest;
 import com.tuimm.learningpath.drivers.dtos.CreateDriverRequestDto;
-import com.tuimm.learningpath.drivers.dtos.DriverDto;
+import com.tuimm.learningpath.drivers.dtos.DriverResponseDto;
 import com.tuimm.learningpath.drivers.dtos.GetAllDriversResponseDto;
 import com.tuimm.learningpath.drivers.queries.GetAllDriversRequest;
 import com.tuimm.learningpath.drivers.queries.GetDriverByIdRequest;
@@ -31,8 +31,8 @@ public class DriversController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DriverDto> getSingle(@PathVariable("id")UUID id) {
-        DriverDto response = mapper.map(mediator.send(GetDriverByIdRequest.fromId(id)));
+    public ResponseEntity<DriverResponseDto> getSingle(@PathVariable("id")UUID id) {
+        DriverResponseDto response = mapper.map(mediator.send(GetDriverByIdRequest.fromId(id)));
         return ResponseEntity.ok(response);
     }
 

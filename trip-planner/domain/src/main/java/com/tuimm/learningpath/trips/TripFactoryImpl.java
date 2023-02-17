@@ -2,7 +2,9 @@ package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.RandomIdGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class TripFactoryImpl implements TripFactory {
     RandomIdGenerator randomIdGenerator;

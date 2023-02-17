@@ -1,13 +1,15 @@
 package com.tuimm.learningpath.trips;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RequiredArgsConstructor(staticName = "create")
+@Builder
+@Getter
 @EqualsAndHashCode
 public class TripPlan {
     private final List<StagePlan> stages;

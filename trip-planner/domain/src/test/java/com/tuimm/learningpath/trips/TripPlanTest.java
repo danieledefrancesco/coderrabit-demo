@@ -20,7 +20,7 @@ class TripPlanTest {
     @BeforeEach
     void setUp() {
         stagePlans = new LinkedList<>();
-        tripPlan = spy(TripPlan.create(stagePlans));
+        tripPlan = spy(TripPlan.builder().stages(stagePlans).build());
         firstStage = mock(StagePlan.class);
         lastStage = mock(StagePlan.class);
         stagePlans.add(firstStage);

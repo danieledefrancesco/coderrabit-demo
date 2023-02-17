@@ -11,6 +11,6 @@ public interface DriversDtoMapper {
     CreateDrivingLicenseRequest map(CreateDrivingLicenseRequestDto request);
     CreateDriverRequest map(CreateDriverRequestDto request);
     DrivingLicenseDto map(DrivingLicense drivingLicense);
-    DriverDto map(Driver driver);
+    DriverResponseDto map(Driver driver);
     GetAllDriversResponseDto map(GetAllDriversResponse response);
 }

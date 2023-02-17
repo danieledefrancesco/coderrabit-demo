@@ -20,11 +20,11 @@ import java.util.UUID;
 @Controller
 @RequestMapping(value = "/vehicles")
 public class VehicleController {
-    private final VehiclesMapper vehiclesMapper;
+    private final VehiclesDtoMapper vehiclesMapper;
     private final String vehicleCreatedLocationHeaderEndPath;
     private final Mediator mediator;
 
-    public VehicleController(@NonNull VehiclesMapper vehiclesMapper,
+    public VehicleController(@NonNull VehiclesDtoMapper vehiclesMapper,
                              @Value("${vehicleController.vehicleCreatedLocationHeaderEndPath}")
                              @NonNull String vehicleCreatedLocationHeaderEndPath,
                              @NonNull Mediator mediator) {

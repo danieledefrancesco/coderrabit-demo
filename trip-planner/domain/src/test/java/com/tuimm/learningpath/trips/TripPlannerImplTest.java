@@ -22,8 +22,8 @@ import java.util.*;
 
 import static org.mockito.Mockito.*;
 
-class TripPlansServiceImplTest {
-    private TripPlansServiceImpl tripPlansService;
+class TripPlannerImplTest {
+    private TripPlannerImpl tripPlansService;
     private Garage garage;
     private WeatherConditionsService weatherConditionsService;
     private RoutesService routesService;
@@ -31,11 +31,11 @@ class TripPlansServiceImplTest {
     private DriversRepository driversRepository;
     private StagePlan.StagePlanBuilder builder;
     private static final Place ROME = Place.create("Rome",
-            GeoCoordinate.of(10,10));
+            GeoCoordinate.of(10, 10));
     private static final Place MILAN = Place.create("Milan",
-            GeoCoordinate.of(15,15));
+            GeoCoordinate.of(15, 15));
     private static final Place ZURICH = Place.create("Zurich",
-            GeoCoordinate.of(20,20));
+            GeoCoordinate.of(20, 20));
 
     private static final Route ROME_TO_MILAN = Route.builder()
             .drivingProfile(DrivingProfile.CAR_PROFILE)
@@ -60,7 +60,7 @@ class TripPlansServiceImplTest {
         placesService = mock(PlacesService.class);
         driversRepository = mock(DriversRepository.class);
         builder = mock(StagePlan.StagePlanBuilder.class);
-        tripPlansService = new TripPlansServiceImpl(garage,
+        tripPlansService = new TripPlannerImpl(garage,
                 weatherConditionsService,
                 placesService,
                 routesService,
@@ -75,12 +75,24 @@ class TripPlansServiceImplTest {
         LocalDateTime secondStageStart =
                 LocalDateTime.of(2023, 1, 1, 14, 0, 0);
         List<StageDefinition> stageDefinitions = new LinkedList<>();
-        StageDefinition firstStage = StageDefinition.create(ROME.getName(), MILAN.getName(), mock(Comparator.class));
-        StageDefinition secondStage = StageDefinition.create(MILAN.getName(), ZURICH.getName(), mock(Comparator.class));
+        StageDefinition firstStage = StageDefinition.builder()
+                .from(ROME.getName())
+                .to(MILAN.getName())
+                .preferredPlanPolicy(mock(Comparator.class))
+                .build();
+        StageDefinition secondStage = StageDefinition.builder()
+                .from(MILAN.getName())
+                .to(ZURICH.getName())
+                .preferredPlanPolicy(mock(Comparator.class))
+                .build();
         stageDefinitions.add(firstStage);
         stageDefinitions.add(secondStage);
         int numberOfPeople = 2;
-        TripDefinition tripDefinition = TripDefinition.create(tripStart, stageDefinitions, 2);
+        TripDefinition tripDefinition = TripDefinition.builder()
+                .start(tripStart)
+                .stages(stageDefinitions)
+                .numberOfPeople(2)
+                .build();
         Vehicle suitableVehicle = mock(Vehicle.class);
         DrivingPolicy drivingPolicy = DrivingPolicy.builder()
                 .drivingProfile(DrivingProfile.CAR_PROFILE)
@@ -95,7 +107,7 @@ class TripPlansServiceImplTest {
         StagePlan firstStagePlan = mock(StagePlan.class);
         StagePlan secondStagePlan = mock(StagePlan.class);
 
-        TripPlan expectedTripPlan = TripPlan.create(Arrays.asList(firstStagePlan, secondStagePlan));
+        TripPlan expectedTripPlan = TripPlan.builder().stages(Arrays.asList(firstStagePlan, secondStagePlan)).build();
 
         when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
         when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
@@ -161,12 +173,15 @@ class TripPlansServiceImplTest {
         verify(builder, times(2)).driver(driver);
         verify(builder, times(2)).build();
     }
+
     @Test
     void planTrip_shouldThrowIllegalOperationException_whenNoSuitableVehicleIsAvailable() {
         StageDefinition stageDefinition = mock(StageDefinition.class);
-        TripDefinition tripDefinition = TripDefinition.create(LocalDateTime.of(2023, 1, 1, 9, 0, 0),
-                Collections.singletonList(stageDefinition),
-                2);
+        TripDefinition tripDefinition = TripDefinition.builder()
+                .start(LocalDateTime.of(2023, 1, 1, 9, 0, 0))
+                .stages(Collections.singletonList(stageDefinition))
+                .numberOfPeople(2)
+                .build();
         when(garage.getSuitableVehicles(2)).thenReturn(new LinkedList<>());
         Exception actualException = Assertions.assertThrows(UnsupportedOperationException.class,
                 () -> tripPlansService.planTrip(tripDefinition));

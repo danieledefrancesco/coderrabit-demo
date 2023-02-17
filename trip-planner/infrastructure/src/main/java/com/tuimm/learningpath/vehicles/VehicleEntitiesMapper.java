@@ -3,6 +3,7 @@ package com.tuimm.learningpath.vehicles;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper
 public interface VehicleEntitiesMapper {
@@ -14,6 +15,7 @@ public interface VehicleEntitiesMapper {
 
     Pullman mapToPullman(VehicleEntity vehicle);
 
+    @Named("mapToVehicle")
     default Vehicle mapToVehicle(VehicleEntity vehicle) {
         switch (vehicle.getType()) {
             case CAR -> {

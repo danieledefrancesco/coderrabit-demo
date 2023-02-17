@@ -1,23 +1,14 @@
 package com.tuimm.learningpath.trips;
 
-import com.tuimm.learningpath.validators.ObjectValidator;
-import com.tuimm.learningpath.validators.StringValidator;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Comparator;
 
 @Getter
+@Builder
 public class StageDefinition {
-    public static StageDefinition create(String from, String to, Comparator<StagePlan> preferredPlanPolicy) {
-        return new StageDefinition(from, to, preferredPlanPolicy);
-    }
     private final String from;
     private final String to;
     private final Comparator<StagePlan> preferredPlanPolicy;
-
-    private StageDefinition(String from, String to, Comparator<StagePlan> preferredPlanPolicy) {
-        this.from = StringValidator.create("from", from).ensureNotNull().ensureNotBlank().getValue();
-        this.to = StringValidator.create("to", to).ensureNotNull().ensureNotBlank().getValue();
-        this.preferredPlanPolicy = ObjectValidator.create("preferredPlanPolicy", preferredPlanPolicy).ensureNotNull().getValue();
-    }
 }

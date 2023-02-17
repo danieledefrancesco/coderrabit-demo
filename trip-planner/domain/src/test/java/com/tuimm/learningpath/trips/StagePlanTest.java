@@ -1,6 +1,6 @@
 package com.tuimm.learningpath.trips;
 
-import com.tuimm.learningpath.places.Place;
+import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.routes.Route;
 import com.tuimm.learningpath.vehicles.DrivingPolicy;
 import com.tuimm.learningpath.vehicles.Vehicle;
@@ -18,6 +18,7 @@ class StagePlanTest {
     private StagePlan stagePlan;
     private Route route;
     private Vehicle vehicle;
+    private Driver driver;
     private final LocalDateTime startDateTime = LocalDateTime.of(2023, 1, 1, 9, 0, 0);
     private final WeatherCondition weatherCondition = WeatherCondition.RAINY;
     private final int numberOfPeople = 3;
@@ -26,6 +27,7 @@ class StagePlanTest {
     void setUp() {
         route = mock(Route.class);
         vehicle = mock(Vehicle.class);
+        driver = mock(Driver.class);
         stagePlan = spy(StagePlan
                 .builder()
                 .vehicle(vehicle)
@@ -33,6 +35,7 @@ class StagePlanTest {
                 .destinationWeatherCondition(weatherCondition)
                 .startDateTime(startDateTime)
                 .numberOfPeople(numberOfPeople)
+                .driver(driver)
                 .build());
     }
 
@@ -130,7 +133,7 @@ class StagePlanTest {
                 .suitableForBadWeather(false)
                 .build();
         when(vehicle.getDrivingPolicy()).thenReturn(policy);
-        Assertions.assertTrue(stagePlan.warnForWeatherCondition());
+        Assertions.assertTrue(stagePlan.isDestinationWeatherConditionSuitableForVehicle());
         verify(vehicle, times(1)).getDrivingPolicy();
     }
 
@@ -140,13 +143,13 @@ class StagePlanTest {
                 .suitableForBadWeather(true)
                 .build();
         when(vehicle.getDrivingPolicy()).thenReturn(policy);
-        Assertions.assertFalse(stagePlan.warnForWeatherCondition());
+        Assertions.assertFalse(stagePlan.isDestinationWeatherConditionSuitableForVehicle());
         verify(vehicle, times(1)).getDrivingPolicy();
     }
 
     @Test
     void warnForDestinationWeatherCondition_shouldReturnFalse_whenTheDestinationWeatherDoesNotRequireCoverage() {
         when(stagePlan.getDestinationWeatherCondition()).thenReturn(WeatherCondition.SUNNY);
-        Assertions.assertFalse(stagePlan.warnForWeatherCondition());
+        Assertions.assertFalse(stagePlan.isDestinationWeatherConditionSuitableForVehicle());
     }
 }

@@ -12,6 +12,7 @@ import com.tuimm.learningpath.weatherconditions.WeatherCondition;
 import com.tuimm.learningpath.weatherconditions.WeatherConditionsService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,8 +21,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
+@Component
 @RequiredArgsConstructor
-public class TripPlansServiceImpl implements TripPlansService {
+public class TripPlannerImpl implements TripPlanner {
     @NonNull
     private final Garage garage;
     @NonNull
@@ -47,7 +49,9 @@ public class TripPlansServiceImpl implements TripPlansService {
             start = stagePlan.getArrivalDateTime();
             stages.add(stagePlan);
         }
-        return TripPlan.create(stages);
+        return TripPlan.builder()
+                .stages(stages)
+                .build();
     }
 
     private Collection<Vehicle> ensureSuitableVehicles(TripDefinition tripDefinition) {
