@@ -23,6 +23,8 @@ public class GenericHttpStepsDefinition extends Definition {
 
     @Then("the status code should be {int}")
     public void theStatusCodeShouldBe(int expectedStatusCode) {
-        Assertions.assertEquals(expectedStatusCode, scenarioContext.getDriver().getLastResponse().statusCode());
+        Assertions.assertEquals(expectedStatusCode,
+                scenarioContext.getDriver().getLastResponse().statusCode(),
+                String.format("The reponse body is: %s", scenarioContext.getDriver().getLastResponse().body()));
     }
 }

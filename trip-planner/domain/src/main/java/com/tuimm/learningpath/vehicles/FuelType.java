@@ -6,7 +6,7 @@ public enum FuelType {
     public double getCost() {
         return cost;
     }
-    void setCost(double cost) {
+    public void setCost(double cost) {
         if (cost <= 0) {
             throw new IllegalArgumentException("cost must be greater than 0");
         }

@@ -35,6 +35,7 @@ public interface TripEntityMapper {
     @Mapping(target = "toLatitude", source = "stagePlan.route.to.geoCoordinate.latitude")
     @Mapping(target = "toLongitude", source = "stagePlan.route.to.geoCoordinate.longitude")
     @Mapping(target = "distanceInKilometers", source = "stagePlan.route.distanceInKilometers")
+    @Mapping(target = "drivingProfile", source = "stagePlan.route.drivingProfile")
     @Mapping(target = "destinationWeatherCondition", source = "stagePlan.destinationWeatherCondition")
     @Mapping(target = "numberOfPeople", source = "stagePlan.numberOfPeople")
     @Mapping(target = "vehicle", source = "stagePlan.vehicle")

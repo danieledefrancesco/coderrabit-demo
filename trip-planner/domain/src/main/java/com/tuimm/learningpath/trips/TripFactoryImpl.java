@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TripFactoryImpl implements TripFactory {
-    RandomIdGenerator randomIdGenerator;
+    private final RandomIdGenerator randomIdGenerator;
     @Override
     public Trip create(TripPlan plan) {
         return Trip.builder()

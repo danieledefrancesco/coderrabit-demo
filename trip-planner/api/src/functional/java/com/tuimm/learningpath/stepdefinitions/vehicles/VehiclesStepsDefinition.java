@@ -127,6 +127,11 @@ public class VehiclesStepsDefinition extends Definition {
         Assertions.assertNull(entity);
     }
 
+    @Given("the {word} cost is {double}")
+    public void theFuelCostIs(String fuelType, double cost) {
+        FuelType.valueOf(fuelType).setCost(cost);
+    }
+
     private static Bike mapToBike(Map<String, String> map) {
         return Bike.builder()
                 .id(UUID.fromString(map.get("id")))
@@ -197,7 +202,7 @@ public class VehiclesStepsDefinition extends Definition {
     }
 
     private static void assertVehicleMatchesRow(Map<String, String> row, JsonNode vehicle) {
-        row.keySet().stream().forEach(key -> Assertions.assertEquals(row.get(key), vehicle.get(key).asText()));
+        row.keySet().forEach(key -> Assertions.assertEquals(row.get(key), vehicle.get(key).asText()));
     }
 
     private void prepareCreateVehicleRequest(CreateEnginePoweredVehicleRequestDto request, DataTable table) {
