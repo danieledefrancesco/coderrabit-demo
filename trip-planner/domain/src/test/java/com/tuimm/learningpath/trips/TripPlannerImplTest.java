@@ -69,7 +69,16 @@ class TripPlannerImplTest {
     }
 
     @Test
-    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesExistAndDriverExists() {
+    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesThatRequiresDrivingLicenseExistAndDriverExists() {
+        testPlanTripInternal(18);
+    }
+
+    @Test
+    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesThatDoesNotRequireDrivingLicenseExistAndDriverExists() {
+        testPlanTripInternal(0);
+    }
+
+    private void testPlanTripInternal(int minimumDrivingAge) {
         LocalDateTime tripStart =
                 LocalDateTime.of(2023, 1, 1, 9, 0, 0);
         LocalDateTime secondStageStart =
@@ -96,7 +105,7 @@ class TripPlannerImplTest {
         Vehicle suitableVehicle = mock(Vehicle.class);
         DrivingPolicy drivingPolicy = DrivingPolicy.builder()
                 .drivingProfile(DrivingProfile.CAR_PROFILE)
-                .minimumDrivingAge(18)
+                .minimumDrivingAge(minimumDrivingAge)
                 .build();
         when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
         List<Vehicle> suitableVehicles = Collections.singletonList(suitableVehicle);
@@ -125,8 +134,8 @@ class TripPlannerImplTest {
         when(weatherConditionsService.getWeatherCondition())
                 .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
 
-        when(driversRepository.findByMinimumAgeAndValidLicense(18, tripStart.toLocalDate())).thenReturn(drivers);
-        when(driversRepository.findByMinimumAgeAndValidLicense(18, secondStageStart.toLocalDate())).thenReturn(drivers);
+        when(driversRepository.findByMinimumAgeAndValidLicense(minimumDrivingAge, tripStart.toLocalDate())).thenReturn(drivers);
+        when(driversRepository.findAll()).thenReturn(drivers);
 
         when(builder.startDateTime(tripStart)).thenReturn(builder);
         when(builder.startDateTime(secondStageStart)).thenReturn(builder);
@@ -146,13 +155,11 @@ class TripPlannerImplTest {
         verify(garage, times(1)).getSuitableVehicles(numberOfPeople);
         verify(firstStagePlan, times(1)).getArrivalDateTime();
 
-        verify(suitableVehicle, times(6)).getDrivingPolicy();
+        verify(suitableVehicle, atLeastOnce()).getDrivingPolicy();
 
         verify(placesService, times(1)).fromName(ROME.getName());
         verify(placesService, times(2)).fromName(MILAN.getName());
         verify(placesService, times(1)).fromName(ZURICH.getName());
-
-        verify(driversRepository, times(2)).findByMinimumAgeAndValidLicense(18, tripStart.toLocalDate());
 
         verify(routesService, times(1))
                 .getRoute(ROME, MILAN, ROME_TO_MILAN.getDrivingProfile());
