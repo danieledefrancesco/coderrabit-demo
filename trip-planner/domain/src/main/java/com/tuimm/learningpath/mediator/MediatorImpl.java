@@ -18,7 +18,10 @@ public class MediatorImpl implements Mediator {
         RequestHandler<?,?> candidate = requestHandlers.stream()
                 .filter(handler -> handler.getRequestType().equals(request.getClass()))
                 .findFirst()
-                .orElseThrow(UnsupportedOperationException::new);
+                .orElseThrow(() -> {
+                    throw new UnsupportedOperationException(String.format("No handler found for request of type %s.",
+                            request.getClass().getSimpleName()));
+                });
         return (T2) candidate.handleInternal(request);
     }
 }
