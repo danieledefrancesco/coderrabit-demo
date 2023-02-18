@@ -16,9 +16,9 @@ public class TripDefinition {
     private final List<StageDefinition> stages;
     private final int numberOfPeople;
 
-    protected TripDefinition(LocalDateTime start, List<StageDefinition> stages, int numberOfPeople) {
-        this.start = ObjectValidator.create("start", start).ensureNotNull().getValue();
-        this.stages = CollectionValidator.create("stages", stages).ensureNotNull().ensureNotEmpty().ensureAllNotNull().getValue();
-        this.numberOfPeople = NumberValidator.create("numberOfPeople", numberOfPeople).ensureGreaterThen(0).getValue();
+    protected TripDefinition(TripDefinition.TripDefinitionBuilder<?,?> builder) {
+        this.start = ObjectValidator.create("start", builder.start).ensureNotNull().getValue();
+        this.stages = CollectionValidator.create("stages", builder.stages).ensureNotNull().ensureNotEmpty().ensureAllNotNull().getValue();
+        this.numberOfPeople = NumberValidator.create("numberOfPeople", builder.numberOfPeople).ensureGreaterThen(0).getValue();
     }
 }
