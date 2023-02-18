@@ -12,9 +12,4 @@ public enum FuelType {
         }
         this.cost = cost;
     }
-    @Override
-    public String toString()
-    {
-        return String.format("%s - %f EUR/l", this.name(), this.getCost());
-    }
 }

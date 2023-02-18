@@ -17,9 +17,4 @@ public abstract class Plate {
                 .getValue();
     }
     protected abstract String getPlateRegex();
-
-    @Override
-    public String toString() {
-        return value;
-    }
 }
