@@ -32,7 +32,7 @@ public class TripsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TripResponseDto> getById(@PathVariable("id")UUID id) {
-        TripResponseDto response = mapper.mapToTripResponseDto(mediator.send(GetTripByIdRequest.create(id)));
+        TripResponseDto response = mapper.mapToTripResponseDto(mediator.send(GetTripByIdRequest.fromId(id)));
         return ResponseEntity.ok(response);
     }
 

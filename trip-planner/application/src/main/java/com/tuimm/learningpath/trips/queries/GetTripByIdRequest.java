@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
-@RequiredArgsConstructor(staticName = "create")
+@RequiredArgsConstructor(staticName = "fromId")
 @Getter
 public class GetTripByIdRequest implements Request<Trip> {
     private final UUID tripId;
