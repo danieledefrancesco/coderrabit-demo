@@ -1,16 +1,23 @@
 package com.tuimm.learningpath.vehicles;
 
+import com.tuimm.learningpath.validators.ObjectValidator;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
+@SuperBuilder
+@Getter
 public class Scooter extends EnginePoweredVehicle {
+
+    private final ScooterPlate plate;
+    protected Scooter(ScooterBuilder<?,?> builder) {
+        super(builder);
+        plate = ObjectValidator.create("plate", builder.plate).ensureNotNull().getValue();
+    }
     private static final DrivingPolicy DRIVING_POLICY = DrivingPolicy.builder()
             .drivingProfile(DrivingProfile.CAR_PROFILE)
             .minimumDrivingAge(16)
             .suitableForBadWeather(false)
             .build();
-
-
-    public Scooter(Builder builder) {
-        super(builder);
-    }
 
     @Override
     protected double getAverageSpeedReductionFactor() {
@@ -20,19 +27,5 @@ public class Scooter extends EnginePoweredVehicle {
     @Override
     public DrivingPolicy getDrivingPolicy() {
         return Scooter.DRIVING_POLICY;
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder extends EnginePoweredVehicle.Builder<Scooter, ScooterPlate> {
-        private Builder() {
-
-        }
-        @Override
-        public Scooter build() {
-            return new Scooter(this);
-        }
     }
 }

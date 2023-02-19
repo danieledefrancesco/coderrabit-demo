@@ -33,7 +33,7 @@ class VehicleEntityMapperTest {
     void mapToEntity_shouldInvokeMapToEntityCar_whenVehicleIsCar() {
         VehicleEntity entity = new VehicleEntity();
         Vehicle vehicle = mock(Car.class);
-        when(((Car)vehicle).getPlate()).thenReturn(mock(Plate.class));
+        when(((Car)vehicle).getPlate()).thenReturn(mock(GenericPlate.class));
         when(mapper.mapToEntity((Car) vehicle)).thenReturn(entity);
 
         clearInvocations(mapper);
@@ -45,7 +45,7 @@ class VehicleEntityMapperTest {
     void mapToEntity_shouldInvokeMapToEntityPullman_whenVehicleIsPullman() {
         VehicleEntity entity = new VehicleEntity();
         Vehicle vehicle = mock(Pullman.class);
-        when(((Pullman)vehicle).getPlate()).thenReturn(mock(Plate.class));
+        when(((Pullman)vehicle).getPlate()).thenReturn(mock(GenericPlate.class));
         when(mapper.mapToEntity((Pullman) vehicle)).thenReturn(entity);
 
         clearInvocations(mapper);
@@ -57,7 +57,7 @@ class VehicleEntityMapperTest {
     void mapToEntity_shouldInvokeMapToEntityScooter_whenVehicleIsScooter() {
         VehicleEntity entity = new VehicleEntity();
         Vehicle vehicle = mock(Scooter.class);
-        when(((Scooter)vehicle).getPlate()).thenReturn(mock(Plate.class));
+        when(((Scooter)vehicle).getPlate()).thenReturn(mock(ScooterPlate.class));
         when(mapper.mapToEntity((Scooter) vehicle)).thenReturn(entity);
 
         clearInvocations(mapper);

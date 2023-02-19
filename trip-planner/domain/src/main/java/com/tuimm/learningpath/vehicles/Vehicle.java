@@ -5,25 +5,23 @@ import com.tuimm.learningpath.validators.StringValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
+@SuperBuilder
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Vehicle {
     @EqualsAndHashCode.Include
-    @NonNull
     private final UUID id;
-    @NonNull
     private final String model;
     private final int maxPeople;
     private final double dailyRentPrice;
     private final double averageSpeed;
     private final double autonomy;
 
-    protected Vehicle(Builder<?> builder) {
+    protected Vehicle(VehicleBuilder<?,?> builder) {
         this.id = ObjectValidator.create("id", builder.id).ensureNotNull().getValue();
         this.model = StringValidator.create("model", builder.model).ensureNotNull().ensureNotBlank().getValue();
         this.maxPeople = NumberValidator.create("maxPeople", builder.maxPeople).ensureGreaterThen(0).getValue();
@@ -55,18 +53,4 @@ public abstract class Vehicle {
     public abstract int getStopTimeInSeconds();
     public abstract double getEmissions();
     public abstract DrivingPolicy getDrivingPolicy();
-
-    @Accessors(fluent = true)
-    @Getter
-    @Setter
-    public abstract static class Builder<T extends Vehicle> {
-        private UUID id;
-        private String model;
-        private int maxPeople;
-        private double dailyRentPrice;
-        private double averageSpeed;
-        private double autonomy;
-
-        public abstract T build();
-    }
 }

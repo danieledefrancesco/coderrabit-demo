@@ -14,32 +14,32 @@ public class VehicleFactoryImpl implements VehicleFactory {
     private final RandomIdGenerator randomIdGenerator;
 
     @Override
-    public Bike createBike(Consumer<Bike.Builder> builderDirector) {
-        Bike.Builder builder = Bike.builder();
+    public Bike createBike(Consumer<Bike.BikeBuilder<?, ?>> builderDirector) {
+        Bike.BikeBuilder<?, ?> builder = Bike.builder();
         builderDirector.accept(builder);
         builder.id(randomIdGenerator.generateRandomId());
         return builder.build();
     }
 
     @Override
-    public Car createCar(Consumer<Car.Builder> builderDirector) {
-        Car.Builder builder = Car.builder();
+    public Car createCar(Consumer<Car.CarBuilder<?, ?>> builderDirector) {
+        Car.CarBuilder<?, ?> builder = Car.builder();
         builderDirector.accept(builder);
         builder.id(randomIdGenerator.generateRandomId());
         return builder.build();
     }
 
     @Override
-    public Pullman createPullman(Consumer<Pullman.Builder> builderDirector) {
-        Pullman.Builder builder = Pullman.builder();
+    public Pullman createPullman(Consumer<Pullman.PullmanBuilder<?, ?>> builderDirector) {
+        Pullman.PullmanBuilder<?, ?> builder = Pullman.builder();
         builderDirector.accept(builder);
         builder.id(randomIdGenerator.generateRandomId());
         return builder.build();
     }
 
     @Override
-    public Scooter createScooter(Consumer<Scooter.Builder> builderDirector) {
-        Scooter.Builder builder = Scooter.builder();
+    public Scooter createScooter(Consumer<Scooter.ScooterBuilder<?, ?>> builderDirector) {
+        Scooter.ScooterBuilder<?, ?> builder = Scooter.builder();
         builderDirector.accept(builder);
         builder.id(randomIdGenerator.generateRandomId());
         return builder.build();

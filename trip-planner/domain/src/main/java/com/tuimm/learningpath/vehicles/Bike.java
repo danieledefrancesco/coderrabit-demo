@@ -1,15 +1,14 @@
 package com.tuimm.learningpath.vehicles;
 
+import lombok.experimental.SuperBuilder;
+
+@SuperBuilder
 public class Bike extends Vehicle {
     private static final DrivingPolicy DRIVING_POLICY = DrivingPolicy.builder()
             .suitableForBadWeather(false)
             .minimumDrivingAge(0)
             .drivingProfile(DrivingProfile.BIKE_PROFILE)
             .build();
-
-    private Bike(Builder builder) {
-        super(builder);
-    }
 
     @Override
     double getAverageSpeedReductionFactor() {
@@ -29,19 +28,5 @@ public class Bike extends Vehicle {
     @Override
     public DrivingPolicy getDrivingPolicy() {
         return Bike.DRIVING_POLICY;
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder extends Vehicle.Builder<Bike> {
-        private Builder() {
-
-        }
-        @Override
-        public Bike build() {
-            return new Bike(this);
-        }
     }
 }
