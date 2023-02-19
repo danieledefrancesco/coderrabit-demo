@@ -2,10 +2,7 @@ package com.tuimm.learningpath.trips.dal;
 
 import com.tuimm.learningpath.drivers.dal.DriverEntity;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +12,7 @@ import java.util.UUID;
 @Embeddable
 @Getter
 @Setter
+@Table(name = "stage_plans")
 public class StagePlanEntity {
     @Column(name = "trip_id")
     private UUID tripId;

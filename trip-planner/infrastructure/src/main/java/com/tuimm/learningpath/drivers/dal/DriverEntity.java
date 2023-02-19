@@ -10,6 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name = "drivers")
 public class DriverEntity {
     @Id
     private UUID id;
