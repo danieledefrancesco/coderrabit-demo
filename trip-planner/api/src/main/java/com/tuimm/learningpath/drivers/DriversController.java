@@ -26,7 +26,7 @@ public class DriversController {
 
     @GetMapping
     public ResponseEntity<GetAllDriversResponseDto> getAll() {
-        GetAllDriversResponseDto response = mapper.map(mediator.send(new GetAllDriversRequest()));
+        GetAllDriversResponseDto response = mapper.map(mediator.send(GetAllDriversRequest.create()));
         return ResponseEntity.ok(response);
     }
 
