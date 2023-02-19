@@ -48,7 +48,7 @@ public class TripsController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id")UUID id) {
-        mediator.send(DeleteTripRequest.create(id));
+        mediator.send(DeleteTripRequest.fromId(id));
         return ResponseEntity.noContent().build();
     }
 }
