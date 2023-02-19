@@ -1,6 +1,7 @@
 package com.tuimm.learningpath.vehicles;
 
 import com.tuimm.learningpath.IntegrationTest;
+import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import org.junit.jupiter.api.Assertions;
@@ -30,6 +31,24 @@ class JPAGarageTest extends IntegrationTest {
     @BeforeEach
     public void cleanUp() {
         dao.deleteAll();
+    }
+
+    @Test
+    void findById_shouldReturnExpectedVehicle_ifVehicleExists() {
+        UUID vehicleId = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        int maxPeople = 2;
+        VehicleEntity vehicleEntity = createVehicle(vehicleId, VehicleEntity.VehicleType.CAR, maxPeople);
+        dao.save(vehicleEntity);
+        Vehicle vehicle = garage.findById(vehicleId);
+        assertVehicleHasExpectedValues((EnginePoweredVehicle) vehicle, vehicleId, maxPeople);
+    }
+
+    @Test
+    void findById_shouldThrowEntityNotFoundException_ifVehicleDoesNotExist() {
+        UUID vehicleId = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        EntityNotFoundException exception = Assertions.assertThrows(EntityNotFoundException.class,
+                () -> garage.findById(vehicleId));
+        Assertions.assertEquals("Vehicle with id 00000000-0000-0000-0000-000000000001 does not exist.", exception.getMessage());
     }
 
     @Test
