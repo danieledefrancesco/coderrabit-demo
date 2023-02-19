@@ -1,6 +1,5 @@
 package com.tuimm.learningpath.trips.commands;
 
-import com.tuimm.learningpath.drivers.commands.DeleteDriverRequest;
 import com.tuimm.learningpath.trips.TripsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
