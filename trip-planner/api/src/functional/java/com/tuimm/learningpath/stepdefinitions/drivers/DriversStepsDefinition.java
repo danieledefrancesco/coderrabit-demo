@@ -118,7 +118,9 @@ public class DriversStepsDefinition extends Definition {
         createDriverRequest.setFirstName(map.get("firstName"));
         createDriverRequest.setLastName(map.get("lastName"));
         createDriverRequest.setCitizenship(map.get("citizenship"));
-        createDriverRequest.setDateOfBirth(LocalDate.parse(map.get("dateOfBirth")));
+        if (map.get("dateOfBirth") != null && !map.get("dateOfBirth").isBlank()) {
+            createDriverRequest.setDateOfBirth(LocalDate.parse(map.get("dateOfBirth")));
+        }
         if (!map.get("licenseCode").equals("null")) {
             CreateDrivingLicenseRequestDto drivingLicense = new CreateDrivingLicenseRequestDto();
             createDriverRequest.setDrivingLicense(drivingLicense);
