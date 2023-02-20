@@ -19,7 +19,7 @@ Feature: Create Trip
     And today is 2023-01-01
 
   Scenario: When a trip is correctly created then its ID is returned.
-    Given the need to plan a trip for 2 people starting the 2023-01-01 at 09:00 and consisting of the following stages
+    Given the need to plan a trip for 2 people starting the "2023-01-01" at "09:00" and consisting of the following stages
       | from  | to     | preferredPlanPolicy |
       | Rome  | Milan  | LEAST_POLLUTING     |
       | Milan | Zurich | FASTEST             |
@@ -30,3 +30,25 @@ Feature: Create Trip
       | destinationWeatherCondition | distanceInKilometers | driverId                             | drivingProfile | fromLatitude        | fromLongitude       | fromName | numberOfPeople | startDateTime       | toLatitude          | toLongitude         | toName | vehicleId                            |
       | PARTLY_SUNNY                | 276.59190000000001   | 00000000-0000-0000-0000-000000000002 | CAR_PROFILE    | 45.473702000000003  | 9.17068500000000064 | Milan    | 2              | 2023-01-01T20:37:22 | 47.3737539999999981 | 8.53708699999999965 | Zurich | 10000000-0000-0000-0000-000000000003 |
       | PARTLY_SUNNY                | 588.517100000000028  | 00000000-0000-0000-0000-000000000001 | CAR_PROFILE    | 41.8782429999999977 | 12.5280900000000006 | Rome     | 2              | 2023-01-01T09:00:00 | 45.473702000000003  | 9.17068500000000064 | Milan  | 10000000-0000-0000-0000-000000000002 |
+
+  Scenario Outline: When providing invalid values then a 400 Bad Response is returned.
+    Given the need to plan a trip for <numberOfPeople> people starting the "<startDate>" at "<startTime>" and consisting of the following stages
+      | from   | to   | preferredPlanPolicy |
+      | <from> | <to> | LEAST_POLLUTING     |
+    When making a POST request to the "/trips" endpoint
+    Then the status code should be 400
+    And the error status should be 400
+    Examples:
+      | numberOfPeople | startDate  | startTime | from | to    |
+      | -1             | 2023-01-01 | 09:00:00  | Rome | Milan |
+      | 0              | 2023-01-01 | 09:00:00  | Rome | Milan |
+      | 1              |            |           | Rome | Milan |
+      | 1              | 2023-01-01 | 09:00:00  |      | Milan |
+      | 1              | 2023-01-01 | 09:00:00  | Rome |       |
+
+  Scenario: When providing no stages then a 400 Bad Response is returned.
+    Given the need to plan a trip for 1 people starting the "2023-01-01" at "09:00:00" and consisting of the following stages
+      | from | to | preferredPlanPolicy |
+    When making a POST request to the "/trips" endpoint
+    Then the status code should be 400
+    And the error status should be 400

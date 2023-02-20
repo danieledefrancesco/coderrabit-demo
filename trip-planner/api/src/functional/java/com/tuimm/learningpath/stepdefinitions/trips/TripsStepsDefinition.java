@@ -38,11 +38,14 @@ public class TripsStepsDefinition extends Definition {
     @Autowired
     private VehiclesDao vehiclesDao;
 
-    @Given("the need to plan a trip for {int} people starting the {word} at {word} and consisting of the following stages")
+    @Given("the need to plan a trip for {int} people starting the {string} at {string} and consisting of the following stages")
     public void theNeedToPlanATripForPeopleStartingTheAtAndConsistingOfTheFollowingStages(int numberOfPeople, String startDateString, String startTimeString, DataTable dataTable) {
-        LocalDate startDate = LocalDate.parse(startDateString);
-        LocalTime startTime = LocalTime.parse(startTimeString);
-        LocalDateTime startDateTime = startDate.atTime(startTime);
+        LocalDateTime startDateTime = null;
+        if (startDateString != null && !startDateString.isBlank()) {
+            LocalDate startDate = LocalDate.parse(startDateString);
+            LocalTime startTime = LocalTime.parse(startTimeString);
+            startDateTime = startDate.atTime(startTime);
+        }
         Collection<CreateStageRequestDto> stages = dataTable.asMaps()
                 .stream()
                 .map(TripsStepsDefinition::mapToCreateStageRequestDto)
