@@ -13,6 +13,7 @@ import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
@@ -93,6 +94,7 @@ public class VehiclesStepsDefinition extends Definition {
         table.asMaps(String.class, String.class)
                 .forEach(row -> assertResponseContainsRow(response, row));
     }
+
     @Then("the response should contain the following bike")
     public void theResponseShouldContainTheFollowingBike(DataTable table) {
         JsonNode response = scenarioContext.getDriver().getLastResponseAs(JsonNode.class);
@@ -106,6 +108,7 @@ public class VehiclesStepsDefinition extends Definition {
                 .map(VehiclesStepsDefinition::mapToCar)
                 .forEach(garage::addVehicle);
     }
+
     @Given("the existing pullmans")
     public void theExistingPullmans(DataTable table) {
         table.asMaps(String.class, String.class)
@@ -113,6 +116,7 @@ public class VehiclesStepsDefinition extends Definition {
                 .map(VehiclesStepsDefinition::mapToPullman)
                 .forEach(garage::addVehicle);
     }
+
     @Given("the existing scooters")
     public void theExistingScooters(DataTable table) {
         table.asMaps(String.class, String.class)
@@ -130,6 +134,17 @@ public class VehiclesStepsDefinition extends Definition {
     @Given("the {word} cost is {double}")
     public void theFuelCostIs(String fuelType, double cost) {
         FuelType.valueOf(fuelType).setCost(cost);
+    }
+
+    @Then("the response should contain the following fuel types")
+    public void theResponseShouldContainTheFollowingFuelTypes(DataTable table) {
+        GetAllFuelTypesResponseDto getAllFuelTypesResponseDto = scenarioContext.getDriver().getLastResponseAs(GetAllFuelTypesResponseDto.class);
+        Collection<Map<String, String>> expectedFuelTypes = table.asMaps();
+        for (Map<String, String> expectedFuelType : expectedFuelTypes) {
+            Assertions.assertTrue(getAllFuelTypesResponseDto.getFuelTypes().stream().anyMatch(actualFuelType ->
+                    actualFuelType.getCost() == Double.parseDouble(expectedFuelType.get("cost")) &&
+                            actualFuelType.getName().equals(expectedFuelType.get("name"))));
+        }
     }
 
     private static Bike mapToBike(Map<String, String> map) {
@@ -198,7 +213,9 @@ public class VehiclesStepsDefinition extends Definition {
                 .filter(vehicle -> vehicle.get("id").asText().equals(row.get("id")))
                 .findFirst()
                 .ifPresentOrElse(vehicle -> assertVehicleMatchesRow(row, vehicle),
-                        () -> { throw new UnsupportedOperationException("no such vehicle"); });
+                        () -> {
+                            throw new UnsupportedOperationException("no such vehicle");
+                        });
     }
 
     private static void assertVehicleMatchesRow(Map<String, String> row, JsonNode vehicle) {

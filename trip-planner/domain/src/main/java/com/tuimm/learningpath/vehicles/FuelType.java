@@ -12,4 +12,7 @@ public enum FuelType {
         }
         this.cost = cost;
     }
+    public String getName() {
+        return name();
+    }
 }

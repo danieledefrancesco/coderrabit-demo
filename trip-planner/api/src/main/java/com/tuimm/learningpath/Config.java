@@ -3,6 +3,7 @@ package com.tuimm.learningpath;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tuimm.learningpath.drivers.DriversDtoMapper;
 import com.tuimm.learningpath.trips.TripsDtoMapper;
+import com.tuimm.learningpath.vehicles.FuelTypesDtoMapper;
 import com.tuimm.learningpath.vehicles.VehiclesDtoMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +18,8 @@ public class Config {
     public VehiclesDtoMapper vehiclesMapper() {
         return Mappers.getMapper(VehiclesDtoMapper.class);
     }
-
-
+    @Bean
+    public FuelTypesDtoMapper fuelTypesDtoMapper() { return Mappers.getMapper(FuelTypesDtoMapper.class); }
     @Bean
     public DriversDtoMapper driversDtoMapper() {
         return Mappers.getMapper(DriversDtoMapper.class);
