@@ -7,7 +7,6 @@ import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.vehicles.dtos.*;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
@@ -136,6 +135,15 @@ public class VehiclesStepsDefinition extends Definition {
         FuelType.valueOf(fuelType).setCost(cost);
     }
 
+
+
+    @Given("the need to update the cost to {double}")
+    public void theNeedToUpdateTheCostToFuelTypeCost(double cost) {
+        UpdateFuelTypeCostRequestDto updateFuelTypeCostRequestDto = new UpdateFuelTypeCostRequestDto();
+        updateFuelTypeCostRequestDto.setCost(cost);
+        scenarioContext.getDriver().setRequestBody(updateFuelTypeCostRequestDto);
+    }
+
     @Then("the response should contain the following fuel types")
     public void theResponseShouldContainTheFollowingFuelTypes(DataTable table) {
         GetAllFuelTypesResponseDto getAllFuelTypesResponseDto = scenarioContext.getDriver().getLastResponseAs(GetAllFuelTypesResponseDto.class);
@@ -145,6 +153,11 @@ public class VehiclesStepsDefinition extends Definition {
                     actualFuelType.getCost() == Double.parseDouble(expectedFuelType.get("cost")) &&
                             actualFuelType.getName().equals(expectedFuelType.get("name"))));
         }
+    }
+
+    @Then("the {word} cost should be {double}")
+    public void theFuelTypeCostShouldBeFuelTypeCost(String fuelTypeAsString, double cost) {
+        Assertions.assertEquals(cost, FuelType.valueOf(fuelTypeAsString).getCost(), 0);
     }
 
     private static Bike mapToBike(Map<String, String> map) {

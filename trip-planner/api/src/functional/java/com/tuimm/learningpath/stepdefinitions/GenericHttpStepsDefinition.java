@@ -16,6 +16,12 @@ public class GenericHttpStepsDefinition extends Definition {
         scenarioContext.getDriver().executePost(path);
     }
 
+    @When("making a PATCH request to the {string} endpoint")
+    public void makingAPatchRequestToTheEndpoint(String path) {
+
+        scenarioContext.getDriver().executePatch(path);
+    }
+
     @When("making a DELETE request to the {string} endpoint")
     public void makingADeleteRequestToTheEndpoint(String path) {
         scenarioContext.getDriver().executeDelete(path);

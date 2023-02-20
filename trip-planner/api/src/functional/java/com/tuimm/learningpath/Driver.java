@@ -44,6 +44,14 @@ public class Driver {
                 .build());
     }
 
+    public void executePatch(String path) {
+        executeRequest(HttpRequest.newBuilder()
+                .method("PATCH", getRequestBodyAsJsonString())
+                .header("Content-Type", "application/json")
+                .uri(createUri(path))
+                .build());
+    }
+
     public void executeDelete(String path) {
         executeRequest(HttpRequest.newBuilder()
                 .DELETE()
