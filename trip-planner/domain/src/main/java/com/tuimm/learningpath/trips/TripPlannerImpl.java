@@ -2,6 +2,8 @@ package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.drivers.DriversRepository;
+import com.tuimm.learningpath.exceptions.NoSuitableDriverException;
+import com.tuimm.learningpath.exceptions.NoSuitableVehicleException;
 import com.tuimm.learningpath.places.PlacesService;
 import com.tuimm.learningpath.places.Place;
 import com.tuimm.learningpath.routes.Route;
@@ -58,7 +60,7 @@ public class TripPlannerImpl implements TripPlanner {
         Collection<Vehicle> vehicles = garage.getSuitableVehicles(tripDefinition.getNumberOfPeople());
 
         if (vehicles.isEmpty()) {
-            throw new UnsupportedOperationException("No suitable vehicles found");
+            throw new NoSuitableVehicleException();
         }
         return vehicles;
     }
@@ -99,6 +101,11 @@ public class TripPlannerImpl implements TripPlanner {
         Collection<Driver> candidateDrivers = vehicle.getDrivingPolicy().requiresDrivingLicense() ?
                 driversRepository.findByMinimumAgeAndValidLicense(vehicle.getDrivingPolicy().getMinimumDrivingAge(), start) :
                 driversRepository.findAll();
+
+        if(candidateDrivers.isEmpty()) {
+            throw new NoSuitableDriverException();
+        }
+
         return candidateDrivers.stream().findFirst().orElseThrow(UnsupportedOperationException::new);
     }
 }

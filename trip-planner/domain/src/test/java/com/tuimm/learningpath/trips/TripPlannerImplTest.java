@@ -2,6 +2,8 @@ package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.drivers.DriversRepository;
+import com.tuimm.learningpath.exceptions.NoSuitableDriverException;
+import com.tuimm.learningpath.exceptions.NoSuitableVehicleException;
 import com.tuimm.learningpath.places.GeoCoordinate;
 import com.tuimm.learningpath.places.Place;
 import com.tuimm.learningpath.places.PlacesService;
@@ -23,7 +25,7 @@ import java.util.*;
 import static org.mockito.Mockito.*;
 
 class TripPlannerImplTest {
-    private TripPlannerImpl tripPlansService;
+    private TripPlannerImpl tripPlanner;
     private Garage garage;
     private WeatherConditionsService weatherConditionsService;
     private RoutesService routesService;
@@ -60,7 +62,7 @@ class TripPlannerImplTest {
         placesService = mock(PlacesService.class);
         driversRepository = mock(DriversRepository.class);
         builder = mock(StagePlan.StagePlanBuilder.class);
-        tripPlansService = new TripPlannerImpl(garage,
+        tripPlanner = new TripPlannerImpl(garage,
                 weatherConditionsService,
                 placesService,
                 routesService,
@@ -76,6 +78,84 @@ class TripPlannerImplTest {
     @Test
     void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesThatDoesNotRequireDrivingLicenseExistAndDriverExists() {
         testPlanTripInternal(0);
+    }
+
+    @Test
+    void planTrip_shouldThrowNoSuitableVehicleException_whenNoSuitableVehicleExist() {
+        LocalDateTime tripStart =
+                LocalDateTime.of(2023, 1, 1, 9, 0, 0);
+        List<StageDefinition> stageDefinitions = new LinkedList<>();
+        StageDefinition firstStage = StageDefinition.builder()
+                .from(ROME.getName())
+                .to(MILAN.getName())
+                .preferredPlanPolicy(mock(Comparator.class))
+                .build();
+        StageDefinition secondStage = StageDefinition.builder()
+                .from(MILAN.getName())
+                .to(ZURICH.getName())
+                .preferredPlanPolicy(mock(Comparator.class))
+                .build();
+        stageDefinitions.add(firstStage);
+        stageDefinitions.add(secondStage);
+        int numberOfPeople = 2;
+        TripDefinition tripDefinition = TripDefinition.builder()
+                .start(tripStart)
+                .stages(stageDefinitions)
+                .numberOfPeople(2)
+                .build();
+        when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(Collections.emptyList());
+        Assertions.assertThrows(NoSuitableVehicleException.class,
+                () -> tripPlanner.planTrip(tripDefinition));
+    }
+
+    @Test
+    void planTrip_shouldThrowNoSuitableDriverException_whenNoSuitableDriverExist() {
+        int minimumDrivingAge = 18;
+        LocalDateTime tripStart =
+                LocalDateTime.of(2023, 1, 1, 9, 0, 0);
+        LocalDateTime secondStageStart =
+                LocalDateTime.of(2023, 1, 1, 14, 0, 0);
+        List<StageDefinition> stageDefinitions = new LinkedList<>();
+        StageDefinition firstStage = StageDefinition.builder()
+                .from(ROME.getName())
+                .to(MILAN.getName())
+                .preferredPlanPolicy(mock(Comparator.class))
+                .build();
+        StageDefinition secondStage = StageDefinition.builder()
+                .from(MILAN.getName())
+                .to(ZURICH.getName())
+                .preferredPlanPolicy(mock(Comparator.class))
+                .build();
+        stageDefinitions.add(firstStage);
+        stageDefinitions.add(secondStage);
+        int numberOfPeople = 2;
+        TripDefinition tripDefinition = TripDefinition.builder()
+                .start(tripStart)
+                .stages(stageDefinitions)
+                .numberOfPeople(2)
+                .build();
+        Vehicle suitableVehicle = mock(Vehicle.class);
+        DrivingPolicy drivingPolicy = DrivingPolicy.builder()
+                .drivingProfile(DrivingProfile.CAR_PROFILE)
+                .minimumDrivingAge(minimumDrivingAge)
+                .build();
+        when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
+        List<Vehicle> suitableVehicles = Collections.singletonList(suitableVehicle);
+        when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
+        when(placesService.fromName(ROME.getName())).thenReturn(ROME);
+        when(placesService.fromName(MILAN.getName())).thenReturn(MILAN);
+        when(placesService.fromName(ZURICH.getName())).thenReturn(ZURICH);
+
+        when(routesService.getRoute(ROME, MILAN, ROME_TO_MILAN.getDrivingProfile()))
+                .thenReturn(ROME_TO_MILAN);
+        when(routesService.getRoute(MILAN, ZURICH, MILAN_TO_ZURICH.getDrivingProfile()))
+                .thenReturn(MILAN_TO_ZURICH);
+
+        when(weatherConditionsService.getWeatherCondition())
+                .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
+        when(driversRepository.findByMinimumAgeAndValidLicense(minimumDrivingAge, tripStart.toLocalDate())).thenReturn(Collections.emptyList());
+        Assertions.assertThrows(NoSuitableDriverException.class,
+                () -> tripPlanner.planTrip(tripDefinition));
     }
 
     private void testPlanTripInternal(int minimumDrivingAge) {
@@ -118,7 +198,6 @@ class TripPlannerImplTest {
 
         TripPlan expectedTripPlan = TripPlan.builder().stages(Arrays.asList(firstStagePlan, secondStagePlan)).build();
 
-        when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
         when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
         when(firstStagePlan.getArrivalDateTime()).thenReturn(secondStageStart);
 
@@ -148,7 +227,7 @@ class TripPlannerImplTest {
         when(builder.driver(driver)).thenReturn(builder);
         when(builder.build()).thenReturn(firstStagePlan, secondStagePlan);
 
-        TripPlan actualTripPlan = tripPlansService.planTrip(tripDefinition);
+        TripPlan actualTripPlan = tripPlanner.planTrip(tripDefinition);
 
         Assertions.assertEquals(expectedTripPlan, actualTripPlan);
 
@@ -179,19 +258,5 @@ class TripPlannerImplTest {
         verify(builder, times(2)).vehicle(suitableVehicle);
         verify(builder, times(2)).driver(driver);
         verify(builder, times(2)).build();
-    }
-
-    @Test
-    void planTrip_shouldThrowIllegalOperationException_whenNoSuitableVehicleIsAvailable() {
-        StageDefinition stageDefinition = mock(StageDefinition.class);
-        TripDefinition tripDefinition = TripDefinition.builder()
-                .start(LocalDateTime.of(2023, 1, 1, 9, 0, 0))
-                .stages(Collections.singletonList(stageDefinition))
-                .numberOfPeople(2)
-                .build();
-        when(garage.getSuitableVehicles(2)).thenReturn(new LinkedList<>());
-        Exception actualException = Assertions.assertThrows(UnsupportedOperationException.class,
-                () -> tripPlansService.planTrip(tripDefinition));
-        Assertions.assertEquals("No suitable vehicles found", actualException.getMessage());
     }
 }

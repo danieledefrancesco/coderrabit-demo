@@ -4,7 +4,7 @@ Feature: Create Trip
     Given the existing drivers
       | id                                   | firstName | lastName | dateOfBirth | citizenship | licenseCode | licenseExpiryDate |
       | 00000000-0000-0000-0000-000000000001 | Mario     | Rossi    | 2006-01-01  | Italian     | ABC123      | 2023-12-12        |
-      | 00000000-0000-0000-0000-000000000002 | John      | Smith    | 2001-01-01  | American    | DEF456      | 2025-12-12        |
+      | 00000000-0000-0000-0000-000000000002 | John      | Smith    | 2004-01-01  | American    | DEF456      | 2025-12-12        |
     And the existing bikes
       | id                                   | model | maxPeople | dailyRentPrice | averageSpeed | autonomy |
       | 10000000-0000-0000-0000-000000000001 | eBike | 1         | 10             | 20           | 100      |
@@ -52,3 +52,26 @@ Feature: Create Trip
     When making a POST request to the "/trips" endpoint
     Then the status code should be 400
     And the error status should be 400
+
+  Scenario: When no suitable vehicle exists then a 422 Unprocessable Entity is returned.
+    Given the need to plan a trip for 12 people starting the "2023-01-01" at "09:00" and consisting of the following stages
+      | from  | to     | preferredPlanPolicy |
+      | Rome  | Milan  | LEAST_POLLUTING     |
+      | Milan | Zurich | FASTEST             |
+    When making a POST request to the "/trips" endpoint
+    Then the status code should be 422
+    And the error message should be "No suitable vehicle found."
+    And the error status should be 422
+
+  Scenario: When no suitable driver exists then a 422 Unprocessable Entity is returned.
+    Given the existing pullmans
+      | id                                   | model   | maxPeople | dailyRentPrice | averageSpeed | autonomy | stopTimeInSeconds | plate   | fuelType | emissions | fuelConsumption |
+      | 10000000-0000-0000-0000-000000000004 | Pullman | 14        | 300            | 110          | 300      | 250               | AA000BC | LPG      | 30        | 19              |
+    And the need to plan a trip for 12 people starting the "2023-01-01" at "09:00" and consisting of the following stages
+      | from  | to     | preferredPlanPolicy |
+      | Rome  | Milan  | LEAST_POLLUTING     |
+      | Milan | Zurich | FASTEST             |
+    When making a POST request to the "/trips" endpoint
+    Then the status code should be 422
+    And the error message should be "No suitable driver found."
+    And the error status should be 422
