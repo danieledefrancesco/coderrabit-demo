@@ -7,7 +7,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tuimm.learningpath</groupId>
-    <artifactId>spring-challenge</artifactId>
+    <artifactId>trip-planner</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
     <modules>

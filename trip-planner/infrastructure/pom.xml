@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.tuimm.learningpath</groupId>
-        <artifactId>spring-challenge</artifactId>
+        <artifactId>trip-planner</artifactId>
         <version>1.0</version>
     </parent>
 
