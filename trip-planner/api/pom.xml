@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.tuimm.learningpath</groupId>
-        <artifactId>spring-challenge</artifactId>
+        <artifactId>trip-planner</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -89,6 +89,11 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.14.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.2</version>
         </dependency>
 
         <!-- Testing dependencies -->
