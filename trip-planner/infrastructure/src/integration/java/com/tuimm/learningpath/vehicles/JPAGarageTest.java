@@ -13,7 +13,8 @@ import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
-class JPAGarageTest extends IntegrationTest {
+@IntegrationTest
+class JPAGarageTest {
     private static final String model = "model";
     private static final double dailyRentPrice = 2;
     private static final double averageSpeed = 3;

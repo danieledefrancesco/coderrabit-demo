@@ -2,9 +2,9 @@ package com.tuimm.learningpath.vehicles.commands;
 
 import com.tuimm.learningpath.mediator.RequestHandler;
 import com.tuimm.learningpath.vehicles.Garage;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class DeleteVehicleCommand extends RequestHandler<DeleteVehicleRequest, Void> {
     private final Garage garage;
     public DeleteVehicleCommand(Garage garage) {

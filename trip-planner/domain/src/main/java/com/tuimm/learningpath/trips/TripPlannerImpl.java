@@ -14,7 +14,7 @@ import com.tuimm.learningpath.weatherconditions.WeatherCondition;
 import com.tuimm.learningpath.weatherconditions.WeatherConditionsService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class TripPlannerImpl implements TripPlanner {
     @NonNull

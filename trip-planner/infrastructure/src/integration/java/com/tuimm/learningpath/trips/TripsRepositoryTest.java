@@ -27,7 +27,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-class TripsRepositoryTest extends IntegrationTest {
+@IntegrationTest
+class TripsRepositoryTest {
     @Autowired
     private TripsDao tripsDao;
     @Autowired

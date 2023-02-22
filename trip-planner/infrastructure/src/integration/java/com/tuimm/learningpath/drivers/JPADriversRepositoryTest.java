@@ -19,7 +19,8 @@ import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 
-class JPADriversRepositoryTest extends IntegrationTest {
+@IntegrationTest
+class JPADriversRepositoryTest {
     private static final UUID ID = UUID.fromString("00000000-0000-0000-0000-000000000001");
     private static final String FIRST_NAME = "firstName";
     private static final String LAST_NAME = "lastName";

@@ -2,9 +2,9 @@ package com.tuimm.learningpath.drivers.queries;
 
 import com.tuimm.learningpath.drivers.DriversRepository;
 import com.tuimm.learningpath.mediator.RequestHandler;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class GetAllDriversRequestHandler extends RequestHandler<GetAllDriversRequest, GetAllDriversResponse> {
     private final DriversRepository driversRepository;
 

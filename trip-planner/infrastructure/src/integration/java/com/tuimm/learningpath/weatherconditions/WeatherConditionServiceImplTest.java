@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-class WeatherConditionServiceImplTest extends IntegrationTest {
+@IntegrationTest
+class WeatherConditionServiceImplTest {
     @Autowired
     private WeatherConditionServiceImpl weatherConditionService;
     @Test

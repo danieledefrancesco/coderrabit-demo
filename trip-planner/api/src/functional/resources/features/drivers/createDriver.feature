@@ -15,7 +15,7 @@ Feature: Create a driver
       | Mario     | Rossi    | 2000-01-01  | Italian     | ABC123      | 2023-12-12        |
       | John      | Smith    | 2001-01-01  | American    | null        | null              |
 
-  Scenario Outline: When creating a driver, if the values provided are invalid then a 404 Bad Request response is returned
+  Scenario Outline: When creating a driver, if the values provided are invalid then a 400 Bad Request response is returned
     Given a create driver request
       | firstName   | lastName   | dateOfBirth   | citizenship   | licenseCode   | licenseExpiryDate   |
       | <firstName> | <lastName> | <dateOfBirth> | <citizenship> | <licenseCode> | <licenseExpiryDate> |

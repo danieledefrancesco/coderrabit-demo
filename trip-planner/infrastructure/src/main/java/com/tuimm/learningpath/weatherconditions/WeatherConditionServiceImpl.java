@@ -3,10 +3,11 @@ package com.tuimm.learningpath.weatherconditions;
 import com.tuimm.learningpath.HttpClientUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.http.HttpClient;
-@Component
+@Service
 public class WeatherConditionServiceImpl implements WeatherConditionsService {
     private final HttpClient httpClient;
     private final String baseUri;

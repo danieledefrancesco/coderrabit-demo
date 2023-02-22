@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class PlacesServiceImplTest extends IntegrationTest {
+@IntegrationTest
+class PlacesServiceImplTest {
     @Autowired
     private PlacesServiceImpl placesService;
     @Test
