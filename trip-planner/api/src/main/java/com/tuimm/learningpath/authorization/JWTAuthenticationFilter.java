@@ -1,19 +1,22 @@
 package com.tuimm.learningpath.authorization;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tuimm.learningpath.exceptions.ErrorResponseBuilder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 
 @Component
@@ -22,25 +25,24 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTDecoder jwtDecoder;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorizationHeader = request.getHeader("authorization");
-        if (noAuthorizationHeaderIsProvided(authorizationHeader)) {
-            setRoleAndContinueChain(false, Role.UNAUTHENTICATED.name(), filterChain, request, response);
-            return;
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+        try {
+            String authorizationHeader = request.getHeader("authorization");
+            if (noAuthorizationHeaderIsProvided(authorizationHeader)) {
+                setRoleAndContinueChain(Role.UNAUTHENTICATED.name(), filterChain, request, response);
+                return;
+            }
+            if (authorizationHeaderContainsInvalidBearerToken(response, authorizationHeader)) return;
+            String bearerToken = authorizationHeader.substring(7);
+            DecodedJWT decodedJWT = jwtDecoder.decodeJWT(bearerToken);
+            SimpleAuthentication authentication = SimpleAuthentication.fromJWT(decodedJWT);
+            setAuthenticationAndContinueChain(authentication, filterChain, request, response);
         }
-        if (authorizationHeaderContainsInvalidBearerToken(response, authorizationHeader)) return;
-        String bearerToken = authorizationHeader.substring(7);
-        String role = bearerToken;
-        if (roleIsInvalid(response, role)) return;
-        setRoleAndContinueChain(true, role, filterChain, request, response);
-    }
-
-    private static boolean roleIsInvalid(HttpServletResponse response, String roleName) throws IOException{
-        if (Arrays.stream(Role.values()).noneMatch(role -> role.name().equals(roleName))) {
-            sendError(response, "Unrecognized role.", HttpStatus.UNAUTHORIZED);
-            return true;
+        catch (UnrecognizedRoleException e) {
+            sendError(response, e.getMessage(), HttpStatus.UNAUTHORIZED);
+        } catch (JWTVerificationException e) {
+            sendError(response, "Invalid JWT.", HttpStatus.UNAUTHORIZED);
         }
-        return false;
     }
 
     private static boolean authorizationHeaderContainsInvalidBearerToken(HttpServletResponse response, String authorizationHeader) throws IOException {
@@ -51,11 +53,16 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         return false;
     }
 
-    private static void setRoleAndContinueChain(boolean authenticated, String roleName, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        SecurityContextHolder.getContext().setAuthentication(SimpleAuthentication.builder()
-                .authenticated(authenticated)
+    private static void setRoleAndContinueChain(String roleName, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Authentication authentication = SimpleAuthentication.builder()
+                .authenticated(false)
                 .authorities(Collections.singleton(new SimpleGrantedAuthority(roleName)))
-                .build());
+                .build();
+        setAuthenticationAndContinueChain(authentication, filterChain, request, response);
+    }
+
+    private static void setAuthenticationAndContinueChain(Authentication authentication, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -21,10 +22,18 @@ public class SimpleAuthentication implements Authentication {
     private static final long serialVersionUID = 1234567L;
 
     public static SimpleAuthentication fromJWT(DecodedJWT jwt) {
+        String roleName = ensureValidRole(jwt.getClaim("role").asString());
         return builder()
                 .authenticated(true)
-                .authorities(Collections.singleton(new SimpleGrantedAuthority(jwt.getClaim("role").asString())))
+                .authorities(Collections.singleton(new SimpleGrantedAuthority(roleName)))
                 .build();
+    }
+
+    private static String ensureValidRole(String roleName) {
+        if(Arrays.stream(Role.values()).noneMatch(role -> role.name().equals(roleName))) {
+            throw new UnrecognizedRoleException("Unrecognized role.");
+        }
+        return roleName;
     }
 
     private final Collection<? extends GrantedAuthority> authorities;
