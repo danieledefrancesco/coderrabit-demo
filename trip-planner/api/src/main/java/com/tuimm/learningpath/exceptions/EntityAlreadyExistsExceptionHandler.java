@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class EntityAlreadyExistsExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {EntityAlreadyExistsException.class})
-    protected ResponseEntity<Object> handleEntityNotFound(RuntimeException ex, WebRequest request) {
+    protected ResponseEntity<Object> handleEntityAlreadyExists(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
                 ErrorResponseBuilder.buildErrorBody(ex, 409),
                 ErrorResponseBuilder.buildHttpHeaders(),

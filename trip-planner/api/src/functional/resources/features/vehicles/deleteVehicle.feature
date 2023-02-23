@@ -1,4 +1,6 @@
 Feature: Delete a vehicle
+  Background:
+    Given the client is authenticated as a MANAGER
 
   Scenario: When deleting a vehicle, a 204 No Content response should be returned, if it is stored in the database
     Given the existing bikes

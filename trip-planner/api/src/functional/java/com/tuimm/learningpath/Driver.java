@@ -12,12 +12,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
 public class Driver {
     private final int port;
     private final HttpClient httpClient = HttpClient.newBuilder().build();
+    private final Map<String, String> requestHeaders = new HashMap<>();
     private HttpResponse<String> lastResponse;
     @Setter
     private Object requestBody;
@@ -30,32 +33,32 @@ public class Driver {
         }
     }
     public void executeGet(String path) {
-        executeRequest(HttpRequest.newBuilder()
+        executeRequest(applyHeaders(HttpRequest.newBuilder()
                 .GET()
-                .uri(createUri(path))
+                .uri(createUri(path)))
                 .build());
     }
 
     public void executePost(String path) {
-        executeRequest(HttpRequest.newBuilder()
+        executeRequest(applyHeaders(HttpRequest.newBuilder()
                 .POST(getRequestBodyAsJsonString())
                 .header("Content-Type", "application/json")
-                .uri(createUri(path))
+                .uri(createUri(path)))
                 .build());
     }
 
     public void executePatch(String path) {
-        executeRequest(HttpRequest.newBuilder()
+        executeRequest(applyHeaders(HttpRequest.newBuilder()
                 .method("PATCH", getRequestBodyAsJsonString())
                 .header("Content-Type", "application/json")
-                .uri(createUri(path))
+                .uri(createUri(path)))
                 .build());
     }
 
     public void executeDelete(String path) {
-        executeRequest(HttpRequest.newBuilder()
+        executeRequest(applyHeaders(HttpRequest.newBuilder()
                 .DELETE()
-                .uri(createUri(path))
+                .uri(createUri(path)))
                 .build());
     }
 
@@ -82,9 +85,23 @@ public class Driver {
         }
     }
 
+    public void addHeader(String header, String role) {
+        requestHeaders.remove(header);
+        requestHeaders.put(header, role);
+    }
+
+    public void removeHeader(String header) {
+        requestHeaders.remove(header);
+    }
+
     private static ObjectMapper createObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         return mapper;
+    }
+
+    private HttpRequest.Builder applyHeaders(HttpRequest.Builder builder) {
+        requestHeaders.keySet().forEach(header -> builder.header(header, requestHeaders.get(header)));
+        return builder;
     }
 }

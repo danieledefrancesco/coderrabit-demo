@@ -1,6 +1,8 @@
 package com.tuimm.learningpath;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.tuimm.learningpath.authorization.JWTAuthenticationFilter;
+import com.tuimm.learningpath.authorization.Role;
 import com.tuimm.learningpath.drivers.DriversDtoMapper;
 import com.tuimm.learningpath.trips.TripsDtoMapper;
 import com.tuimm.learningpath.vehicles.FuelTypesDtoMapper;
@@ -9,10 +11,32 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.tuimm.learningpath.authorization.HierarchicalAuthorizationManager.*;
 
 @Configuration
 @ComponentScan("com.tuimm.learningpath")
+@EnableMethodSecurity
+@EnableWebSecurity
 public class Config {
+    @Bean
+    public SecurityFilterChain web(HttpSecurity httpSecurity, JWTAuthenticationFilter filter) throws Exception {
+        httpSecurity.csrf().disable();
+        httpSecurity.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(HttpMethod.GET).permitAll()
+                .requestMatchers(HttpMethod.POST).access(forRole(Role.OPERATOR))
+                .requestMatchers(HttpMethod.PATCH).access(forRole(Role.OPERATOR))
+                .requestMatchers(HttpMethod.DELETE).access(forRole(Role.MANAGER))
+                .anyRequest().denyAll());
+        httpSecurity.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+        return httpSecurity.build();
+    }
 
     @Bean
     public VehiclesDtoMapper vehiclesMapper() {

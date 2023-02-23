@@ -1,4 +1,6 @@
 Feature: Create a scooter
+  Background:
+    Given the client is authenticated as a OPERATOR
 
   Scenario: When a scooter is correctly created its ID should be returned
     Given a create scooter request

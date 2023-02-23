@@ -10,8 +10,11 @@ public class ErrorResponseBuilder {
     private ErrorResponseBuilder() {
 
     }
-
     public static String buildErrorBody(Exception exception, int statusCode) {
+        return buildErrorBody(exception.getMessage(), statusCode);
+    }
+
+    public static String buildErrorBody(String exceptionMessage, int statusCode) {
         return String.format("""
                         {
                             "timestamp": "%s",
@@ -21,7 +24,7 @@ public class ErrorResponseBuilder {
                         }""",
                 OffsetDateTime.now().atZoneSameInstant(ZoneOffset.UTC),
                 statusCode,
-                exception.getMessage(),
+                exceptionMessage,
                 ServletUriComponentsBuilder.fromCurrentRequest().build().toUri());
     }
 

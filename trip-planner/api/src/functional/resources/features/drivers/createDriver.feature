@@ -1,4 +1,6 @@
 Feature: Create a driver
+  Background:
+    Given the client is authenticated as a OPERATOR
 
   Scenario Outline: When a driver is correctly created then its ID should be returned
     Given a create driver request

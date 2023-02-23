@@ -1,4 +1,6 @@
 Feature: Create a bike
+  Background:
+    Given the client is authenticated as a OPERATOR
 
   Scenario: When a bike is correctly created its ID should be returned
     Given a create bike request

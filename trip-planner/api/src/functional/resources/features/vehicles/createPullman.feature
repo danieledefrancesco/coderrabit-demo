@@ -1,4 +1,6 @@
 Feature: Create a pullman
+  Background:
+    Given the client is authenticated as a OPERATOR
 
   Scenario: When a pullman is correctly created its ID should be returned
     Given a create pullman request

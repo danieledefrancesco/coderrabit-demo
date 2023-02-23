@@ -1,4 +1,6 @@
 Feature: Delete a driver
+  Background:
+    Given the client is authenticated as a MANAGER
 
   Scenario: When deleting a driver, a 204 No Content response should be returned if the driver exists
     Given the existing drivers

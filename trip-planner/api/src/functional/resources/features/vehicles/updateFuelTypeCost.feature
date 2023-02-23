@@ -1,4 +1,6 @@
 Feature: Update fuel type cost
+  Background:
+    Given the client is authenticated as a OPERATOR
 
   Scenario Outline: When updating the <fuelType> cost, a 204 No Content response should be returned and the <fuelType> cost should be updated accordingly to the request.
     Given the need to update the cost to <fuelTypeCost>

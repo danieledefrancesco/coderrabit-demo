@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class NoSuitableDriverExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {NoSuitableDriverException.class})
-    protected ResponseEntity<Object> handleEntityNotFound(RuntimeException ex, WebRequest request) {
+    protected ResponseEntity<Object> handleNoSuitableDriver(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
                 ErrorResponseBuilder.buildErrorBody(ex, 422),
                 ErrorResponseBuilder.buildHttpHeaders(),

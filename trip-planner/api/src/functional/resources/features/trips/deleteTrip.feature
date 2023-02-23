@@ -1,7 +1,8 @@
 Feature: Delete a trip
 
   Background:
-    Given the existing drivers
+    Given the client is authenticated as a MANAGER
+    And the existing drivers
       | id                                   | firstName | lastName | dateOfBirth | citizenship | licenseCode | licenseExpiryDate |
       | 00000000-0000-0000-0000-000000000001 | Mario     | Rossi    | 2006-01-01  | Italian     | ABC123      | 2023-12-12        |
       | 00000000-0000-0000-0000-000000000002 | John      | Smith    | 2001-01-01  | American    | DEF456      | 2025-12-12        |
