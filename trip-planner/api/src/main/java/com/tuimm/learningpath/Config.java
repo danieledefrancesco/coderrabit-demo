@@ -4,6 +4,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tuimm.learningpath.authorization.JWTAuthenticationFilter;
 import com.tuimm.learningpath.authorization.Role;
 import com.tuimm.learningpath.drivers.DriversDtoMapper;
+import com.tuimm.learningpath.exceptions.ErrorResponseBuilder;
 import com.tuimm.learningpath.trips.TripsDtoMapper;
 import com.tuimm.learningpath.vehicles.FuelTypesDtoMapper;
 import com.tuimm.learningpath.vehicles.VehiclesDtoMapper;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,6 +37,12 @@ public class Config {
                 .requestMatchers(HttpMethod.DELETE).access(forRole(Role.MANAGER))
                 .anyRequest().denyAll());
         httpSecurity.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.exceptionHandling(exceptionHandling ->
+                exceptionHandling.accessDeniedHandler(((request, response, accessDeniedException) -> {
+                    response.setStatus(HttpStatus.FORBIDDEN.value());
+                    response.setContentType("application/json");
+                    response.getWriter().println(ErrorResponseBuilder.buildErrorBody(accessDeniedException, HttpStatus.FORBIDDEN.value()));
+                })));
         return httpSecurity.build();
     }
 

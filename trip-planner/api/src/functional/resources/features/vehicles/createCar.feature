@@ -33,3 +33,9 @@ Feature: Create a car
       | aCar  | 2         | 10             | 35           | 100      | 300               | AA000BB | PETROL   | -1        | 20              |
       | aCar  | 2         | 10             | 35           | 100      | 300               | AA000BB | PETROL   | 300       | -1              |
 
+  Scenario: When creating a car, a 403 Forbidden response should be returned if the client is not authenticated
+    Given the client is not authenticated
+    When making a POST request to the "/vehicles/cars" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403

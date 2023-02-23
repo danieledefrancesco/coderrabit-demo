@@ -1,4 +1,5 @@
 Feature: Delete a vehicle
+
   Background:
     Given the client is authenticated as a MANAGER
 
@@ -10,7 +11,21 @@ Feature: Delete a vehicle
     Then the status code should be 204
     And the vehicle with id 00000000-0000-0000-0000-000000000001 should no longer exist
 
-  Scenario:  When deleting a vehicle, a 404 Not Found response should be returned if the driver is not stored in the database
+  Scenario: When deleting a vehicle, a 403 Forbidden response should be returned if the client is not authenticated
+    Given the client is not authenticated
+    When making a DELETE request to the "/vehicles/00000000-0000-0000-0000-000000000001" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
+  Scenario: When deleting a vehicle, a 403 Forbidden response should be returned if the client is authenticated as an OPERATOR
+    Given the client is authenticated as a OPERATOR
+    When making a DELETE request to the "/vehicles/00000000-0000-0000-0000-000000000001" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
+  Scenario: When deleting a vehicle, a 404 Not Found response should be returned if the driver is not stored in the database
     When making a DELETE request to the "/vehicles/00000000-0000-0000-0000-000000000001" endpoint
     Then the status code should be 404
     And the error message should be "Vehicle with id 00000000-0000-0000-0000-000000000001 does not exist."

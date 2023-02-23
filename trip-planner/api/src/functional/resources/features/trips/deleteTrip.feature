@@ -24,6 +24,20 @@ Feature: Delete a trip
     Then the status code should be 204
     And the trip with id 20000000-0000-0000-0000-000000000001 should no longer be present in the database
 
+  Scenario: when deleting a trip by id, a 403 Forbidden response should be returned, if the client is not authenticated
+    Given the client is not authenticated
+    When making a DELETE request to the "/trips/20000000-0000-0000-0000-000000000001" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
+  Scenario: when deleting a trip by id, a 403 Forbidden response should be returned, if the client is authenticated as an OPERATOR
+    Given the client is authenticated as a OPERATOR
+    When making a DELETE request to the "/trips/20000000-0000-0000-0000-000000000001" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
   Scenario: When deleting a trip by id, a 404 Not Found response should be returned, if the trip is not stored in the database
     When making a DELETE request to the "/trips/20000000-0000-0000-0000-000000000001" endpoint
     Then the status code should be 404

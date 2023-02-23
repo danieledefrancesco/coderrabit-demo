@@ -54,6 +54,17 @@ Feature: Create Trip
     Then the status code should be 400
     And the error status should be 400
 
+  Scenario: When the client is not authenticated a 403 Forbidden response should be returned.
+    Given the client is not authenticated
+    And the need to plan a trip for 2 people starting the "2023-01-01" at "09:00" and consisting of the following stages
+      | from  | to     | preferredPlanPolicy |
+      | Rome  | Milan  | LEAST_POLLUTING     |
+      | Milan | Zurich | FASTEST             |
+    When making a POST request to the "/trips" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
   Scenario: When no suitable vehicle exists then a 422 Unprocessable Entity is returned.
     Given the need to plan a trip for 12 people starting the "2023-01-01" at "09:00" and consisting of the following stages
       | from  | to     | preferredPlanPolicy |

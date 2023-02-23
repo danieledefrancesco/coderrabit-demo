@@ -10,6 +10,20 @@ Feature: Delete a driver
     Then the status code should be 204
     And the driver with id 00000000-0000-0000-0000-000000000001 should no longer be present in the database
 
+  Scenario: When deleting a driver, a 403 Forbidden response should be returned if the client is not authenticated
+    Given the client is not authenticated
+    When making a DELETE request to the "/drivers/00000000-0000-0000-0000-000000000001" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
+  Scenario: When deleting a driver, a 403 Forbidden response should be returned if the client is authenticated as an OPERATOR
+    Given the client is authenticated as a OPERATOR
+    When making a DELETE request to the "/drivers/00000000-0000-0000-0000-000000000001" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
   Scenario:  When deleting a driver, a 404 Not Found response should be returned if the driver does not exist
     When making a DELETE request to the "/drivers/00000000-0000-0000-0000-000000000001" endpoint
     Then the status code should be 404

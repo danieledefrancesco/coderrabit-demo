@@ -1,4 +1,5 @@
 Feature: Create a bike
+
   Background:
     Given the client is authenticated as a OPERATOR
 
@@ -28,3 +29,9 @@ Feature: Create a bike
       | eBike | 1         | 10             | 35           | 0        |
       | eBike | 1         | 10             | 35           | -1       |
 
+  Scenario: When creating a bike, a 403 Forbidden response should be returned if the client is not authenticated
+    Given the client is not authenticated
+    When making a POST request to the "/vehicles/bikes" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403

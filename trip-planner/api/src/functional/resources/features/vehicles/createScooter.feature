@@ -32,3 +32,10 @@ Feature: Create a scooter
       | aScooter | 2         | 10             | 35           | 100      | 300               | AA000BB | PETROL   | 300       | 20              |
       | aScooter | 2         | 10             | 35           | 100      | 300               | AA1234  | PETROL   | -1        | 20              |
       | aScooter | 2         | 10             | 35           | 100      | 300               | AA1234  | PETROL   | 300       | -1              |
+
+  Scenario: When creating a scooter, a 403 Forbidden response should be returned if the client is not authenticated
+    Given the client is not authenticated
+    When making a POST request to the "/vehicles/scooters" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403

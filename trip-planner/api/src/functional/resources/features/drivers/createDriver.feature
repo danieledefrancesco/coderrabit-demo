@@ -1,4 +1,5 @@
 Feature: Create a driver
+
   Background:
     Given the client is authenticated as a OPERATOR
 
@@ -31,6 +32,15 @@ Feature: Create a driver
       | Mario     | Rossi    |             | Italian     | ABC123      | 2023-12-12        |
       | Mario     | Rossi    | 2000-01-01  |             | ABC123      | 2023-12-12        |
 
+  Scenario: When creating a driver, if the user is not authenticated than a 403 Forbidden response should be returned
+    Given the client is not authenticated
+    And a create driver request
+      | firstName | lastName | dateOfBirth | citizenship | licenseCode | licenseExpiryDate |
+      | Mario     | Rossi    | 2000-01-01  | Italian     | ABC123      | 2023-12-12        |
+    When making a POST request to the "/drivers" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
 
   Scenario: When creating a driver, if a license with the same code already exists then a 409 conflict error is returned
     Given the existing drivers

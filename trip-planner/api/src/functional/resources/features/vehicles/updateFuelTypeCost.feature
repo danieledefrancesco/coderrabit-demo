@@ -22,6 +22,13 @@ Feature: Update fuel type cost
       | 0            |
       | -1           |
 
+  Scenario: When updating the fuel type cost, a 403 Forbidden response should be returned if the client is not authenticated
+    Given the client is not authenticated
+    When making a PATCH request to the "/fuel-types/PETROL/cost" endpoint
+    Then the status code should be 403
+    And the error message should be "Access Denied"
+    And the error status should be 403
+
   Scenario: When updating the fuel type cost, a 404 Not Found response should be returned when the provided fuel type does not exist
     Given the need to update the cost to 2
     When making a PATCH request to the "/fuel-types/HYDROGEN/cost" endpoint
