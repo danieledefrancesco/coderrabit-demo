@@ -20,6 +20,7 @@ public class JWTDecoder {
 
     public DecodedJWT decodeJWT(String token) {
         JWTVerifier verifier = JWT.require(Algorithm.none())
+                .withIssuer(jwtIssuer)
                 .build();
         return verifier.verify(token);
     }

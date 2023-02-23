@@ -14,6 +14,13 @@ Feature: The client must provide a valid token
     And the error message should be "Invalid JWT."
     And the status code should be 401
 
+  Scenario: When providing a JWT token with an invalid issuer a 401 Unauthorized response should be returned
+    Given the client is authenticated with an invalid issuer
+    When making a GET request to the "/fuel-types" endpoint
+    Then the error status should be 401
+    And the error message should be "Invalid JWT."
+    And the status code should be 401
+
   Scenario: When providing an unrecognized role a 401 Unauthorized response should be returned
     Given the client is authenticated as a UNRECOGNIZED_ROLE
     When making a GET request to the "/fuel-types" endpoint
