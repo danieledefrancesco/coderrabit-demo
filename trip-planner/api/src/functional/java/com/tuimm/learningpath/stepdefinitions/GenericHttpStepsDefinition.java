@@ -1,10 +1,15 @@
 package com.tuimm.learningpath.stepdefinitions;
 
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
 public class GenericHttpStepsDefinition extends Definition {
+    @Given("the {word} header is {string}")
+    public void theHeaderIs(String headerName, String headerValue) {
+        scenarioContext.getDriver().addHeader(headerName, headerValue);
+    }
     @When("making a GET request to the {string} endpoint")
     public void makingAGetRequestToTheEndpoint(String path) {
         scenarioContext.getDriver().executeGet(path);

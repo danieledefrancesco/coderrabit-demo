@@ -7,7 +7,7 @@ public class AuthorizationSteps extends Definition {
 
     @Given("the client is authenticated as a {word}")
     public void theClientIsAuthenticatedAs(String role) {
-        scenarioContext.getDriver().addHeader("authorization", role);
+        scenarioContext.getDriver().addHeader("authorization", String.format("Bearer %s", role));
     }
 
     @Given("the client is not authenticated")

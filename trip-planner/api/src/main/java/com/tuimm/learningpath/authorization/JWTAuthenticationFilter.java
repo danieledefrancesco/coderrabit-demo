@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Component
@@ -23,23 +24,43 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader("authorization");
-        if (authorizationHeader == null || authorizationHeader.isBlank()) {
-            SecurityContextHolder.getContext().setAuthentication(SimpleAuthentication.builder()
-                    .authenticated(false)
-                    .authorities(Collections.singleton(new SimpleGrantedAuthority(Role.UNAUTHENTICATED.name())))
-                    .build());
-            filterChain.doFilter(request, response);
+        if (noAuthorizationHeaderIsProvided(authorizationHeader)) {
+            setRoleAndContinueChain(false, Role.UNAUTHENTICATED.name(), filterChain, request, response);
             return;
         }
-        //if (!authorizationHeader.startsWith("Bearer ")) {
-        //    sendError(response, "Missing authorization header", HttpStatus.UNAUTHORIZED);
-        //    return;
-        //}
+        if (authorizationHeaderContainsInvalidBearerToken(response, authorizationHeader)) return;
+        String bearerToken = authorizationHeader.substring(7);
+        String role = bearerToken;
+        if (roleIsInvalid(response, role)) return;
+        setRoleAndContinueChain(true, role, filterChain, request, response);
+    }
+
+    private static boolean roleIsInvalid(HttpServletResponse response, String roleName) throws IOException{
+        if (Arrays.stream(Role.values()).noneMatch(role -> role.name().equals(roleName))) {
+            sendError(response, "Unrecognized role.", HttpStatus.UNAUTHORIZED);
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean authorizationHeaderContainsInvalidBearerToken(HttpServletResponse response, String authorizationHeader) throws IOException {
+        if (!authorizationHeader.startsWith("Bearer ")) {
+            sendError(response, "The authorization header does not contain a valid bearer token.", HttpStatus.UNAUTHORIZED);
+            return true;
+        }
+        return false;
+    }
+
+    private static void setRoleAndContinueChain(boolean authenticated, String roleName, FilterChain filterChain, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(SimpleAuthentication.builder()
-                    .authenticated(true)
-                    .authorities(Collections.singleton(new SimpleGrantedAuthority(authorizationHeader)))
-                    .build());
+                .authenticated(authenticated)
+                .authorities(Collections.singleton(new SimpleGrantedAuthority(roleName)))
+                .build());
         filterChain.doFilter(request, response);
+    }
+
+    private static boolean noAuthorizationHeaderIsProvided(String authorizationHeader) {
+        return authorizationHeader == null || authorizationHeader.isBlank();
     }
 
     private static void sendError(HttpServletResponse response, String errorMessage, HttpStatus status) throws IOException {
