@@ -2,8 +2,9 @@ package com.tuimm.learningpath.vehicles.queries;
 
 import com.tuimm.learningpath.mediator.RequestHandler;
 import com.tuimm.learningpath.vehicles.Garage;
-import org.springframework.stereotype.Component;
-@Component
+import org.springframework.stereotype.Service;
+
+@Service
 public class GetAllVehiclesRequestHandler extends RequestHandler<GetAllVehiclesRequest, GetVehiclesResponse> {
     private final Garage garage;
     public GetAllVehiclesRequestHandler(Garage garage) {

@@ -5,12 +5,13 @@ import com.tuimm.learningpath.trips.dal.TripEntity;
 import com.tuimm.learningpath.trips.dal.TripsDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 public class JPATripsRepository implements TripsRepository {
     private final TripsDao dao;

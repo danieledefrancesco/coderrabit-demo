@@ -2,9 +2,9 @@ package com.tuimm.learningpath.trips.queries;
 
 import com.tuimm.learningpath.mediator.RequestHandler;
 import com.tuimm.learningpath.trips.TripsRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class GetAllTripsRequestHandler extends RequestHandler<GetAllTripsRequest, GetAllTripsResponse> {
     private final TripsRepository repository;
 

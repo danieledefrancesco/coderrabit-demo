@@ -3,11 +3,12 @@ package com.tuimm.learningpath.places;
 import com.tuimm.learningpath.HttpClientUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.util.List;
-@Component
+@Service
 public class PlacesServiceImpl implements PlacesService {
     private final HttpClient httpClient;
     private final String baseUri;

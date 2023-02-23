@@ -3,9 +3,9 @@ package com.tuimm.learningpath.vehicles.commands;
 import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import com.tuimm.learningpath.mediator.RequestHandler;
 import com.tuimm.learningpath.vehicles.FuelType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class UpdateFuelTypeCostCommand extends RequestHandler<UpdateFuelTypeCostRequest, Void> {
     public UpdateFuelTypeCostCommand() {
         super(UpdateFuelTypeCostRequest.class);

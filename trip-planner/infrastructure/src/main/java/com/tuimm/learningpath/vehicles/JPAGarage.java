@@ -5,10 +5,11 @@ import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 public class JPAGarage implements Garage {
     private final VehiclesDao vehiclesDao;

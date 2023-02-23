@@ -2,9 +2,9 @@ package com.tuimm.learningpath.vehicles.commands;
 
 import com.tuimm.learningpath.mediator.RequestHandler;
 import com.tuimm.learningpath.vehicles.*;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CreatePullmanCommand extends RequestHandler<CreatePullmanRequest, Vehicle> {
     private final Garage garage;
     private final VehicleFactory vehicleFactory;

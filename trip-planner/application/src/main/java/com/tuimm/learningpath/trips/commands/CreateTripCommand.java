@@ -5,9 +5,9 @@ import com.tuimm.learningpath.trips.Trip;
 import com.tuimm.learningpath.trips.TripFactory;
 import com.tuimm.learningpath.trips.TripPlanner;
 import com.tuimm.learningpath.trips.TripsRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CreateTripCommand extends RequestHandler<CreateTripRequest, Trip> {
     private final TripFactory tripFactory;
     private final TripPlanner tripPlanner;

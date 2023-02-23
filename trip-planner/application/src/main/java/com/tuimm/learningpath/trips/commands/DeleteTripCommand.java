@@ -2,9 +2,9 @@ package com.tuimm.learningpath.trips.commands;
 
 import com.tuimm.learningpath.mediator.RequestHandler;
 import com.tuimm.learningpath.trips.TripsRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class DeleteTripCommand extends RequestHandler<DeleteTripRequest, Void> {
     private final TripsRepository repository;
     public DeleteTripCommand(TripsRepository repository) {

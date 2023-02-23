@@ -2,9 +2,9 @@ package com.tuimm.learningpath.drivers.commands;
 
 import com.tuimm.learningpath.drivers.DriversRepository;
 import com.tuimm.learningpath.mediator.RequestHandler;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class DeleteDriverCommand extends RequestHandler<DeleteDriverRequest, Void> {
     private final DriversRepository repository;
     public DeleteDriverCommand(DriversRepository repository) {

@@ -5,9 +5,9 @@ import com.tuimm.learningpath.vehicles.Bike;
 import com.tuimm.learningpath.vehicles.Garage;
 import com.tuimm.learningpath.vehicles.Vehicle;
 import com.tuimm.learningpath.vehicles.VehicleFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CreateBikeCommand extends RequestHandler<CreateBikeRequest, Vehicle> {
     private final VehicleFactory vehicleFactory;
     private final Garage garage;

@@ -3,8 +3,9 @@ package com.tuimm.learningpath.drivers.commands;
 import com.tuimm.learningpath.drivers.*;
 import com.tuimm.learningpath.mediator.RequestHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CreateDriverCommand extends RequestHandler<CreateDriverRequest, Driver> {
     private final DriversRepository repository;
     private final DriverFactory factory;

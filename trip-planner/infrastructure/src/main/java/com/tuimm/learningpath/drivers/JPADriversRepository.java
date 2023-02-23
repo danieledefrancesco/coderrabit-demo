@@ -7,13 +7,14 @@ import com.tuimm.learningpath.exceptions.EntityAlreadyExistsException;
 import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 public class JPADriversRepository implements DriversRepository {
     private final DriversDao dao;
