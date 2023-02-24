@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Mapper(uses = {DriverEntityMapper.class, VehicleEntitiesMapper.class})
+@Mapper(uses = {DriverEntityMapper.class, VehicleEntitiesMapper.class}, componentModel = "spring")
 public interface TripEntityMapper {
     @Mapping(target = "stages", expression = "java(mapToStages(trip))")
     TripEntity mapToTripEntity(Trip trip);

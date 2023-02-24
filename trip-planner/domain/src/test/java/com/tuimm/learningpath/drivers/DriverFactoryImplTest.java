@@ -1,6 +1,7 @@
 package com.tuimm.learningpath.drivers;
 
 import com.tuimm.learningpath.RandomIdGenerator;
+import com.tuimm.learningpath.TodayDateProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,11 +15,13 @@ import static org.mockito.Mockito.when;
 class DriverFactoryImplTest {
     private RandomIdGenerator randomIdGenerator;
     private DriverFactoryImpl driverFactory;
+    private TodayDateProvider todayDateProvider;
 
     @BeforeEach
     void setUp() {
         randomIdGenerator = mock(RandomIdGenerator.class);
-        driverFactory = new DriverFactoryImpl(randomIdGenerator);
+        todayDateProvider = mock(TodayDateProvider.class);
+        driverFactory = new DriverFactoryImpl(randomIdGenerator, todayDateProvider);
     }
 
     @Test

@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface VehicleEntitiesMapper {
     Bike mapToBike(VehicleEntity vehicle);
 
@@ -32,14 +32,14 @@ public interface VehicleEntitiesMapper {
             }
         }
     }
+
     @Mapping(target = "type", constant = "BIKE")
-
     VehicleEntity mapToEntity(Bike bike);
+
     @Mapping(target = "type", constant = "CAR")
-
     VehicleEntity mapToEntity(Car car);
-    @Mapping(target = "type", constant = "PULLMAN")
 
+    @Mapping(target = "type", constant = "PULLMAN")
     VehicleEntity mapToEntity(Pullman pullman);
 
     @Mapping(target = "type", constant = "SCOOTER")
@@ -60,7 +60,16 @@ public interface VehicleEntitiesMapper {
         }
         throw new UnsupportedOperationException();
     }
-    default String mapToString(Plate plate) { return plate.getValue(); }
-    default GenericPlate mapToGenericPlate(String plate) { return GenericPlate.from(plate); }
-    default ScooterPlate mapToScooterPlate(String plate) { return ScooterPlate.from(plate); }
+
+    default String mapToString(Plate plate) {
+        return plate.getValue();
+    }
+
+    default GenericPlate mapToGenericPlate(String plate) {
+        return GenericPlate.from(plate);
+    }
+
+    default ScooterPlate mapToScooterPlate(String plate) {
+        return ScooterPlate.from(plate);
+    }
 }

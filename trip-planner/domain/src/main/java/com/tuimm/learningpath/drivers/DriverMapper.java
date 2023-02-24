@@ -2,7 +2,7 @@ package com.tuimm.learningpath.drivers;
 
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface DriverMapper {
     default FirstName mapFirstName(String value) {
         return FirstName.from(value);

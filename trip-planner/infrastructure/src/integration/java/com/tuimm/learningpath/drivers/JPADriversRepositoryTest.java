@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @IntegrationTest
@@ -188,6 +190,8 @@ class JPADriversRepositoryTest {
                 .firstName(FirstName.from(FIRST_NAME))
                 .citizenship(Citizenship.from(CITIZENSHIP))
                 .drivingLicense(license)
+                .todayDateProvider(mock(TodayDateProvider.class))
+                .reservedSlots(Collections.emptyList())
                 .build();
     }
 }

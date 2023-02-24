@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -22,4 +23,7 @@ public class DriverEntity {
     @JoinColumn(name = "driving_license_code", referencedColumnName = "code")
     private DrivingLicenseEntity drivingLicense;
     private String citizenship;
+    @ElementCollection(targetClass = SlotEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "slot_id", referencedColumnName = "id")
+    private Set<SlotEntity> reservedSlots;
 }
