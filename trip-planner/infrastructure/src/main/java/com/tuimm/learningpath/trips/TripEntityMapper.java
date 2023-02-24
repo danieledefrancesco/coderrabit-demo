@@ -10,22 +10,28 @@ import com.tuimm.learningpath.vehicles.DrivingProfile;
 import com.tuimm.learningpath.vehicles.VehicleEntitiesMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Mapper(uses = {DriverEntityMapper.class, VehicleEntitiesMapper.class}, componentModel = "spring")
-public interface TripEntityMapper {
-    @Mapping(target = "stages", expression = "java(mapToStages(trip))")
-    TripEntity mapToTripEntity(Trip trip);
+public abstract class TripEntityMapper {
+    @Lazy
+    @Autowired
+    protected TripAggregateManager aggregateManager;
 
-    default Set<StagePlanEntity> mapToStages(Trip trip) {
+    @Mapping(target = "stages", expression = "java(mapToStages(trip))")
+    public abstract TripEntity mapToTripEntity(Trip trip);
+
+    public Set<StagePlanEntity> mapToStages(Trip trip) {
         return trip.getPlan().getStages().stream()
                 .map(stage -> mapToStagePlanEntity(stage, trip.getId()))
                 .collect(Collectors.toSet());
     }
-    
+
     @Mapping(target = "tripId", source = "tripId")
     @Mapping(target = "startDateTime", source = "stagePlan.startDateTime")
     @Mapping(target = "fromName", source = "stagePlan.route.from.name")
@@ -40,19 +46,20 @@ public interface TripEntityMapper {
     @Mapping(target = "numberOfPeople", source = "stagePlan.numberOfPeople")
     @Mapping(target = "vehicle", source = "stagePlan.vehicle")
     @Mapping(target = "driver", source = "stagePlan.driver")
-    StagePlanEntity mapToStagePlanEntity(StagePlan stagePlan, UUID tripId);
+    public abstract StagePlanEntity mapToStagePlanEntity(StagePlan stagePlan, UUID tripId);
 
     @Mapping(target = "plan", source = "tripEntity")
-    Trip mapTripEntityToTrip(TripEntity tripEntity);
+    @Mapping(target = "aggregateManager", expression = "java(aggregateManager)")
+    public abstract Trip mapTripEntityToTrip(TripEntity tripEntity);
 
-    TripPlan mapTripEntityToTripPlan(TripEntity tripEntity);
+    public abstract TripPlan mapTripEntityToTripPlan(TripEntity tripEntity);
 
     @Mapping(target = "route", expression = "java(mapStagePlanEntityToRoute(stagePlanEntity))")
     @Mapping(target = "vehicle", source = "stagePlanEntity.vehicle", qualifiedByName = "mapToVehicle")
-    StagePlan mapStagePlanEntityToStagePlan(StagePlanEntity stagePlanEntity);
+    public abstract StagePlan mapStagePlanEntityToStagePlan(StagePlanEntity stagePlanEntity);
 
 
-    default Route mapStagePlanEntityToRoute(StagePlanEntity stagePlanEntity) {
+    public Route mapStagePlanEntityToRoute(StagePlanEntity stagePlanEntity) {
         return Route.builder()
                 .from(Place.create(stagePlanEntity.getFromName(),
                         GeoCoordinate.of(stagePlanEntity.getFromLatitude(), stagePlanEntity.getFromLatitude())))
@@ -61,5 +68,5 @@ public interface TripEntityMapper {
                 .distanceInKilometers(stagePlanEntity.getDistanceInKilometers())
                 .drivingProfile(DrivingProfile.valueOf(stagePlanEntity.getDrivingProfile()))
                 .build();
-    } 
+    }
 }

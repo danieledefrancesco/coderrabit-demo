@@ -16,12 +16,14 @@ class DriverFactoryImplTest {
     private RandomIdGenerator randomIdGenerator;
     private DriverFactoryImpl driverFactory;
     private TodayDateProvider todayDateProvider;
+    private DriverAggregateManager aggregateManager;
 
     @BeforeEach
     void setUp() {
         randomIdGenerator = mock(RandomIdGenerator.class);
         todayDateProvider = mock(TodayDateProvider.class);
-        driverFactory = new DriverFactoryImpl(randomIdGenerator, todayDateProvider);
+        aggregateManager = mock(DriverAggregateManager.class);
+        driverFactory = new DriverFactoryImpl(randomIdGenerator, todayDateProvider, aggregateManager);
     }
 
     @Test

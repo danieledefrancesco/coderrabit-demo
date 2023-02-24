@@ -1,18 +1,19 @@
 package com.tuimm.learningpath.drivers;
 
 import com.tuimm.learningpath.TodayDateProvider;
+import com.tuimm.learningpath.common.Aggregate;
 import com.tuimm.learningpath.vehicles.Vehicle;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor
-@Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Driver {
+@SuperBuilder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class Driver extends Aggregate<Driver> {
     @EqualsAndHashCode.Include
     @NonNull
     private final UUID id;

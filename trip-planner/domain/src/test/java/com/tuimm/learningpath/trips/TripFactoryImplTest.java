@@ -13,11 +13,13 @@ import static org.mockito.Mockito.when;
 class TripFactoryImplTest {
     private RandomIdGenerator randomIdGenerator;
     private TripFactoryImpl tripFactory;
+    private TripAggregateManager aggregateManager;
 
     @BeforeEach
     void setUp() {
         randomIdGenerator = mock(RandomIdGenerator.class);
-        tripFactory = new TripFactoryImpl(randomIdGenerator);
+        aggregateManager = mock(TripAggregateManager.class);
+        tripFactory = new TripFactoryImpl(randomIdGenerator, aggregateManager);
     }
 
     @Test

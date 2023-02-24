@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import static org.mockito.Mockito.*;
@@ -25,7 +26,7 @@ class MediatorImplTest {
         response = mock(Object.class);
         handler = mock(RequestHandler.class);
         when(handler.getRequestType()).thenReturn((Class)TestRequest1.class);
-        mediator = new MediatorImpl(Collections.singleton(handler));
+        mediator = new MediatorImpl(Collections.singleton(handler), Collections.emptyList());
     }
 
     @Test

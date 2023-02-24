@@ -11,13 +11,15 @@ import java.util.UUID;
 class VehicleFactoryImplTest {
     private VehicleFactoryImpl vehicleFactory;
     private RandomIdGenerator randomIdGenerator;
+    private VehicleAggregateManager aggregateManager;
     private final UUID randomId = UUID.randomUUID();
 
     @BeforeEach
     public void setUp() {
         randomIdGenerator = Mockito.mock(RandomIdGenerator.class);
         Mockito.when(randomIdGenerator.generateRandomId()).thenReturn(randomId);
-        vehicleFactory = new VehicleFactoryImpl(randomIdGenerator);
+        aggregateManager = Mockito.mock(VehicleAggregateManager.class);
+        vehicleFactory = new VehicleFactoryImpl(randomIdGenerator, aggregateManager);
     }
 
     @Test

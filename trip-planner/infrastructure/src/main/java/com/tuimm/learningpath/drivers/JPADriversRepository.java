@@ -6,7 +6,6 @@ import com.tuimm.learningpath.drivers.dal.DriversDao;
 import com.tuimm.learningpath.exceptions.EntityAlreadyExistsException;
 import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

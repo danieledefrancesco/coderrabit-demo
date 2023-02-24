@@ -1,16 +1,28 @@
 package com.tuimm.learningpath.mediator;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
 @Component
-@RequiredArgsConstructor
 public class MediatorImpl implements Mediator {
-    @NonNull
-    private final Collection<RequestHandler<?,?>> requestHandlers;
+    @Lazy
+    @Autowired
+    private Collection<RequestHandler<?,?>> requestHandlers;
+    @Lazy
+    @Autowired
+    private Collection<EventHandler<?>> eventHandlers;
+
+    public MediatorImpl() {
+
+    }
+
+    public MediatorImpl(Collection<RequestHandler<?, ?>> requestHandlers, Collection<EventHandler<?>> eventHandlers) {
+        this.requestHandlers = requestHandlers;
+        this.eventHandlers = eventHandlers;
+    }
 
 
     @Override
@@ -23,5 +35,12 @@ public class MediatorImpl implements Mediator {
                             request.getClass().getSimpleName()));
                 });
         return (T2) candidate.handleInternal(request);
+    }
+
+    @Override
+    public <T> void notify(T event) {
+        eventHandlers.stream()
+                .filter(handler -> handler.getEventType().equals(event.getClass()))
+                .forEach(handler -> handler.handleInternal(event));
     }
 }

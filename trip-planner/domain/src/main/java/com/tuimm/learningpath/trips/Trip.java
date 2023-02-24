@@ -1,13 +1,14 @@
 package com.tuimm.learningpath.trips;
 
-import lombok.Builder;
+import com.tuimm.learningpath.common.Aggregate;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
 @Getter
-@Builder
-public class Trip {
-    UUID id;
-    TripPlan plan;
+@SuperBuilder
+public class Trip extends Aggregate<Trip> {
+    private final UUID id;
+    private final TripPlan plan;
 }

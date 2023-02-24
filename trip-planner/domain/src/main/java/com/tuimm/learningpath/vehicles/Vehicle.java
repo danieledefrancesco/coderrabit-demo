@@ -1,18 +1,18 @@
 package com.tuimm.learningpath.vehicles;
+import com.tuimm.learningpath.common.Aggregate;
 import com.tuimm.learningpath.validators.NumberValidator;
 import com.tuimm.learningpath.validators.ObjectValidator;
 import com.tuimm.learningpath.validators.StringValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
 @SuperBuilder
 @Getter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class Vehicle {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public abstract class Vehicle extends Aggregate<Vehicle> {
     @EqualsAndHashCode.Include
     private final UUID id;
     private final String model;
@@ -22,6 +22,7 @@ public abstract class Vehicle {
     private final double autonomy;
 
     protected Vehicle(VehicleBuilder<?,?> builder) {
+        super(builder);
         this.id = ObjectValidator.create("id", builder.id).ensureNotNull().getValue();
         this.model = StringValidator.create("model", builder.model).ensureNotNull().ensureNotBlank().getValue();
         this.maxPeople = NumberValidator.create("maxPeople", builder.maxPeople).ensureGreaterThen(0).getValue();

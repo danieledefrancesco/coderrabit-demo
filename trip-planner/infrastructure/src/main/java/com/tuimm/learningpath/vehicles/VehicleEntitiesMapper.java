@@ -4,19 +4,29 @@ import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 @Mapper(componentModel = "spring")
-public interface VehicleEntitiesMapper {
-    Bike mapToBike(VehicleEntity vehicle);
+public abstract class VehicleEntitiesMapper {
+    @Lazy
+    @Autowired
+    protected VehicleAggregateManager aggregateManager;
 
-    Car mapToCar(VehicleEntity vehicle);
+    @Mapping(target = "aggregateManager", expression = "java(aggregateManager)")
+    public abstract Bike mapToBike(VehicleEntity vehicle);
 
-    Scooter mapToScooter(VehicleEntity vehicle);
+    @Mapping(target = "aggregateManager", expression = "java(aggregateManager)")
+    public abstract Car mapToCar(VehicleEntity vehicle);
 
-    Pullman mapToPullman(VehicleEntity vehicle);
+    @Mapping(target = "aggregateManager", expression = "java(aggregateManager)")
+    public abstract Scooter mapToScooter(VehicleEntity vehicle);
+
+    @Mapping(target = "aggregateManager", expression = "java(aggregateManager)")
+    public abstract Pullman mapToPullman(VehicleEntity vehicle);
 
     @Named("mapToVehicle")
-    default Vehicle mapToVehicle(VehicleEntity vehicle) {
+    public Vehicle mapToVehicle(VehicleEntity vehicle) {
         switch (vehicle.getType()) {
             case CAR -> {
                 return mapToCar(vehicle);
@@ -34,18 +44,18 @@ public interface VehicleEntitiesMapper {
     }
 
     @Mapping(target = "type", constant = "BIKE")
-    VehicleEntity mapToEntity(Bike bike);
+    public abstract VehicleEntity mapToEntity(Bike bike);
 
     @Mapping(target = "type", constant = "CAR")
-    VehicleEntity mapToEntity(Car car);
+    public abstract VehicleEntity mapToEntity(Car car);
 
     @Mapping(target = "type", constant = "PULLMAN")
-    VehicleEntity mapToEntity(Pullman pullman);
+    public abstract VehicleEntity mapToEntity(Pullman pullman);
 
     @Mapping(target = "type", constant = "SCOOTER")
-    VehicleEntity mapToEntity(Scooter scooter);
+    public abstract VehicleEntity mapToEntity(Scooter scooter);
 
-    default VehicleEntity mapToEntity(Vehicle vehicle) {
+    public VehicleEntity mapToEntity(Vehicle vehicle) {
         if (vehicle instanceof Bike bike) {
             return mapToEntity(bike);
         }
@@ -61,15 +71,15 @@ public interface VehicleEntitiesMapper {
         throw new UnsupportedOperationException();
     }
 
-    default String mapToString(Plate plate) {
+    public String mapToString(Plate plate) {
         return plate.getValue();
     }
 
-    default GenericPlate mapToGenericPlate(String plate) {
+    public GenericPlate mapToGenericPlate(String plate) {
         return GenericPlate.from(plate);
     }
 
-    default ScooterPlate mapToScooterPlate(String plate) {
+    public ScooterPlate mapToScooterPlate(String plate) {
         return ScooterPlate.from(plate);
     }
 }
