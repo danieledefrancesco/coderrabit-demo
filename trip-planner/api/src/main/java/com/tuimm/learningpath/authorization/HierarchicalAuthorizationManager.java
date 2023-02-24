@@ -13,7 +13,7 @@ public class HierarchicalAuthorizationManager implements AuthorizationManager<Re
     private final Role requiredRole;
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
-        return new AuthorizationDecision(authentication.get().getAuthorities()
+            return new AuthorizationDecision(authentication.get().getAuthorities()
                 .stream()
                 .anyMatch(authority -> isAuthorized(Role.valueOf(authority.getAuthority()))));
     }
