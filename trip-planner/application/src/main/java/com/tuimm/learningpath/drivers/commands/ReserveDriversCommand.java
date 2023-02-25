@@ -6,8 +6,8 @@ import com.tuimm.learningpath.trips.StagePlan;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReserveTimeSlotsCommand extends EventHandler<OnTripCreatedEvent> {
-    public ReserveTimeSlotsCommand() {
+public class ReserveDriversCommand extends EventHandler<OnTripCreatedEvent> {
+    public ReserveDriversCommand() {
         super(OnTripCreatedEvent.class);
     }
 

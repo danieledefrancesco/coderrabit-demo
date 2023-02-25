@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.function.Consumer;
 
 @Component
@@ -21,6 +22,7 @@ public class VehicleFactoryImpl implements VehicleFactory {
         builderDirector.accept(builder);
         return builder.id(randomIdGenerator.generateRandomId())
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 
@@ -30,6 +32,7 @@ public class VehicleFactoryImpl implements VehicleFactory {
         builderDirector.accept(builder);
         return builder.id(randomIdGenerator.generateRandomId())
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 
@@ -39,6 +42,7 @@ public class VehicleFactoryImpl implements VehicleFactory {
         builderDirector.accept(builder);
         return builder.id(randomIdGenerator.generateRandomId())
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 
@@ -48,6 +52,7 @@ public class VehicleFactoryImpl implements VehicleFactory {
         builderDirector.accept(builder);
         return builder.id(randomIdGenerator.generateRandomId())
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 }

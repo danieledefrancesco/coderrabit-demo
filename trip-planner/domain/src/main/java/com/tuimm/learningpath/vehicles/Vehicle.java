@@ -1,5 +1,7 @@
 package com.tuimm.learningpath.vehicles;
 import com.tuimm.learningpath.common.Aggregate;
+import com.tuimm.learningpath.common.TimeSlot;
+import com.tuimm.learningpath.validators.CollectionValidator;
 import com.tuimm.learningpath.validators.NumberValidator;
 import com.tuimm.learningpath.validators.ObjectValidator;
 import com.tuimm.learningpath.validators.StringValidator;
@@ -7,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Collection;
 import java.util.UUID;
 
 @SuperBuilder
@@ -20,6 +23,7 @@ public abstract class Vehicle extends Aggregate<Vehicle> {
     private final double dailyRentPrice;
     private final double averageSpeed;
     private final double autonomy;
+    private final Collection<TimeSlot> reservedTimeSlots;
 
     protected Vehicle(VehicleBuilder<?,?> builder) {
         super(builder);
@@ -29,6 +33,7 @@ public abstract class Vehicle extends Aggregate<Vehicle> {
         this.dailyRentPrice = NumberValidator.create("dailyRentPrice", builder.dailyRentPrice).ensureGreaterThenOrEqualTo(0d).getValue();
         this.averageSpeed = NumberValidator.create("averageSpeed", builder.averageSpeed).ensureGreaterThen(0d).getValue();
         this.autonomy = NumberValidator.create("autonomy", builder.autonomy).ensureGreaterThen(0d).getValue();
+        this.reservedTimeSlots = CollectionValidator.create("reservedTimeSlots", builder.reservedTimeSlots).ensureNotNull().ensureAllNotNull().getValue();
     }
 
     public double computeAverageSpeedForPassengersAmount(int passengersAmount) {
@@ -54,4 +59,18 @@ public abstract class Vehicle extends Aggregate<Vehicle> {
     public abstract int getStopTimeInSeconds();
     public abstract double getEmissions();
     public abstract DrivingPolicy getDrivingPolicy();
+    public boolean isAvailableFor(TimeSlot timeSlot) {
+        return reservedTimeSlots.stream().noneMatch(reservedSlot -> reservedSlot.clashesWith(timeSlot));
+    }
+
+    public void reserveSlot(TimeSlot timeSlot) {
+        if (!isAvailableFor(timeSlot)) {
+            throw new IllegalArgumentException("vehicle not available for slot");
+        }
+        reservedTimeSlots.add(timeSlot);
+    }
+
+    public void freeSlot(TimeSlot timeSlot) {
+        reservedTimeSlots.remove(timeSlot);
+    }
 }

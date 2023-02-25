@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
@@ -172,6 +173,7 @@ public class VehiclesStepsDefinition extends Definition {
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 
@@ -190,6 +192,7 @@ public class VehiclesStepsDefinition extends Definition {
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 
@@ -207,6 +210,7 @@ public class VehiclesStepsDefinition extends Definition {
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 
@@ -224,6 +228,7 @@ public class VehiclesStepsDefinition extends Definition {
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
                 .aggregateManager(aggregateManager)
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 

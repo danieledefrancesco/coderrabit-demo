@@ -1,4 +1,4 @@
-package com.tuimm.learningpath.drivers.dal;
+package com.tuimm.learningpath.vehicles.dal;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Table;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Embeddable
 @Getter
 @Setter
-@Table(name = "drivers_reserved_slots")
+@Table(name = "vehicles_reserved_slots")
 public class SlotEntity {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;

@@ -1,5 +1,7 @@
 package com.tuimm.learningpath.vehicles;
 
+import com.tuimm.learningpath.common.TimeSlot;
+import com.tuimm.learningpath.drivers.dal.SlotEntity;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -82,4 +84,8 @@ public abstract class VehicleEntitiesMapper {
     public ScooterPlate mapToScooterPlate(String plate) {
         return ScooterPlate.from(plate);
     }
+
+    public abstract SlotEntity mapToEntity(TimeSlot timeSlot);
+
+    public abstract TimeSlot mapToSlot(SlotEntity slot);
 }

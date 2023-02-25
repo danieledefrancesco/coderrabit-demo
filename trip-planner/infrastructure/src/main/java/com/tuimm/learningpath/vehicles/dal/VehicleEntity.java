@@ -1,11 +1,11 @@
 package com.tuimm.learningpath.vehicles.dal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.tuimm.learningpath.drivers.dal.SlotEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -29,4 +29,6 @@ public class VehicleEntity {
     public enum VehicleType {
         BIKE, CAR, PULLMAN, SCOOTER
     }
+    @ElementCollection(targetClass = com.tuimm.learningpath.drivers.dal.SlotEntity.class, fetch = FetchType.EAGER)
+    private Set<SlotEntity> reservedTimeSlots;
 }
