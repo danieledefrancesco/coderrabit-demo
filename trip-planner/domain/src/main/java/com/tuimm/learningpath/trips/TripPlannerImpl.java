@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -36,8 +35,6 @@ public class TripPlannerImpl implements TripPlanner {
     private final RoutesService routesService;
     @NonNull
     private final DriversRepository driversRepository;
-    @NonNull
-    private final Supplier<StagePlan.StagePlanBuilder> stagePlanBuilderSupplier;
 
     @Override
     public TripPlan planTrip(TripDefinition tripDefinition) {
@@ -75,8 +72,9 @@ public class TripPlannerImpl implements TripPlanner {
 
         return vehicles.stream()
                 .map(vehicle -> createStagePlan(start, vehicle, from, to, weatherCondition, tripDefinition.getNumberOfPeople()))
+                .filter(stage -> stage.getVehicle().isAvailableFor(stage.getTimeSlot()))
                 .min(stageDefinition.getPreferredPlanPolicy())
-                .orElseThrow();
+                .orElseThrow(NoSuitableVehicleException::new);
     }
 
     private StagePlan createStagePlan(LocalDateTime start,
@@ -87,7 +85,7 @@ public class TripPlannerImpl implements TripPlanner {
                                       int numberOfPeople) {
         Route route = routesService.getRoute(from, to, vehicle.getDrivingPolicy().getDrivingProfile());
         Driver driver = getDriverForVehicle(vehicle, start.toLocalDate());
-        return stagePlanBuilderSupplier.get()
+        return StagePlan.builder()
                 .startDateTime(start)
                 .destinationWeatherCondition(weatherCondition)
                 .route(route)
