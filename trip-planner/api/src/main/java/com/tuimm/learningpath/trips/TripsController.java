@@ -1,7 +1,9 @@
 package com.tuimm.learningpath.trips;
 
+import com.tuimm.learningpath.common.TimeSlot;
 import com.tuimm.learningpath.mediator.Mediator;
 import com.tuimm.learningpath.trips.commands.DeleteTripRequest;
+import com.tuimm.learningpath.trips.commands.UpdateStageDriverRequest;
 import com.tuimm.learningpath.trips.dtos.CreateTripRequestDto;
 import com.tuimm.learningpath.trips.dtos.GetAllTripsResponseDto;
 import com.tuimm.learningpath.trips.dtos.TripResponseDto;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
@@ -48,6 +51,23 @@ public class TripsController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id")UUID id) {
         mediator.send(DeleteTripRequest.fromId(id));
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/plan/stages/{start}-{end}/driver")
+    public ResponseEntity<Object> updateStageDriver(@PathVariable("id") UUID tripId,
+                                                    @PathVariable("start") LocalDateTime start,
+                                                    @PathVariable("end") LocalDateTime end,
+                                                    @Valid @RequestBody UpdateStageDriverRequest updateStageDriverRequest) {
+        UpdateStageDriverRequest request =  UpdateStageDriverRequest.builder()
+                .tripId(tripId)
+                .driverId(updateStageDriverRequest.getDriverId())
+                .timeSlot(TimeSlot.builder()
+                        .startDateTime(start)
+                        .endDateTime(end)
+                        .build())
+                .build();
+        mediator.send(request);
         return ResponseEntity.noContent().build();
     }
 }

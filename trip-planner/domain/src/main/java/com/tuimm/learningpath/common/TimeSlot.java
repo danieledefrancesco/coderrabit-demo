@@ -3,6 +3,7 @@ package com.tuimm.learningpath.common;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Getter
 @EqualsAndHashCode
+@ToString
 public class TimeSlot {
     @NonNull
     private final LocalDateTime startDateTime;

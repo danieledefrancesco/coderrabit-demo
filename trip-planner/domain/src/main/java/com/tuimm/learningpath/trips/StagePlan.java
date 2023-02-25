@@ -5,9 +5,7 @@ import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.routes.Route;
 import com.tuimm.learningpath.vehicles.Vehicle;
 import com.tuimm.learningpath.weatherconditions.WeatherCondition;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -25,7 +23,8 @@ public class StagePlan {
     private final Vehicle vehicle;
     private final int numberOfPeople;
     @NonNull
-    private final Driver driver;
+    @Setter(AccessLevel.MODULE)
+    private Driver driver;
 
     public double getPrice()
     {
@@ -40,8 +39,7 @@ public class StagePlan {
         return (int)(route.getDistanceInKilometers() / vehicle.getAutonomy());
     }
 
-    public Duration getDuration()
-    {
+    public Duration getDuration() {
         long routeDurationInSeconds =
                 (int) ((route.getDistanceInKilometers() / vehicle.computeAverageSpeedForPassengersAmount(numberOfPeople)) * 3600);
         int stopsDurationInSeconds = vehicle.getStopTimeInSeconds() * getRequiredStops();

@@ -31,7 +31,6 @@ class TripPlannerImplTest {
     private RoutesService routesService;
     private PlacesService placesService;
     private DriversRepository driversRepository;
-    private StagePlan.StagePlanBuilder builder;
     private static final Place ROME = Place.create("Rome",
             GeoCoordinate.of(10, 10));
     private static final Place MILAN = Place.create("Milan",
@@ -61,13 +60,11 @@ class TripPlannerImplTest {
         routesService = mock(RoutesService.class);
         placesService = mock(PlacesService.class);
         driversRepository = mock(DriversRepository.class);
-        builder = mock(StagePlan.StagePlanBuilder.class);
         tripPlanner = new TripPlannerImpl(garage,
                 weatherConditionsService,
                 placesService,
                 routesService,
-                driversRepository,
-                () -> builder);
+                driversRepository);
     }
 
     @Test
@@ -188,18 +185,13 @@ class TripPlannerImplTest {
                 .minimumDrivingAge(minimumDrivingAge)
                 .build();
         when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
+        when(suitableVehicle.isAvailableFor(any())).thenReturn(true);
         List<Vehicle> suitableVehicles = Collections.singletonList(suitableVehicle);
 
         Driver driver = mock(Driver.class);
         List<Driver> drivers = Collections.singletonList(driver);
 
-        StagePlan firstStagePlan = mock(StagePlan.class);
-        StagePlan secondStagePlan = mock(StagePlan.class);
-
-        TripPlan expectedTripPlan = TripPlan.builder().stages(Arrays.asList(firstStagePlan, secondStagePlan)).build();
-
         when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
-        when(firstStagePlan.getArrivalDateTime()).thenReturn(secondStageStart);
 
         when(placesService.fromName(ROME.getName())).thenReturn(ROME);
         when(placesService.fromName(MILAN.getName())).thenReturn(MILAN);
@@ -213,26 +205,25 @@ class TripPlannerImplTest {
         when(weatherConditionsService.getWeatherCondition())
                 .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
 
-        when(driversRepository.findByMinimumAgeAndValidLicense(minimumDrivingAge, tripStart.toLocalDate())).thenReturn(drivers);
+        when(driversRepository.findByMinimumAgeAndValidLicense(eq(minimumDrivingAge), any())).thenReturn(drivers);
         when(driversRepository.findAll()).thenReturn(drivers);
-
-        when(builder.startDateTime(tripStart)).thenReturn(builder);
-        when(builder.startDateTime(secondStageStart)).thenReturn(builder);
-        when(builder.numberOfPeople(tripDefinition.getNumberOfPeople())).thenReturn(builder);
-        when(builder.destinationWeatherCondition(WeatherCondition.CLOUDY)).thenReturn(builder);
-        when(builder.destinationWeatherCondition(WeatherCondition.PARTLY_CLOUDY)).thenReturn(builder);
-        when(builder.route(ROME_TO_MILAN)).thenReturn(builder);
-        when(builder.route(MILAN_TO_ZURICH)).thenReturn(builder);
-        when(builder.vehicle(suitableVehicle)).thenReturn(builder);
-        when(builder.driver(driver)).thenReturn(builder);
-        when(builder.build()).thenReturn(firstStagePlan, secondStagePlan);
 
         TripPlan actualTripPlan = tripPlanner.planTrip(tripDefinition);
 
-        Assertions.assertEquals(expectedTripPlan, actualTripPlan);
-
+        Assertions.assertEquals(2, actualTripPlan.getStages().size());
+        Assertions.assertEquals(tripStart, actualTripPlan.getStages().get(0).getStartDateTime());
+        Assertions.assertEquals(actualTripPlan.getStages().get(0).getArrivalDateTime(), actualTripPlan.getStages().get(1).getStartDateTime());
+        Assertions.assertEquals(numberOfPeople, actualTripPlan.getStages().get(0).getNumberOfPeople());
+        Assertions.assertEquals(numberOfPeople, actualTripPlan.getStages().get(1).getNumberOfPeople());
+        Assertions.assertEquals(WeatherCondition.CLOUDY, actualTripPlan.getStages().get(0).getDestinationWeatherCondition());
+        Assertions.assertEquals(WeatherCondition.PARTLY_CLOUDY, actualTripPlan.getStages().get(1).getDestinationWeatherCondition());
+        Assertions.assertEquals(ROME_TO_MILAN, actualTripPlan.getStages().get(0).getRoute());
+        Assertions.assertEquals(MILAN_TO_ZURICH, actualTripPlan.getStages().get(1).getRoute());
+        Assertions.assertEquals(suitableVehicle, actualTripPlan.getStages().get(0).getVehicle());
+        Assertions.assertEquals(suitableVehicle, actualTripPlan.getStages().get(1).getVehicle());
+        Assertions.assertEquals(driver, actualTripPlan.getStages().get(0).getDriver());
+        Assertions.assertEquals(driver, actualTripPlan.getStages().get(1).getDriver());
         verify(garage, times(1)).getSuitableVehicles(numberOfPeople);
-        verify(firstStagePlan, times(1)).getArrivalDateTime();
 
         verify(suitableVehicle, atLeastOnce()).getDrivingPolicy();
 
@@ -247,16 +238,5 @@ class TripPlannerImplTest {
 
         verify(weatherConditionsService, times(2))
                 .getWeatherCondition();
-
-        verify(builder, times(1)).startDateTime(tripStart);
-        verify(builder, times(1)).startDateTime(secondStageStart);
-        verify(builder, times(2)).numberOfPeople(numberOfPeople);
-        verify(builder, times(1)).destinationWeatherCondition(WeatherCondition.CLOUDY);
-        verify(builder, times(1)).destinationWeatherCondition(WeatherCondition.PARTLY_CLOUDY);
-        verify(builder, times(1)).route(ROME_TO_MILAN);
-        verify(builder, times(1)).route(MILAN_TO_ZURICH);
-        verify(builder, times(2)).vehicle(suitableVehicle);
-        verify(builder, times(2)).driver(driver);
-        verify(builder, times(2)).build();
     }
 }

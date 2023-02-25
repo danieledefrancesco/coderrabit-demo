@@ -1,5 +1,6 @@
 package com.tuimm.learningpath.trips;
 
+import com.tuimm.learningpath.TodayDateProvider;
 import com.tuimm.learningpath.drivers.DriverEntityMapper;
 import com.tuimm.learningpath.places.GeoCoordinate;
 import com.tuimm.learningpath.places.Place;
@@ -22,6 +23,8 @@ public abstract class TripEntityMapper {
     @Lazy
     @Autowired
     protected TripAggregateManager aggregateManager;
+    @Autowired
+    protected TodayDateProvider todayDateProvider;
 
     @Mapping(target = "stages", expression = "java(mapToStages(trip))")
     public abstract TripEntity mapToTripEntity(Trip trip);
@@ -50,6 +53,7 @@ public abstract class TripEntityMapper {
 
     @Mapping(target = "plan", source = "tripEntity")
     @Mapping(target = "aggregateManager", expression = "java(aggregateManager)")
+    @Mapping(target = "todayDateProvider", expression = "java(todayDateProvider)")
     public abstract Trip mapTripEntityToTrip(TripEntity tripEntity);
 
     public abstract TripPlan mapTripEntityToTripPlan(TripEntity tripEntity);

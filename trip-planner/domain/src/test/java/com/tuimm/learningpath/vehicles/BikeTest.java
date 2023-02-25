@@ -1,9 +1,13 @@
 package com.tuimm.learningpath.vehicles;
 
+import com.tuimm.learningpath.common.AggregateManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.UUID;
+
+import static org.mockito.Mockito.mock;
 
 class BikeTest extends VehicleTest {
 
@@ -31,6 +35,8 @@ class BikeTest extends VehicleTest {
                 .autonomy(autonomy)
                 .averageSpeed(averageSpeed)
                 .dailyRentPrice(dailyRentPrice)
+                .reservedTimeSlots(Collections.emptyList())
+                .aggregateManager(mock(AggregateManager.class))
                 .build();
     }
 

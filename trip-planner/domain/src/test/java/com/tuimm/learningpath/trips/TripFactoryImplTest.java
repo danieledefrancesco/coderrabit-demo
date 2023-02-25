@@ -1,6 +1,7 @@
 package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.RandomIdGenerator;
+import com.tuimm.learningpath.TodayDateProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,14 @@ class TripFactoryImplTest {
     private RandomIdGenerator randomIdGenerator;
     private TripFactoryImpl tripFactory;
     private TripAggregateManager aggregateManager;
+    private TodayDateProvider todayDateProvider;
 
     @BeforeEach
     void setUp() {
         randomIdGenerator = mock(RandomIdGenerator.class);
         aggregateManager = mock(TripAggregateManager.class);
-        tripFactory = new TripFactoryImpl(randomIdGenerator, aggregateManager);
+        todayDateProvider = mock(TodayDateProvider.class);
+        tripFactory = new TripFactoryImpl(randomIdGenerator, aggregateManager, todayDateProvider);
     }
 
     @Test

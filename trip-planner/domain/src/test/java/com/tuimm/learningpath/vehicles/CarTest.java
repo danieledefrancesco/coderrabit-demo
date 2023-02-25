@@ -1,6 +1,11 @@
 package com.tuimm.learningpath.vehicles;
 
+import com.tuimm.learningpath.common.AggregateManager;
+
+import java.util.Collections;
 import java.util.UUID;
+
+import static org.mockito.Mockito.mock;
 
 class CarTest extends EnginePoweredVehicleTest {
     @Override
@@ -38,6 +43,8 @@ class CarTest extends EnginePoweredVehicleTest {
                 .maxPeople(maxPeople)
                 .averageSpeed(averageSpeed)
                 .autonomy(autonomy)
+                .reservedTimeSlots(Collections.emptyList())
+                .aggregateManager(mock(AggregateManager.class))
                 .build();
     }
 }
