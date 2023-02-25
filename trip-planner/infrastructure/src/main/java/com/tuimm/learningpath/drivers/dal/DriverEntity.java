@@ -24,6 +24,6 @@ public class DriverEntity {
     private DrivingLicenseEntity drivingLicense;
     private String citizenship;
     @ElementCollection(targetClass = SlotEntity.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "slot_id", referencedColumnName = "id")
-    private Set<SlotEntity> reservedSlots;
+    private Set<SlotEntity> reservedTimeSlots;
+
 }

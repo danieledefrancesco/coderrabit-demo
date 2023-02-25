@@ -1,6 +1,7 @@
 package com.tuimm.learningpath.drivers;
 
 import com.tuimm.learningpath.TodayDateProvider;
+import com.tuimm.learningpath.common.TimeSlot;
 import com.tuimm.learningpath.drivers.dal.DriverEntity;
 import com.tuimm.learningpath.drivers.dal.DrivingLicenseEntity;
 import com.tuimm.learningpath.drivers.dal.SlotEntity;
@@ -24,6 +25,6 @@ public abstract class DriverEntityMapper {
     public abstract Driver mapToDriver(DriverEntity entity);
     public abstract DrivingLicenseEntity mapToEntity(DrivingLicense drivingLicense);
     public abstract DrivingLicense mapToDrivingLicense(DrivingLicenseEntity entity);
-    public abstract SlotEntity mapToEntity(Slot slot);
-    public abstract Slot mapToSlot(SlotEntity slot);
+    public abstract SlotEntity mapToEntity(TimeSlot timeSlot);
+    public abstract TimeSlot mapToSlot(SlotEntity slot);
 }

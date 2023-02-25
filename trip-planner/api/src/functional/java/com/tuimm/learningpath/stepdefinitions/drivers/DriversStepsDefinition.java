@@ -16,9 +16,7 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class DriversStepsDefinition extends Definition {
     @Autowired
@@ -104,6 +102,7 @@ public class DriversStepsDefinition extends Definition {
         driverEntity.setLastName(map.get("lastName"));
         driverEntity.setCitizenship(map.get("citizenship"));
         driverEntity.setDateOfBirth(LocalDate.parse(map.get("dateOfBirth")));
+        driverEntity.setReservedTimeSlots(Collections.emptySet());
         if (!map.get("licenseCode").equals("null")) {
             DrivingLicenseEntity drivingLicense = new DrivingLicenseEntity();
             driverEntity.setDrivingLicense(drivingLicense);

@@ -3,7 +3,6 @@ package com.tuimm.learningpath.drivers;
 import com.tuimm.learningpath.TodayDateProvider;
 import com.tuimm.learningpath.drivers.dal.DriverEntity;
 import com.tuimm.learningpath.drivers.dal.DriversDao;
-import com.tuimm.learningpath.exceptions.EntityAlreadyExistsException;
 import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -39,23 +38,6 @@ public class JPADriversRepository implements DriversRepository {
     @Override
     public Driver findById(UUID id) {
         return driverEntityMapper.mapToDriver(getDriverOrThrowNotFoundException(id));
-    }
-
-    @Override
-    public void add(Driver driver) {
-        if (driver.getDrivingLicense() != null) {
-            dao.findFirstByDrivingLicenseCode(driver.getDrivingLicense().getCode().getValue())
-                    .ifPresent(driverEntity -> {
-                        throw new EntityAlreadyExistsException("DrivingLicense", driver.getDrivingLicense().getCode().getValue());
-                    });
-        }
-
-        dao.save(driverEntityMapper.mapToEntity(driver));
-    }
-
-    @Override
-    public void delete(UUID id) {
-        dao.delete(getDriverOrThrowNotFoundException(id));
     }
 
     private DriverEntity getDriverOrThrowNotFoundException(UUID id) {

@@ -20,7 +20,7 @@ public class DriverFactoryImpl implements DriverFactory {
         builderDirector.accept(builder);
         builder.id(randomIdGenerator.generateRandomId())
                 .todayDateProvider(todayDateProvider)
-                .reservedSlots(Collections.emptyList())
+                .reservedTimeSlots(Collections.emptyList())
                 .aggregateManager(aggregateManager);
         return builder.build();
     }

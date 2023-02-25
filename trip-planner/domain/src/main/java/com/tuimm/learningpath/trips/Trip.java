@@ -11,4 +11,10 @@ import java.util.UUID;
 public class Trip extends Aggregate<Trip> {
     private final UUID id;
     private final TripPlan plan;
+
+    @Override
+    public void delete() {
+        super.delete();
+        addEvent(OnTripDeletedEvent.of(this));
+    }
 }

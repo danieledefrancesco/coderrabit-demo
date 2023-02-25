@@ -14,7 +14,7 @@ public class DeleteVehicleCommand extends RequestHandler<DeleteVehicleRequest, V
 
     @Override
     public Void handle(DeleteVehicleRequest request) {
-        garage.delete(request.getDriverId());
+        garage.findById(request.getVehicleId()).delete();
         return null;
     }
 }

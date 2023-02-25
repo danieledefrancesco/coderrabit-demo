@@ -1,6 +1,7 @@
 package com.tuimm.learningpath.stepdefinitions.vehicles;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.tuimm.learningpath.common.Aggregate;
 import com.tuimm.learningpath.stepdefinitions.Definition;
 import com.tuimm.learningpath.vehicles.*;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
@@ -22,6 +23,8 @@ public class VehiclesStepsDefinition extends Definition {
     private Garage garage;
     @Autowired
     private VehiclesDao dao;
+    @Autowired
+    private VehicleAggregateManager aggregateManager;
 
     @Given("a create bike request")
     public void aCreateBikeRequest(DataTable table) {
@@ -77,8 +80,8 @@ public class VehiclesStepsDefinition extends Definition {
     public void theExistingBikes(DataTable table) {
         table.asMaps(String.class, String.class)
                 .stream()
-                .map(VehiclesStepsDefinition::mapToBike)
-                .forEach(garage::addVehicle);
+                .map(this::mapToBike)
+                .forEach(Aggregate::save);
     }
 
     @Then("the response should have {int} vehicles")
@@ -104,24 +107,24 @@ public class VehiclesStepsDefinition extends Definition {
     public void theExistingCars(DataTable table) {
         table.asMaps(String.class, String.class)
                 .stream()
-                .map(VehiclesStepsDefinition::mapToCar)
-                .forEach(garage::addVehicle);
+                .map(this::mapToCar)
+                .forEach(Aggregate::save);
     }
 
     @Given("the existing pullmans")
     public void theExistingPullmans(DataTable table) {
         table.asMaps(String.class, String.class)
                 .stream()
-                .map(VehiclesStepsDefinition::mapToPullman)
-                .forEach(garage::addVehicle);
+                .map(this::mapToPullman)
+                .forEach(Aggregate::save);
     }
 
     @Given("the existing scooters")
     public void theExistingScooters(DataTable table) {
         table.asMaps(String.class, String.class)
                 .stream()
-                .map(VehiclesStepsDefinition::mapToScooter)
-                .forEach(garage::addVehicle);
+                .map(this::mapToScooter)
+                .forEach(Aggregate::save);
     }
 
     @Then("the vehicle with id {word} should no longer exist")
@@ -160,7 +163,7 @@ public class VehiclesStepsDefinition extends Definition {
         Assertions.assertEquals(cost, FuelType.valueOf(fuelTypeAsString).getCost(), 0);
     }
 
-    private static Bike mapToBike(Map<String, String> map) {
+    private Bike mapToBike(Map<String, String> map) {
         return Bike.builder()
                 .id(UUID.fromString(map.get("id")))
                 .model(map.get("model"))
@@ -168,11 +171,12 @@ public class VehiclesStepsDefinition extends Definition {
                 .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
+                .aggregateManager(aggregateManager)
                 .build();
     }
 
 
-    private static Car mapToCar(Map<String, String> map) {
+    private Car mapToCar(Map<String, String> map) {
         return Car.builder()
                 .stopTimeInSeconds(Integer.parseInt(map.get("stopTimeInSeconds")))
                 .plate(GenericPlate.from(map.get("plate")))
@@ -185,10 +189,11 @@ public class VehiclesStepsDefinition extends Definition {
                 .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
+                .aggregateManager(aggregateManager)
                 .build();
     }
 
-    private static Pullman mapToPullman(Map<String, String> map) {
+    private Pullman mapToPullman(Map<String, String> map) {
         return Pullman.builder()
                 .stopTimeInSeconds(Integer.parseInt(map.get("stopTimeInSeconds")))
                 .plate(GenericPlate.from(map.get("plate")))
@@ -201,10 +206,11 @@ public class VehiclesStepsDefinition extends Definition {
                 .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
+                .aggregateManager(aggregateManager)
                 .build();
     }
 
-    private static Scooter mapToScooter(Map<String, String> map) {
+    private Scooter mapToScooter(Map<String, String> map) {
         return Scooter.builder()
                 .stopTimeInSeconds(Integer.parseInt(map.get("stopTimeInSeconds")))
                 .plate(ScooterPlate.from(map.get("plate")))
@@ -217,6 +223,7 @@ public class VehiclesStepsDefinition extends Definition {
                 .dailyRentPrice(Double.parseDouble(map.get("dailyRentPrice")))
                 .averageSpeed(Double.parseDouble(map.get("averageSpeed")))
                 .autonomy(Double.parseDouble(map.get("autonomy")))
+                .aggregateManager(aggregateManager)
                 .build();
     }
 

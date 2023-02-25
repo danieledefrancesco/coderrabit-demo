@@ -1,6 +1,6 @@
-package com.tuimm.learningpath.drivers;
+package com.tuimm.learningpath.common;
 
-import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
@@ -9,13 +9,14 @@ import java.time.LocalDateTime;
 
 @SuperBuilder
 @Getter
-public class Slot {
+@EqualsAndHashCode
+public class TimeSlot {
     @NonNull
     private final LocalDateTime startDateTime;
     @NonNull
     private final LocalDateTime endDateTime;
 
-    protected Slot(SlotBuilder<?,?> builder) {
+    protected TimeSlot(TimeSlotBuilder<?,?> builder) {
         if (!builder.endDateTime.isAfter(builder.startDateTime)) {
             throw new IllegalArgumentException("startDateTime must be before endDateTime");
         }
@@ -23,7 +24,7 @@ public class Slot {
         endDateTime = builder.endDateTime;
     }
 
-    public boolean clashesWith(@NonNull Slot other) {
+    public boolean clashesWith(@NonNull TimeSlot other) {
         if (endDateTime.isBefore(other.startDateTime)) return false;
         return !startDateTime.isAfter(other.endDateTime);
     }

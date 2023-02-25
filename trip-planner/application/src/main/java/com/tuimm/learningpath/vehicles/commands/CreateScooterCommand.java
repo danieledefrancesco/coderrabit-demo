@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateScooterCommand extends RequestHandler<CreateScooterRequest, Vehicle> {
-    private final Garage garage;
     private final VehicleFactory vehicleFactory;
-    public CreateScooterCommand(Garage garage, VehicleFactory vehicleFactory) {
+    public CreateScooterCommand(VehicleFactory vehicleFactory) {
         super(CreateScooterRequest.class);
-        this.garage = garage;
         this.vehicleFactory = vehicleFactory;
     }
 
@@ -27,7 +25,7 @@ public class CreateScooterCommand extends RequestHandler<CreateScooterRequest, V
                         .averageSpeed(request.getAverageSpeed())
                         .dailyRentPrice(request.getDailyRentPrice())
                         .maxPeople(request.getMaxPeople()));
-        garage.addVehicle(scooter);
+        scooter.save();
         return scooter;
     }
 }

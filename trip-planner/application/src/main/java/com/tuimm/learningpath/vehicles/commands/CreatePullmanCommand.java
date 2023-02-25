@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreatePullmanCommand extends RequestHandler<CreatePullmanRequest, Vehicle> {
-    private final Garage garage;
     private final VehicleFactory vehicleFactory;
-    public CreatePullmanCommand(Garage garage, VehicleFactory vehicleFactory) {
+    public CreatePullmanCommand(VehicleFactory vehicleFactory) {
         super(CreatePullmanRequest.class);
-        this.garage = garage;
         this.vehicleFactory = vehicleFactory;
     }
 
@@ -27,7 +25,7 @@ public class CreatePullmanCommand extends RequestHandler<CreatePullmanRequest, V
                         .averageSpeed(request.getAverageSpeed())
                         .dailyRentPrice(request.getDailyRentPrice())
                         .maxPeople(request.getMaxPeople()));
-        garage.addVehicle(pullman);
+        pullman.save();
         return pullman;
     }
 }

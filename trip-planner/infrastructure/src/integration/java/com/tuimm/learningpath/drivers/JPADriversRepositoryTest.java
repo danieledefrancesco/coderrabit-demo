@@ -1,7 +1,6 @@
 package com.tuimm.learningpath.drivers;
 
 import com.tuimm.learningpath.TodayDateProvider;
-import com.tuimm.learningpath.exceptions.EntityAlreadyExistsException;
 import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import com.tuimm.learningpath.IntegrationTest;
 import com.tuimm.learningpath.drivers.dal.DriverEntity;
@@ -118,46 +117,6 @@ class JPADriversRepositoryTest {
         Assertions.assertEquals(1, drivers.size());
     }
 
-    @Test
-    void add_shouldAddDriver_ifLicenseCodeDoesNotAlreadyExist() {
-        Driver driver = createDriver(UUID.randomUUID(), DrivingLicense.builder()
-                .code(DrivingLicenseCode.from(CODE))
-                .expiryDate(EXPIRY_DATE)
-                .build());
-        repository.add(driver);
-        Assertions.assertTrue(dao.findAll().iterator().hasNext());
-    }
-
-    @Test
-    void add_shouldAddDriver_ifLicenseIsNull() {
-        Driver driver = createDriver(UUID.randomUUID(), null);
-        repository.add(driver);
-        Assertions.assertTrue(dao.findAll().iterator().hasNext());
-    }
-
-    @Test
-    void add_shouldThrowEntityAlreadyExistsException_ifLicenseCodeAlreadyExists() {
-        DriverEntity driverEntity = createDriverEntity();
-        dao.save(driverEntity);
-        Driver driver = createDriver(UUID.randomUUID(), DrivingLicense.builder()
-                .code(DrivingLicenseCode.from(CODE))
-                .expiryDate(EXPIRY_DATE)
-                .build());
-        EntityAlreadyExistsException exception = Assertions.assertThrows(
-                EntityAlreadyExistsException.class,
-                () -> repository.add(driver));
-        Assertions.assertEquals(String.format("DrivingLicense with id %s already exists.", CODE),
-                exception.getMessage());
-    }
-
-    @Test
-    void delete_shouldDeleteDriver_whenDriverExists() {
-        DriverEntity driverEntity = createDriverEntity();
-        dao.save(driverEntity);
-        repository.delete(ID);
-        Assertions.assertFalse(dao.findAll().iterator().hasNext());
-    }
-
     private void assertIsExpectedDriver(Driver driver) {
         Assertions.assertEquals(ID, driver.getId());
         Assertions.assertEquals(FIRST_NAME, driver.getFirstName().getValue());
@@ -191,7 +150,7 @@ class JPADriversRepositoryTest {
                 .citizenship(Citizenship.from(CITIZENSHIP))
                 .drivingLicense(license)
                 .todayDateProvider(mock(TodayDateProvider.class))
-                .reservedSlots(Collections.emptyList())
+                .reservedTimeSlots(Collections.emptyList())
                 .build();
     }
 }

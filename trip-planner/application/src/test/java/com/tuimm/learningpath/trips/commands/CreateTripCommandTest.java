@@ -10,15 +10,13 @@ import static org.mockito.Mockito.*;
 class CreateTripCommandTest {
     private TripFactory tripFactory;
     private TripPlanner tripPlanner;
-    private TripsRepository tripsRepository;
     private CreateTripCommand createTripCommand;
 
     @BeforeEach
     void setUp() {
         tripFactory = mock(TripFactory.class);
         tripPlanner = mock(TripPlanner.class);
-        tripsRepository = mock(TripsRepository.class);
-        createTripCommand = new CreateTripCommand(tripFactory, tripPlanner, tripsRepository);
+        createTripCommand = new CreateTripCommand(tripFactory, tripPlanner);
     }
 
     @Test
@@ -34,6 +32,6 @@ class CreateTripCommandTest {
 
         verify(tripPlanner).planTrip(createTripRequest);
         verify(tripFactory).create(plan);
-        verify(tripsRepository).add(trip);
+        verify(trip).save();
     }
 }

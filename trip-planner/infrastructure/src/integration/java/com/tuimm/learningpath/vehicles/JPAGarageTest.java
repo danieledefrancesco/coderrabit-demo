@@ -97,26 +97,6 @@ class JPAGarageTest {
         assertVehicleHasExpectedValues(pullman, pullmanId, 2);
     }
 
-    @Test
-    void addVehicle_shouldAddVehicle() {
-        UUID carId = UUID.randomUUID();
-        garage.addVehicle(createCar(carId, 2));
-
-        Assertions.assertEquals(1, StreamSupport.stream(dao.findAll().spliterator(), false).count());
-        VehicleEntity vehicleEntity = dao.findById(carId).orElseThrow();
-
-        assertVehicleHasExpectedValues(vehicleEntity, carId, 2, VehicleEntity.VehicleType.CAR);
-    }
-
-    @Test
-    void delete_shouldDeleteVehicle() {
-        UUID id = UUID.randomUUID();
-        VehicleEntity entity = createVehicle(id, VehicleEntity.VehicleType.CAR, 3);
-        dao.save(entity);
-        garage.delete(id);
-        Assertions.assertEquals(0, StreamSupport.stream(dao.findAll().spliterator(), false).count());
-    }
-
     private void assertVehicleHasExpectedValues(VehicleEntity vehicle, UUID id, int maxPeople, VehicleEntity.VehicleType type)
     {
         Assertions.assertEquals(id, vehicle.getId());

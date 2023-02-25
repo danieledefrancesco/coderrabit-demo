@@ -8,6 +8,4 @@ public interface DriversRepository {
     Collection<Driver> findAll();
     Collection<Driver> findByMinimumAgeAndValidLicense(int minimumAge, LocalDate tripEndDate);
     Driver findById(UUID id);
-    void add(Driver driver);
-    void delete(UUID id);
 }

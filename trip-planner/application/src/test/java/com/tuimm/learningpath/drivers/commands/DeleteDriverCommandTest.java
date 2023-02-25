@@ -1,5 +1,6 @@
 package com.tuimm.learningpath.drivers.commands;
 
+import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.drivers.DriversRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,10 @@ class DeleteDriverCommandTest {
     void handle_shouldInvokeRepository() {
         UUID id = UUID.fromString("00000000-0000-0000-0000-000000000001");
         DeleteDriverRequest request = DeleteDriverRequest.fromId(id);
+        Driver driver = mock(Driver.class);
+        when(driversRepository.findById(id)).thenReturn(driver);
         deleteDriverCommand.handle(request);
-        verify(driversRepository).delete(id);
+        verify(driver).delete();
+        verify(driversRepository).findById(id);
     }
 }

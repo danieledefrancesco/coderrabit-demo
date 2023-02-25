@@ -14,7 +14,7 @@ public class DeleteTripCommand extends RequestHandler<DeleteTripRequest, Void> {
 
     @Override
     public Void handle(DeleteTripRequest request) {
-        repository.deleteById(request.getTripId());
+        repository.findById(request.getTripId()).delete();
         return null;
     }
 }

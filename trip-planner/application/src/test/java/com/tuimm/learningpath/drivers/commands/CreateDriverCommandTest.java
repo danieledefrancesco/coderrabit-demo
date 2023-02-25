@@ -14,14 +14,12 @@ import static org.mockito.Mockito.*;
 
 class CreateDriverCommandTest {
     private DriverFactory driverFactory;
-    private DriversRepository driversRepository;
     private CreateDriverCommand createDriverCommand;
 
     @BeforeEach
     void setUp() {
         driverFactory = mock(DriverFactory.class);
-        driversRepository = mock(DriversRepository.class);
-        createDriverCommand = new CreateDriverCommand(driversRepository, driverFactory);
+        createDriverCommand = new CreateDriverCommand(driverFactory);
     }
     @Test
     void handle_shouldReturnExpectedResult_whenDrivingLicenseIsNotNull() {
@@ -73,7 +71,7 @@ class CreateDriverCommandTest {
         Assertions.assertEquals(driver,
                 createDriverCommand.handle(createDriverRequest));
 
-        verify(driversRepository).add(driver);
+        verify(driver).save();
         verify(driverFactory).create(any());
         verify(builder).citizenship(Citizenship.from(citizenship));
         verify(builder).drivingLicense(drivingLicense);

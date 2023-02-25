@@ -2,6 +2,7 @@ package com.tuimm.learningpath.drivers;
 
 import com.tuimm.learningpath.TodayDateProvider;
 import com.tuimm.learningpath.common.Aggregate;
+import com.tuimm.learningpath.common.TimeSlot;
 import com.tuimm.learningpath.vehicles.Vehicle;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,21 +30,25 @@ public class Driver extends Aggregate<Driver> {
     @NonNull
     private final TodayDateProvider todayDateProvider;
     @NonNull
-    private final Collection<Slot> reservedSlots;
+    private final Collection<TimeSlot> reservedTimeSlots;
 
     public boolean canDrive(Vehicle vehicle) {
         if (!vehicle.getDrivingPolicy().requiresDrivingLicense()) return true;
         return todayDateProvider.getTodayDate().minusYears(vehicle.getDrivingPolicy().getMinimumDrivingAge()).isAfter(dateOfBirth);
     }
 
-    public boolean isAvailableFor(Slot slot) {
-        return reservedSlots.stream().noneMatch(reservedSlot -> reservedSlot.clashesWith(slot));
+    public boolean isAvailableFor(TimeSlot timeSlot) {
+        return reservedTimeSlots.stream().noneMatch(reservedSlot -> reservedSlot.clashesWith(timeSlot));
     }
 
-    public void reserveSlot(Slot slot) {
-        if (!isAvailableFor(slot)) {
+    public void reserveSlot(TimeSlot timeSlot) {
+        if (!isAvailableFor(timeSlot)) {
             throw new IllegalArgumentException("driver not available for slot");
         }
-        reservedSlots.add(slot);
+        reservedTimeSlots.add(timeSlot);
+    }
+
+    public void freeSlot(TimeSlot timeSlot) {
+        reservedTimeSlots.remove(timeSlot);
     }
 }

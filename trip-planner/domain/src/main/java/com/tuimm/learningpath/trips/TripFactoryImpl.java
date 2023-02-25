@@ -11,10 +11,12 @@ public class TripFactoryImpl implements TripFactory {
     private final TripAggregateManager aggregateManager;
     @Override
     public Trip create(TripPlan plan) {
-        return Trip.builder()
+        Trip trip = Trip.builder()
                 .id(randomIdGenerator.generateRandomId())
                 .plan(plan)
                 .aggregateManager(aggregateManager)
                 .build();
+        trip.addEvent(OnTripCreatedEvent.of(trip));
+        return trip;
     }
 }

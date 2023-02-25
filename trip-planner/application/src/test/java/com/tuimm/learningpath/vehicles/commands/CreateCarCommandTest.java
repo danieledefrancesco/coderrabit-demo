@@ -11,14 +11,12 @@ import static org.mockito.Mockito.*;
 
 class CreateCarCommandTest {
     private VehicleFactory vehicleFactory;
-    private Garage garage;
     private CreateCarCommand createCarCommand;
 
     @BeforeEach
     void setUp() {
         vehicleFactory = mock(VehicleFactory.class);
-        garage = mock(Garage.class);
-        createCarCommand = new CreateCarCommand(garage, vehicleFactory);
+        createCarCommand = new CreateCarCommand(vehicleFactory);
     }
 
     @Test
@@ -57,7 +55,7 @@ class CreateCarCommandTest {
         Assertions.assertEquals(car, createCarCommand.handle(request));
 
         verify(vehicleFactory).createCar(any());
-        verify(garage).addVehicle(car);
+        verify(car).save();
 
         verify(builder).model(model);
         verify(builder).maxPeople(maxNumberOfPeople);

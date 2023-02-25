@@ -49,17 +49,6 @@ class TripsRepositoryTest {
         vehiclesDao.deleteAll();
         driversDao.deleteAll();
     }
-    @Test
-    void add_shouldCreateTheTripInTheDatabase() {
-        Trip trip = Trip.builder()
-                .id(UUID.randomUUID())
-                .plan(TripPlan.builder()
-                        .stages(Arrays.asList(createFirstStagePlan(), createSecondStagePlan()))
-                        .build())
-                .build();
-        tripsRepository.add(trip);
-        Assertions.assertTrue(tripsDao.findAll().iterator().hasNext());
-    }
 
     @Test
     void findById_shouldReturnExpectedTrip_ifTripExists() {
@@ -114,35 +103,6 @@ class TripsRepositoryTest {
         Collection<Trip> trips = tripsRepository.findAll();
         Assertions.assertEquals(1, trips.size());
     }
-
-    @Test
-    void delete_shouldDeleteTrip_ifTripsExist() {
-        UUID tripID = UUID.randomUUID();
-        TripEntity tripEntity = new TripEntity();
-        tripEntity.setId(tripID);
-        Set<StagePlanEntity> stagePlanEntities = new HashSet<>();
-
-        StagePlanEntity stagePlan1 = createAndStoreFirstStagePlan(tripID);
-        StagePlanEntity stagePlan2 = createAndStoreSecondStagePlan(tripID);
-        stagePlanEntities.add(stagePlan1);
-        stagePlanEntities.add(stagePlan2);
-
-        tripEntity.setStages(stagePlanEntities);
-        tripEntity.setStages(stagePlanEntities);
-        tripsDao.save(tripEntity);
-        tripsRepository.deleteById(tripID);
-        Assertions.assertFalse(tripsDao.findAll().iterator().hasNext());
-    }
-
-    @Test
-    void delete_shouldThrowEntityNotFoundException_ifTripDoesNotExist() {
-        UUID tripId = UUID.fromString("00000000-0000-0000-0000-000000000001");
-        EntityNotFoundException exception = Assertions.assertThrows(EntityNotFoundException.class,
-                () -> tripsRepository.deleteById(tripId));
-        Assertions.assertEquals("Trip with id 00000000-0000-0000-0000-000000000001 does not exist.",
-                exception.getMessage());
-    }
-
     private StagePlan createFirstStagePlan() {
         DriverEntity driverEntity = createAndStoreFirstDriver();
         VehicleEntity vehicle = createAndStoreFirstVehicle();

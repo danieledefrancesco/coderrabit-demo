@@ -4,7 +4,6 @@ import com.tuimm.learningpath.exceptions.EntityNotFoundException;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import com.tuimm.learningpath.vehicles.dal.VehicleEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -30,16 +29,6 @@ public class JPAGarage implements Garage {
     public Collection<Vehicle> getSuitableVehicles(int numberOfPeople) {
         Iterable<VehicleEntity> entities = vehiclesDao.findByMaxPeopleGreaterThanEqual(numberOfPeople);
         return mapToVehicles(entities);
-    }
-
-    @Override
-    public void addVehicle(Vehicle vehicle) {
-        vehiclesDao.save(vehiclesMapper.mapToEntity(vehicle));
-    }
-
-    @Override
-    public void delete(UUID id) {
-        vehiclesDao.delete(getVehicleEntityOrThrowEntityNotFoundException(id));
     }
 
     private VehicleEntity getVehicleEntityOrThrowEntityNotFoundException(UUID id) {

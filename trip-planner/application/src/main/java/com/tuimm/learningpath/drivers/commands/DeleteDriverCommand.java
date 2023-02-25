@@ -14,7 +14,7 @@ public class DeleteDriverCommand extends RequestHandler<DeleteDriverRequest, Voi
 
     @Override
     public Void handle(DeleteDriverRequest request) {
-        repository.delete(request.getDriverId());
+        repository.findById(request.getDriverId()).delete();
         return null;
     }
 }

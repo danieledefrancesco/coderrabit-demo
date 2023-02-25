@@ -9,5 +9,5 @@ import java.util.UUID;
 @Getter
 @RequiredArgsConstructor(staticName = "fromId")
 public class DeleteVehicleRequest implements Request<Void> {
-    private final UUID driverId;
+    private final UUID vehicleId;
 }

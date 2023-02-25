@@ -1,5 +1,6 @@
 package com.tuimm.learningpath.trips;
 
+import com.tuimm.learningpath.common.TimeSlot;
 import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.routes.Route;
 import com.tuimm.learningpath.vehicles.Vehicle;
@@ -45,6 +46,13 @@ public class StagePlan {
                 (int) ((route.getDistanceInKilometers() / vehicle.computeAverageSpeedForPassengersAmount(numberOfPeople)) * 3600);
         int stopsDurationInSeconds = vehicle.getStopTimeInSeconds() * getRequiredStops();
         return Duration.ofSeconds(routeDurationInSeconds + stopsDurationInSeconds);
+    }
+
+    public TimeSlot getTimeSlot() {
+        return TimeSlot.builder()
+                .startDateTime(startDateTime)
+                .endDateTime(getArrivalDateTime())
+                .build();
     }
 
     public LocalDateTime getArrivalDateTime() {
