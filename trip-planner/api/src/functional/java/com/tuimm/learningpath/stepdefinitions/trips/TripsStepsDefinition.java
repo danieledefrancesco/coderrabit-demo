@@ -148,6 +148,9 @@ public class TripsStepsDefinition extends Definition {
         result.setFrom(map.get("from"));
         result.setTo(map.get("to"));
         result.setPreferredPlanPolicy(PreferredPlanPolicy.valueOf(map.get("preferredPlanPolicy")));
+        if (map.get("driverId") != null && !map.get("driverId").isBlank()) {
+            result.setDriverId(UUID.fromString(map.get("driverId")));
+        }
         return result;
     }
 

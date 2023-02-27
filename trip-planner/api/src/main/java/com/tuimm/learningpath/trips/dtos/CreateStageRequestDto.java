@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class CreateStageRequestDto {
@@ -18,4 +20,7 @@ public class CreateStageRequestDto {
     @NotNull
     @JsonProperty("preferred_plan_policy")
     private PreferredPlanPolicy preferredPlanPolicy;
+    @NotNull
+    @JsonProperty("driver_id")
+    private UUID driverId;
 }

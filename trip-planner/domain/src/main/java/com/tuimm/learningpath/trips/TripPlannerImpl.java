@@ -2,7 +2,6 @@ package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.drivers.DriversRepository;
-import com.tuimm.learningpath.exceptions.NoSuitableDriverException;
 import com.tuimm.learningpath.exceptions.NoSuitableVehicleException;
 import com.tuimm.learningpath.places.PlacesService;
 import com.tuimm.learningpath.places.Place;
@@ -16,11 +15,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -71,7 +70,9 @@ public class TripPlannerImpl implements TripPlanner {
         WeatherCondition weatherCondition = weatherConditionsService.getWeatherCondition();
 
         return vehicles.stream()
-                .map(vehicle -> createStagePlan(start, vehicle, from, to, weatherCondition, tripDefinition.getNumberOfPeople()))
+                .map(vehicle -> createStagePlan(start, vehicle, from, to, weatherCondition, tripDefinition.getNumberOfPeople(), stageDefinition.getDriverId()))
+                .filter(stage -> stage.getDriver().isAvailableFor(stage.getTimeSlot()))
+                .filter(stage -> stage.getDriver().canDriveVehicleUntil(stage.getVehicle(), stage.getArrivalDateTime()))
                 .filter(stage -> stage.getVehicle().isAvailableFor(stage.getTimeSlot()))
                 .min(stageDefinition.getPreferredPlanPolicy())
                 .orElseThrow(NoSuitableVehicleException::new);
@@ -82,9 +83,11 @@ public class TripPlannerImpl implements TripPlanner {
                                       Place from,
                                       Place to,
                                       WeatherCondition weatherCondition,
-                                      int numberOfPeople) {
+                                      int numberOfPeople,
+                                      UUID driverId) {
         Route route = routesService.getRoute(from, to, vehicle.getDrivingPolicy().getDrivingProfile());
-        Driver driver = getDriverForVehicle(vehicle, start.toLocalDate());
+        Driver driver = driversRepository.findById(driverId);
+
         return StagePlan.builder()
                 .startDateTime(start)
                 .destinationWeatherCondition(weatherCondition)
@@ -93,17 +96,5 @@ public class TripPlannerImpl implements TripPlanner {
                 .numberOfPeople(numberOfPeople)
                 .driver(driver)
                 .build();
-    }
-
-    private Driver getDriverForVehicle(Vehicle vehicle, LocalDate start) {
-        Collection<Driver> candidateDrivers = vehicle.getDrivingPolicy().requiresDrivingLicense() ?
-                driversRepository.findByMinimumAgeAndValidLicense(vehicle.getDrivingPolicy().getMinimumDrivingAge(), start) :
-                driversRepository.findAll();
-
-        if(candidateDrivers.isEmpty()) {
-            throw new NoSuitableDriverException();
-        }
-
-        return candidateDrivers.stream().findFirst().orElseThrow(UnsupportedOperationException::new);
     }
 }

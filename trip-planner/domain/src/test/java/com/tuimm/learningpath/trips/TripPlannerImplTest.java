@@ -2,7 +2,7 @@ package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.drivers.Driver;
 import com.tuimm.learningpath.drivers.DriversRepository;
-import com.tuimm.learningpath.exceptions.NoSuitableDriverException;
+import com.tuimm.learningpath.exceptions.DriverNotAvailableException;
 import com.tuimm.learningpath.exceptions.NoSuitableVehicleException;
 import com.tuimm.learningpath.places.GeoCoordinate;
 import com.tuimm.learningpath.places.Place;
@@ -68,13 +68,8 @@ class TripPlannerImplTest {
     }
 
     @Test
-    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesThatRequiresDrivingLicenseExistAndDriverExists() {
+    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesAndDriverExists() {
         testPlanTripInternal(18);
-    }
-
-    @Test
-    void planTrip_shouldReturnExpectedResult_whenSuitableVehiclesThatDoesNotRequireDrivingLicenseExistAndDriverExists() {
-        testPlanTripInternal(0);
     }
 
     @Test
@@ -86,11 +81,13 @@ class TripPlannerImplTest {
                 .from(ROME.getName())
                 .to(MILAN.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
+                .driverId(UUID.randomUUID())
                 .build();
         StageDefinition secondStage = StageDefinition.builder()
                 .from(MILAN.getName())
                 .to(ZURICH.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
+                .driverId(UUID.randomUUID())
                 .build();
         stageDefinitions.add(firstStage);
         stageDefinitions.add(secondStage);
@@ -104,72 +101,24 @@ class TripPlannerImplTest {
         Assertions.assertThrows(NoSuitableVehicleException.class,
                 () -> tripPlanner.planTrip(tripDefinition));
     }
-
-    @Test
-    void planTrip_shouldThrowNoSuitableDriverException_whenNoSuitableDriverExist() {
-        int minimumDrivingAge = 18;
-        LocalDateTime tripStart =
-                LocalDateTime.of(2023, 1, 1, 9, 0, 0);
-        LocalDateTime secondStageStart =
-                LocalDateTime.of(2023, 1, 1, 14, 0, 0);
-        List<StageDefinition> stageDefinitions = new LinkedList<>();
-        StageDefinition firstStage = StageDefinition.builder()
-                .from(ROME.getName())
-                .to(MILAN.getName())
-                .preferredPlanPolicy(mock(Comparator.class))
-                .build();
-        StageDefinition secondStage = StageDefinition.builder()
-                .from(MILAN.getName())
-                .to(ZURICH.getName())
-                .preferredPlanPolicy(mock(Comparator.class))
-                .build();
-        stageDefinitions.add(firstStage);
-        stageDefinitions.add(secondStage);
-        int numberOfPeople = 2;
-        TripDefinition tripDefinition = TripDefinition.builder()
-                .start(tripStart)
-                .stages(stageDefinitions)
-                .numberOfPeople(2)
-                .build();
-        Vehicle suitableVehicle = mock(Vehicle.class);
-        DrivingPolicy drivingPolicy = DrivingPolicy.builder()
-                .drivingProfile(DrivingProfile.CAR_PROFILE)
-                .minimumDrivingAge(minimumDrivingAge)
-                .build();
-        when(suitableVehicle.getDrivingPolicy()).thenReturn(drivingPolicy);
-        List<Vehicle> suitableVehicles = Collections.singletonList(suitableVehicle);
-        when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
-        when(placesService.fromName(ROME.getName())).thenReturn(ROME);
-        when(placesService.fromName(MILAN.getName())).thenReturn(MILAN);
-        when(placesService.fromName(ZURICH.getName())).thenReturn(ZURICH);
-
-        when(routesService.getRoute(ROME, MILAN, ROME_TO_MILAN.getDrivingProfile()))
-                .thenReturn(ROME_TO_MILAN);
-        when(routesService.getRoute(MILAN, ZURICH, MILAN_TO_ZURICH.getDrivingProfile()))
-                .thenReturn(MILAN_TO_ZURICH);
-
-        when(weatherConditionsService.getWeatherCondition())
-                .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
-        when(driversRepository.findByMinimumAgeAndValidLicense(minimumDrivingAge, tripStart.toLocalDate())).thenReturn(Collections.emptyList());
-        Assertions.assertThrows(NoSuitableDriverException.class,
-                () -> tripPlanner.planTrip(tripDefinition));
-    }
-
     private void testPlanTripInternal(int minimumDrivingAge) {
         LocalDateTime tripStart =
                 LocalDateTime.of(2023, 1, 1, 9, 0, 0);
         LocalDateTime secondStageStart =
                 LocalDateTime.of(2023, 1, 1, 14, 0, 0);
         List<StageDefinition> stageDefinitions = new LinkedList<>();
+        UUID driverId = UUID.randomUUID();
         StageDefinition firstStage = StageDefinition.builder()
                 .from(ROME.getName())
                 .to(MILAN.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
+                .driverId(driverId)
                 .build();
         StageDefinition secondStage = StageDefinition.builder()
                 .from(MILAN.getName())
                 .to(ZURICH.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
+                .driverId(driverId)
                 .build();
         stageDefinitions.add(firstStage);
         stageDefinitions.add(secondStage);
@@ -189,7 +138,6 @@ class TripPlannerImplTest {
         List<Vehicle> suitableVehicles = Collections.singletonList(suitableVehicle);
 
         Driver driver = mock(Driver.class);
-        List<Driver> drivers = Collections.singletonList(driver);
 
         when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
 
@@ -205,8 +153,9 @@ class TripPlannerImplTest {
         when(weatherConditionsService.getWeatherCondition())
                 .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
 
-        when(driversRepository.findByMinimumAgeAndValidLicense(eq(minimumDrivingAge), any())).thenReturn(drivers);
-        when(driversRepository.findAll()).thenReturn(drivers);
+        when(driversRepository.findById(driverId)).thenReturn(driver);
+        when(driver.canDriveVehicleUntil(eq(suitableVehicle), any())).thenReturn(true);
+        when(driver.isAvailableFor(any())).thenReturn(true);
 
         TripPlan actualTripPlan = tripPlanner.planTrip(tripDefinition);
 

@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -35,6 +36,12 @@ public class Driver extends Aggregate<Driver> {
     public boolean canDrive(Vehicle vehicle) {
         if (!vehicle.getDrivingPolicy().requiresDrivingLicense()) return true;
         return todayDateProvider.getTodayDate().minusYears(vehicle.getDrivingPolicy().getMinimumDrivingAge()).isAfter(dateOfBirth);
+    }
+
+    public boolean canDriveVehicleUntil(Vehicle vehicle, LocalDateTime until) {
+        if (!vehicle.getDrivingPolicy().requiresDrivingLicense()) return true;
+        if (!todayDateProvider.getTodayDate().minusYears(vehicle.getDrivingPolicy().getMinimumDrivingAge()).isAfter(dateOfBirth)) return false;
+        return drivingLicense.getExpiryDate().isAfter(until.toLocalDate());
     }
 
     public boolean isAvailableFor(TimeSlot timeSlot) {
