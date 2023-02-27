@@ -1,5 +1,6 @@
 package com.tuimm.learningpath;
 
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tuimm.learningpath.authorization.JWTAuthenticationFilter;
 import com.tuimm.learningpath.authorization.Role;
@@ -63,4 +64,6 @@ public class Config {
     public com.fasterxml.jackson.databind.Module javaTimeModule() {
         return new JavaTimeModule();
     }
+    @Bean
+    public com.fasterxml.jackson.databind.Module jdk8Module() { return new Jdk8Module(); }
 }

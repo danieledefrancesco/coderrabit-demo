@@ -20,14 +20,19 @@ public class Driver extends Aggregate<Driver> {
     @NonNull
     private final UUID id;
     @NonNull
-    private final FirstName firstName;
+    @Setter
+    private FirstName firstName;
     @NonNull
-    private final LastName lastName;
+    @Setter
+    private LastName lastName;
     @NonNull
-    private final LocalDate dateOfBirth;
-    private final DrivingLicense drivingLicense;
+    @Setter
+    private LocalDate dateOfBirth;
+    @Setter
+    private DrivingLicense drivingLicense;
     @NonNull
-    private final Citizenship citizenship;
+    @Setter
+    private Citizenship citizenship;
     @NonNull
     private final TodayDateProvider todayDateProvider;
     @NonNull

@@ -4,6 +4,7 @@ import com.tuimm.learningpath.drivers.commands.DeleteDriverRequest;
 import com.tuimm.learningpath.drivers.dtos.CreateDriverRequestDto;
 import com.tuimm.learningpath.drivers.dtos.DriverResponseDto;
 import com.tuimm.learningpath.drivers.dtos.GetAllDriversResponseDto;
+import com.tuimm.learningpath.drivers.dtos.UpdateDriverRequestDto;
 import com.tuimm.learningpath.drivers.queries.GetAllDriversRequest;
 import com.tuimm.learningpath.drivers.queries.GetDriverByIdRequest;
 import com.tuimm.learningpath.mediator.Mediator;
@@ -43,6 +44,13 @@ public class DriversController {
                 .path("/{id}")
                 .buildAndExpand(driver.getId());
         return ResponseEntity.created(uriComponentsBuilder.toUri()).build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable("id")UUID id,
+                                        @Valid @RequestBody UpdateDriverRequestDto updateDriverRequestDto) {
+        mediator.send(mapper.map(updateDriverRequestDto, id));
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

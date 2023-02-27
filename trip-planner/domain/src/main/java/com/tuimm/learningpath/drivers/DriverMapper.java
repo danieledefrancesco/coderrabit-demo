@@ -5,6 +5,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DriverMapper {
     default FirstName mapFirstName(String value) {
+        if (value == null) return null;
         return FirstName.from(value);
     }
     
@@ -12,6 +13,7 @@ public interface DriverMapper {
         return firstName.getValue();
     }
     default LastName mapLastName(String value) {
+        if (value == null) return null;
         return LastName.from(value);
     }
 
@@ -20,6 +22,7 @@ public interface DriverMapper {
     }
 
     default Citizenship mapCitizenship(String value) {
+        if (value == null) return null;
         return Citizenship.from(value);
     }
 
@@ -28,6 +31,7 @@ public interface DriverMapper {
     }
 
     default DrivingLicenseCode mapDrivingLicenseCode(String value) {
+        if (value == null) return null;
         return DrivingLicenseCode.from(value);
     }
 

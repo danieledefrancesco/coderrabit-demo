@@ -6,6 +6,7 @@ import com.tuimm.learningpath.drivers.dal.DriversDao;
 import com.tuimm.learningpath.drivers.dal.DrivingLicenseEntity;
 import com.tuimm.learningpath.drivers.dtos.CreateDriverRequestDto;
 import com.tuimm.learningpath.drivers.dtos.CreateDrivingLicenseRequestDto;
+import com.tuimm.learningpath.drivers.dtos.UpdateDriverRequestDto;
 import com.tuimm.learningpath.stepdefinitions.AssertionUtils;
 import com.tuimm.learningpath.stepdefinitions.Definition;
 import io.cucumber.datatable.DataTable;
@@ -36,6 +37,14 @@ public class DriversStepsDefinition extends Definition {
                 .stream()
                 .findFirst()
                 .ifPresent(map -> scenarioContext.getDriver().setRequestBody(toCreateDriverRequest(map)));
+    }
+
+    @Given("the need to update a driver with the following values")
+    public void theNeedToUpdateADriverWithTheFollowingValues(DataTable table) {
+        table.asMaps(String.class, String.class)
+                .stream()
+                .findFirst()
+                .ifPresent(map -> scenarioContext.getDriver().setRequestBody(toUpdateDriverRequest(map)));
     }
 
     @Then("the response should contain the following drivers")
@@ -69,10 +78,21 @@ public class DriversStepsDefinition extends Definition {
         scenarioContext.set(UUID.class, id);
     }
 
+    @Then("a driver with id {word} should be present in the database with the following properties")
+    public void aDriverWithIdShouldBePresentInTheDatabaseWithTheFollowingProperties(String driverId, DataTable table) {
+        Map<String, String> map = table.asMaps().get(0);
+        assertDriverIsPresentInTheDatabase(map, UUID.fromString(driverId));
+    }
+
+
     @Then("a driver should be present in the database with that id and the following properties")
     public void aDriverShouldBePresentInTheDatabaseWithThatIdAndTheFollowingProperties(DataTable table) {
         Map<String, String> map = table.asMaps().get(0);
         UUID id = scenarioContext.get(UUID.class);
+        assertDriverIsPresentInTheDatabase(map, id);
+    }
+
+    private void assertDriverIsPresentInTheDatabase(Map<String, String> map, UUID id) {
         DriverEntity entity = driversDao.findById(id).orElse(null);
         Assertions.assertNotNull(entity);
         Assertions.assertEquals(map.get("firstName"), entity.getFirstName());
@@ -127,6 +147,23 @@ public class DriversStepsDefinition extends Definition {
             drivingLicense.setExpiryDate(LocalDate.parse(map.get("licenseExpiryDate")));
         }
         return createDriverRequest;
+    }
+
+    private static UpdateDriverRequestDto toUpdateDriverRequest(Map<String, String> map) {
+        UpdateDriverRequestDto updateDriverRequestDto = new UpdateDriverRequestDto();
+        updateDriverRequestDto.setFirstName(map.get("firstName"));
+        updateDriverRequestDto.setLastName(map.get("lastName"));
+        updateDriverRequestDto.setCitizenship(map.get("citizenship"));
+        if (map.get("dateOfBirth") != null && !map.get("dateOfBirth").isBlank()) {
+            updateDriverRequestDto.setDateOfBirth(LocalDate.parse(map.get("dateOfBirth")));
+        }
+        if (map.get("licenseCode") != null && !map.get("licenseCode").equals("null")) {
+            CreateDrivingLicenseRequestDto drivingLicense = new CreateDrivingLicenseRequestDto();
+            updateDriverRequestDto.setDrivingLicense(drivingLicense);
+            drivingLicense.setCode(map.get("licenseCode"));
+            drivingLicense.setExpiryDate(LocalDate.parse(map.get("licenseExpiryDate")));
+        }
+        return updateDriverRequestDto;
     }
 
 }
