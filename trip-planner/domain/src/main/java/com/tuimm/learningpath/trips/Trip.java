@@ -51,7 +51,7 @@ public class Trip extends Aggregate<Trip> {
     }
 
     public boolean isStarted() {
-        return getStartDateTime().isAfter(todayDateProvider.now());
+        return getStartDateTime().isBefore(todayDateProvider.now());
     }
 
     public LocalDateTime getStartDateTime() {

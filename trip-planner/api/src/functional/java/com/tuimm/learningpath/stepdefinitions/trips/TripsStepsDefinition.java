@@ -11,6 +11,7 @@ import com.tuimm.learningpath.trips.dal.TripsDao;
 import com.tuimm.learningpath.trips.dtos.CreateStageRequestDto;
 import com.tuimm.learningpath.trips.dtos.CreateTripRequestDto;
 import com.tuimm.learningpath.trips.dtos.PreferredPlanPolicy;
+import com.tuimm.learningpath.trips.dtos.UpdateStagePlanDriverRequestDto;
 import com.tuimm.learningpath.vehicles.dal.VehiclesDao;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -86,6 +87,16 @@ public class TripsStepsDefinition extends Definition {
     @Then("a trip should be stored in the database with the following stages")
     public void aTripShouldBeStoredInTheDatabaseWithTheFollowingStages(DataTable table) {
         UUID tripId = scenarioContext.get(UUID.class);
+        assertTripIsStoredInTheDatabase(table, tripId);
+    }
+
+    @Then("a trip with id {word} should be stored in the database with the following stages")
+    public void aTripWithIdShouldBeStoredInTheDatabaseWithTheFollowingStages(String id, DataTable table) {
+        UUID tripId = UUID.fromString(id);
+        assertTripIsStoredInTheDatabase(table, tripId);
+    }
+
+    private void assertTripIsStoredInTheDatabase(DataTable table, UUID tripId) {
         TripEntity entity = tripsDao.findById(tripId).orElseThrow();
         table.asMaps().forEach(map -> entity.getStages().stream()
                 .filter(stage -> stage.getStartDateTime().equals(LocalDateTime.parse(map.get("startDateTime"))))
@@ -126,6 +137,13 @@ public class TripsStepsDefinition extends Definition {
     public void theTripWithIdShouldNoLongerBePresentInTheDatabase(String tripIdAsString) {
         UUID tripId = UUID.fromString(tripIdAsString);
         Assertions.assertNull(tripsDao.findById(tripId).orElse(null));
+    }
+
+    @Given("the need to update the driver to {word}")
+    public void theNeedToUpdateTheDriverTo(String newDriverId) {
+        UpdateStagePlanDriverRequestDto requestDto = new UpdateStagePlanDriverRequestDto();
+        requestDto.setDriverId(UUID.fromString(newDriverId));
+        scenarioContext.getDriver().setRequestBody(requestDto);
     }
 
     private void assertStagePlanEntityMatchesMap(StagePlanEntity stagePlanEntity, Map<String, String> map) {

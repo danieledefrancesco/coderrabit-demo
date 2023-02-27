@@ -18,6 +18,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.function.Function;
 
@@ -38,6 +39,7 @@ public class CucumberTest {
         public TodayDateProvider todayDateProvider() {
             TodayDateProvider todayDateProvider = mock(TodayDateProvider.class);
             when(todayDateProvider.getTodayDate()).thenReturn(LocalDate.now());
+            when(todayDateProvider.now()).thenReturn(LocalDateTime.now());
             return todayDateProvider;
         }
 

@@ -66,9 +66,9 @@ public abstract class TripEntityMapper {
     public Route mapStagePlanEntityToRoute(StagePlanEntity stagePlanEntity) {
         return Route.builder()
                 .from(Place.create(stagePlanEntity.getFromName(),
-                        GeoCoordinate.of(stagePlanEntity.getFromLatitude(), stagePlanEntity.getFromLatitude())))
+                        GeoCoordinate.of(stagePlanEntity.getFromLatitude(), stagePlanEntity.getFromLongitude())))
                 .to(Place.create(stagePlanEntity.getToName(),
-                        GeoCoordinate.of(stagePlanEntity.getToLatitude(), stagePlanEntity.getToLatitude())))
+                        GeoCoordinate.of(stagePlanEntity.getToLatitude(), stagePlanEntity.getToLongitude())))
                 .distanceInKilometers(stagePlanEntity.getDistanceInKilometers())
                 .drivingProfile(DrivingProfile.valueOf(stagePlanEntity.getDrivingProfile()))
                 .build();

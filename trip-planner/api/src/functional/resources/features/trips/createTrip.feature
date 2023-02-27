@@ -17,7 +17,7 @@ Feature: Create Trip
       | 10000000-0000-0000-0000-000000000003 | Panda | 4         | 100            | 90           | 300      | 250               | AA000BB | LPG      | 30        | 19              |
     And the PETROL cost is 1.92
     And the LPG cost is 0.8
-    And today is 2023-01-01
+    And today is 2023-01-01T00:00:00
 
   Scenario: When a trip is correctly created then its ID is returned.
     Given the need to plan a trip for 2 people starting the "2023-01-01" at "09:00" and consisting of the following stages

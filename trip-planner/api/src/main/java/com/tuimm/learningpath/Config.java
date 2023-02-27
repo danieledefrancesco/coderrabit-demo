@@ -33,6 +33,7 @@ public class Config {
         httpSecurity.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.GET).permitAll()
                 .requestMatchers(HttpMethod.POST).access(forRole(Role.OPERATOR))
+                .requestMatchers(HttpMethod.PATCH, "/trips/{id}/plan/stages/{start}-to-{end}/driver").access(forRole(Role.MANAGER))
                 .requestMatchers(HttpMethod.PATCH).access(forRole(Role.OPERATOR))
                 .requestMatchers(HttpMethod.DELETE).access(forRole(Role.MANAGER))
                 .anyRequest().denyAll());

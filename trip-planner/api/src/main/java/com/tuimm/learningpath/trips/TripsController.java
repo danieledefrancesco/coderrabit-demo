@@ -7,10 +7,12 @@ import com.tuimm.learningpath.trips.commands.UpdateStageDriverRequest;
 import com.tuimm.learningpath.trips.dtos.CreateTripRequestDto;
 import com.tuimm.learningpath.trips.dtos.GetAllTripsResponseDto;
 import com.tuimm.learningpath.trips.dtos.TripResponseDto;
+import com.tuimm.learningpath.trips.dtos.UpdateStagePlanDriverRequestDto;
 import com.tuimm.learningpath.trips.queries.GetAllTripsRequest;
 import com.tuimm.learningpath.trips.queries.GetTripByIdRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -54,11 +56,11 @@ public class TripsController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/plan/stages/{start}-{end}/driver")
+    @PatchMapping("/{id}/plan/stages/{start}-to-{end}/driver")
     public ResponseEntity<Object> updateStageDriver(@PathVariable("id") UUID tripId,
-                                                    @PathVariable("start") LocalDateTime start,
-                                                    @PathVariable("end") LocalDateTime end,
-                                                    @Valid @RequestBody UpdateStageDriverRequest updateStageDriverRequest) {
+                                                    @PathVariable("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+                                                    @PathVariable("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+                                                    @Valid @RequestBody UpdateStagePlanDriverRequestDto updateStageDriverRequest) {
         UpdateStageDriverRequest request =  UpdateStageDriverRequest.builder()
                 .tripId(tripId)
                 .driverId(updateStageDriverRequest.getDriverId())
