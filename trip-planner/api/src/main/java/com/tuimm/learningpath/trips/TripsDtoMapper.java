@@ -2,6 +2,7 @@ package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.drivers.DriversDtoMapper;
 import com.tuimm.learningpath.routes.Route;
+import com.tuimm.learningpath.trips.commands.CreateStageRequest;
 import com.tuimm.learningpath.trips.commands.CreateTripRequest;
 import com.tuimm.learningpath.trips.dtos.*;
 import com.tuimm.learningpath.trips.queries.GetAllTripsResponse;
@@ -14,7 +15,7 @@ public interface TripsDtoMapper {
     CreateTripRequest mapToCreateTripRequest(CreateTripRequestDto dto);
 
     @Mapping(target = "preferredPlanPolicy", source = "dto.preferredPlanPolicy.policy")
-    StageDefinition mapToStageDefinition(CreateStageRequestDto dto);
+    CreateStageRequest mapToStageDefinition(CreateStageRequestDto dto);
 
     GetAllTripsResponseDto mapToGetAllTripsResponseDto(GetAllTripsResponse response);
 
