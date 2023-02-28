@@ -1,8 +1,6 @@
 package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.drivers.Driver;
-import com.tuimm.learningpath.drivers.DriversRepository;
-import com.tuimm.learningpath.exceptions.DriverNotAvailableException;
 import com.tuimm.learningpath.exceptions.NoSuitableVehicleException;
 import com.tuimm.learningpath.places.GeoCoordinate;
 import com.tuimm.learningpath.places.Place;
@@ -30,7 +28,6 @@ class TripPlannerImplTest {
     private WeatherConditionsService weatherConditionsService;
     private RoutesService routesService;
     private PlacesService placesService;
-    private DriversRepository driversRepository;
     private static final Place ROME = Place.create("Rome",
             GeoCoordinate.of(10, 10));
     private static final Place MILAN = Place.create("Milan",
@@ -59,12 +56,10 @@ class TripPlannerImplTest {
         weatherConditionsService = mock(WeatherConditionsService.class);
         routesService = mock(RoutesService.class);
         placesService = mock(PlacesService.class);
-        driversRepository = mock(DriversRepository.class);
         tripPlanner = new TripPlannerImpl(garage,
                 weatherConditionsService,
                 placesService,
-                routesService,
-                driversRepository);
+                routesService);
     }
 
     @Test
@@ -81,13 +76,13 @@ class TripPlannerImplTest {
                 .from(ROME.getName())
                 .to(MILAN.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
-                .driverId(UUID.randomUUID())
+                .driver(mock(Driver.class))
                 .build();
         StageDefinition secondStage = StageDefinition.builder()
                 .from(MILAN.getName())
                 .to(ZURICH.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
-                .driverId(UUID.randomUUID())
+                .driver(mock(Driver.class))
                 .build();
         stageDefinitions.add(firstStage);
         stageDefinitions.add(secondStage);
@@ -104,21 +99,19 @@ class TripPlannerImplTest {
     private void testPlanTripInternal(int minimumDrivingAge) {
         LocalDateTime tripStart =
                 LocalDateTime.of(2023, 1, 1, 9, 0, 0);
-        LocalDateTime secondStageStart =
-                LocalDateTime.of(2023, 1, 1, 14, 0, 0);
         List<StageDefinition> stageDefinitions = new LinkedList<>();
-        UUID driverId = UUID.randomUUID();
+        Driver driver = mock(Driver.class);
         StageDefinition firstStage = StageDefinition.builder()
                 .from(ROME.getName())
                 .to(MILAN.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
-                .driverId(driverId)
+                .driver(driver)
                 .build();
         StageDefinition secondStage = StageDefinition.builder()
                 .from(MILAN.getName())
                 .to(ZURICH.getName())
                 .preferredPlanPolicy(mock(Comparator.class))
-                .driverId(driverId)
+                .driver(driver)
                 .build();
         stageDefinitions.add(firstStage);
         stageDefinitions.add(secondStage);
@@ -137,7 +130,6 @@ class TripPlannerImplTest {
         when(suitableVehicle.isAvailableFor(any())).thenReturn(true);
         List<Vehicle> suitableVehicles = Collections.singletonList(suitableVehicle);
 
-        Driver driver = mock(Driver.class);
 
         when(garage.getSuitableVehicles(numberOfPeople)).thenReturn(suitableVehicles);
 
@@ -153,7 +145,6 @@ class TripPlannerImplTest {
         when(weatherConditionsService.getWeatherCondition())
                 .thenReturn(WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY);
 
-        when(driversRepository.findById(driverId)).thenReturn(driver);
         when(driver.canDriveVehicleUntil(eq(suitableVehicle), any())).thenReturn(true);
         when(driver.isAvailableFor(any())).thenReturn(true);
 

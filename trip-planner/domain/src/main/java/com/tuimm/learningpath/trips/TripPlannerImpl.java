@@ -1,7 +1,6 @@
 package com.tuimm.learningpath.trips;
 
 import com.tuimm.learningpath.drivers.Driver;
-import com.tuimm.learningpath.drivers.DriversRepository;
 import com.tuimm.learningpath.exceptions.NoSuitableVehicleException;
 import com.tuimm.learningpath.places.PlacesService;
 import com.tuimm.learningpath.places.Place;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +30,6 @@ public class TripPlannerImpl implements TripPlanner {
     private final PlacesService placesService;
     @NonNull
     private final RoutesService routesService;
-    @NonNull
-    private final DriversRepository driversRepository;
 
     @Override
     public TripPlan planTrip(TripDefinition tripDefinition) {
@@ -70,7 +66,7 @@ public class TripPlannerImpl implements TripPlanner {
         WeatherCondition weatherCondition = weatherConditionsService.getWeatherCondition();
 
         return vehicles.stream()
-                .map(vehicle -> createStagePlan(start, vehicle, from, to, weatherCondition, tripDefinition.getNumberOfPeople(), stageDefinition.getDriverId()))
+                .map(vehicle -> createStagePlan(start, vehicle, from, to, weatherCondition, tripDefinition.getNumberOfPeople(), stageDefinition.getDriver()))
                 .filter(stage -> stage.getDriver().isAvailableFor(stage.getTimeSlot()))
                 .filter(stage -> stage.getDriver().canDriveVehicleUntil(stage.getVehicle(), stage.getArrivalDateTime()))
                 .filter(stage -> stage.getVehicle().isAvailableFor(stage.getTimeSlot()))
@@ -84,9 +80,8 @@ public class TripPlannerImpl implements TripPlanner {
                                       Place to,
                                       WeatherCondition weatherCondition,
                                       int numberOfPeople,
-                                      UUID driverId) {
+                                      Driver driver) {
         Route route = routesService.getRoute(from, to, vehicle.getDrivingPolicy().getDrivingProfile());
-        Driver driver = driversRepository.findById(driverId);
 
         return StagePlan.builder()
                 .startDateTime(start)

@@ -35,14 +35,18 @@ public class CreateTripCommand extends RequestHandler<CreateTripRequest, Trip> {
     }
 
     private StageDefinition toStageDefinition(CreateStageRequest createStageRequest) {
-        Driver driver = createStageRequest.getDriverId() != null ?
-                mediator.send(GetDriverByIdRequest.fromId(createStageRequest.getDriverId())) :
-                mediator.send(createStageRequest.getDriver());
+        Driver driver = getOrCreateDriver(createStageRequest);
         return StageDefinition.builder()
                 .from(createStageRequest.getFrom())
                 .to(createStageRequest.getTo())
-                .driverId(driver.getId())
+                .driver(driver)
                 .preferredPlanPolicy(createStageRequest.getPreferredPlanPolicy())
                 .build();
+    }
+
+    private Driver getOrCreateDriver(CreateStageRequest createStageRequest) {
+        return createStageRequest.getDriverId() != null ?
+                mediator.send(GetDriverByIdRequest.fromId(createStageRequest.getDriverId())) :
+                mediator.send(createStageRequest.getDriver());
     }
 }
