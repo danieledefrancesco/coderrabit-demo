@@ -30,4 +30,8 @@ public class TimeSlot {
         if (endDateTime.isBefore(other.startDateTime)) return false;
         return !startDateTime.isAfter(other.endDateTime);
     }
+
+    public boolean contains(@NonNull LocalDateTime dateTime) {
+        return !startDateTime.isAfter(dateTime) && !endDateTime.isBefore(dateTime);
+    }
 }

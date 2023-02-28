@@ -3,6 +3,7 @@ package com.tuimm.learningpath.drivers;
 import com.tuimm.learningpath.TodayDateProvider;
 import com.tuimm.learningpath.common.Aggregate;
 import com.tuimm.learningpath.common.TimeSlot;
+import com.tuimm.learningpath.exceptions.DriverNotAvailableException;
 import com.tuimm.learningpath.vehicles.Vehicle;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,18 +21,14 @@ public class Driver extends Aggregate<Driver> {
     @NonNull
     private final UUID id;
     @NonNull
-    @Setter
     private FirstName firstName;
     @NonNull
-    @Setter
     private LastName lastName;
     @NonNull
-    @Setter
     private LocalDate dateOfBirth;
-    @Setter
+    @NonNull
     private DrivingLicense drivingLicense;
     @NonNull
-    @Setter
     private Citizenship citizenship;
     @NonNull
     private final TodayDateProvider todayDateProvider;
@@ -62,5 +59,40 @@ public class Driver extends Aggregate<Driver> {
 
     public void freeSlot(TimeSlot timeSlot) {
         reservedTimeSlots.remove(timeSlot);
+    }
+
+    public void setFirstName(@NonNull FirstName firstName) {
+        ensureIsCurrentlyAvailable();
+        this.firstName = firstName;
+    }
+
+    public void setLastName(@NonNull LastName lastName) {
+        ensureIsCurrentlyAvailable();
+        this.lastName = lastName;
+    }
+
+    public void setCitizenship(@NonNull Citizenship citizenship) {
+        ensureIsCurrentlyAvailable();
+        this.citizenship = citizenship;
+    }
+
+    public void setDateOfBirth(@NonNull LocalDate dateOfBirth) {
+        ensureIsCurrentlyAvailable();
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setDrivingLicense(@NonNull DrivingLicense drivingLicense) {
+        ensureIsCurrentlyAvailable();
+        this.drivingLicense = drivingLicense;
+    }
+
+    public boolean isCurrentlyAvailable() {
+        return reservedTimeSlots.stream().noneMatch(slot -> slot.contains(todayDateProvider.now()));
+    }
+
+    private void ensureIsCurrentlyAvailable() {
+        if (!isCurrentlyAvailable()) {
+            throw DriverNotAvailableException.notCurrentlyAvailable(this);
+        }
     }
 }
