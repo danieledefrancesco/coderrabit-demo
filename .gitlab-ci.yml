@@ -2,7 +2,7 @@ stages:
   - build
 
 maven:build:
-  image: maven:3.8.6-jdk-17
+  image: maven:3-openjdk-17
   stage: build
   script:
     - cd trip-planner
