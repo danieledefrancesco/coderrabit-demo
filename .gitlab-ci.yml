@@ -1,0 +1,16 @@
+stages:
+  - build
+
+maven:build:
+  image: maven:3-openjdk-17
+  stage: build
+  script:
+    - cd trip-planner
+    - mvn clean package -DskipTests
+  artifacts:
+    when: on_success
+    paths:
+      - "trip-planner/api/target"
+      - "trip-planner/application/target"
+      - "trip-planner/domain/target"
+      - "trip-planner/infrastructure/target"
