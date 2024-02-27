@@ -16,7 +16,7 @@ public class CreateDriverCommand extends RequestHandler<CreateDriverRequest, Dri
     @Override
     public Driver handle(CreateDriverRequest request) {
         Driver driver = factory.create(builder ->
-                builder.citizenship(Citizenship.from(request.getCitizenship()))
+                builder.citizenship(Citizenship.from("%s.".formatted(request.getCitizenship())))
                         .dateOfBirth(request.getDateOfBirth())
                         .firstName(FirstName.from(request.getFirstName()))
                         .lastName(LastName.from(request.getLastName()))
