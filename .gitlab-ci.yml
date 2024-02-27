@@ -10,4 +10,7 @@ maven:build:
   artifacts:
     when: on_success
     paths:
-      - "trip-planner/target"
+      - "trip-planner/api/target"
+      - "trip-planner/application/target"
+      - "trip-planner/domain/target"
+      - "trip-planner/infrastructure/target"
