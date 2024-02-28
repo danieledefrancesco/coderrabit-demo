@@ -31,7 +31,7 @@ public class DriversController {
     }
 
     @GetMapping("/available")
-    public ResponseEntity<GetAvailableDriversResponseDto> getAvailable(@Valid LocalDateTime from, @Valid LocalDateTime to) {
+    public ResponseEntity<GetAvailableDriversResponseDto> getAvailable(@Valid @RequestParam("from") LocalDateTime from, @Valid @RequestParam("to") LocalDateTime to) {
         GetAvailableDriversResponseDto response = mapper.map(
                 mediator.send(GetAvailableDriversRequest.of(
                         TimeSlot.builder()
