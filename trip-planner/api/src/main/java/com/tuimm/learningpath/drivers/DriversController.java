@@ -1,11 +1,10 @@
 package com.tuimm.learningpath.drivers;
 
+import com.tuimm.learningpath.common.TimeSlot;
 import com.tuimm.learningpath.drivers.commands.DeleteDriverRequest;
-import com.tuimm.learningpath.drivers.dtos.CreateDriverRequestDto;
-import com.tuimm.learningpath.drivers.dtos.DriverResponseDto;
-import com.tuimm.learningpath.drivers.dtos.GetAllDriversResponseDto;
-import com.tuimm.learningpath.drivers.dtos.UpdateDriverRequestDto;
+import com.tuimm.learningpath.drivers.dtos.*;
 import com.tuimm.learningpath.drivers.queries.GetAllDriversRequest;
+import com.tuimm.learningpath.drivers.queries.GetAvailableDriversRequest;
 import com.tuimm.learningpath.drivers.queries.GetDriverByIdRequest;
 import com.tuimm.learningpath.mediator.Mediator;
 import jakarta.validation.Valid;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
@@ -27,6 +27,16 @@ public class DriversController {
     @GetMapping
     public ResponseEntity<GetAllDriversResponseDto> getAll() {
         GetAllDriversResponseDto response = mapper.map(mediator.send(GetAllDriversRequest.create()));
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/available")
+    public ResponseEntity<GetAvailableDriversResponseDto> getAvailable(@Valid @RequestParam("from") LocalDateTime from, @Valid @RequestParam("to") LocalDateTime to) {
+        GetAvailableDriversResponseDto response = mapper.map(
+                mediator.send(GetAvailableDriversRequest.of(
+                        TimeSlot.builder()
+                                .startDateTime(from)
+                                .endDateTime(to).build())));
         return ResponseEntity.ok(response);
     }
 

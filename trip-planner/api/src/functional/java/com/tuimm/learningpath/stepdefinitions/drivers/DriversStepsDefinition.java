@@ -4,19 +4,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.tuimm.learningpath.drivers.dal.DriverEntity;
 import com.tuimm.learningpath.drivers.dal.DriversDao;
 import com.tuimm.learningpath.drivers.dal.DrivingLicenseEntity;
+import com.tuimm.learningpath.drivers.dal.SlotEntity;
 import com.tuimm.learningpath.drivers.dtos.CreateDriverRequestDto;
 import com.tuimm.learningpath.drivers.dtos.CreateDrivingLicenseRequestDto;
 import com.tuimm.learningpath.drivers.dtos.UpdateDriverRequestDto;
 import com.tuimm.learningpath.stepdefinitions.AssertionUtils;
 import com.tuimm.learningpath.stepdefinitions.Definition;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class DriversStepsDefinition extends Definition {
@@ -29,6 +30,23 @@ public class DriversStepsDefinition extends Definition {
                 .stream()
                 .map(DriversStepsDefinition::toDriverEntity)
                 .forEach(driversDao::save);
+    }
+
+
+    @Given("the following drivers reservations")
+    public void givenTheFollowingDriversReservations(DataTable table) {
+        List<Map<String, String>> maps = table.asMaps(String.class, String.class);
+        maps.forEach(map -> {
+            UUID driverId = UUID.fromString(map.get("driverId"));
+            LocalDateTime reservedFrom = LocalDateTime.parse(map.get("reservedFrom"));
+            LocalDateTime reservedTo = LocalDateTime.parse(map.get("reservedTo"));
+            DriverEntity driverEntity = driversDao.findById(driverId).orElseThrow();
+            SlotEntity slotEntity = new SlotEntity();
+            slotEntity.setStartDateTime(reservedFrom);
+            slotEntity.setEndDateTime(reservedTo);
+            driverEntity.getReservedTimeSlots().add(slotEntity);
+            driversDao.save(driverEntity);
+        });
     }
 
     @Given("a create driver request")

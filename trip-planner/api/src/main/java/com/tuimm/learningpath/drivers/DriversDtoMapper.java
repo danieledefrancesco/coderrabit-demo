@@ -5,6 +5,7 @@ import com.tuimm.learningpath.drivers.commands.CreateDrivingLicenseRequest;
 import com.tuimm.learningpath.drivers.commands.UpdateDriverRequest;
 import com.tuimm.learningpath.drivers.dtos.*;
 import com.tuimm.learningpath.drivers.queries.GetAllDriversResponse;
+import com.tuimm.learningpath.drivers.queries.GetAvailableDriversResponse;
 import org.mapstruct.Mapper;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ public interface DriversDtoMapper {
     DrivingLicenseDto map(DrivingLicense drivingLicense);
     DriverResponseDto map(Driver driver);
     GetAllDriversResponseDto map(GetAllDriversResponse response);
+    GetAvailableDriversResponseDto map(GetAvailableDriversResponse response);
     UpdateDriverRequest map(UpdateDriverRequestDto request, UUID driverId);
     default <T> Optional<T> map(T value) {
         return Optional.ofNullable(value);
