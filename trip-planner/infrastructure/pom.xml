@@ -29,6 +29,11 @@
             <artifactId>domain</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.tuimm.learningpath</groupId>
+            <artifactId>application</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- Database drivers -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
